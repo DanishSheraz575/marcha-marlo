@@ -1,32 +1,45 @@
-import React from 'react';
-import {Alert, View, Text, TouchableOpacity, TextInput } from 'react-native';
+//import React from 'react';
+import React, { useState } from 'react';
+import {View, Text, TouchableOpacity, TextInput } from 'react-native';
 
 import StyleOf from '../assets/AppStyles';
 import SocialBtns from '../components/SocialBtns';
 
 
 
-
 export default function Login({navigation}) {
 
 
-  let product_img_url = SecureStore.getItemAsync('product_images_base_url');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const alertit = () =>
-  Alert.alert(
-    "Alert Title",
-    product_img_url,
-    [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
+  function get_me_login(){
+    alert(email);
+    alert(password);
+
+    const data = { api_token: '3154f2a10b4aecaa9ae8c10468cd8227',email:email,password:password };
+    fetch('https://www.marchamarlo.com/api/login', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
       },
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ],
-    { cancelable: false }
-  );
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then((json) =>  {
+      
+      if(json.status=='Success'){
 
+      }else{
+        console.log(json.result.email);
+      }
+      
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+  }
   
 
   return (
@@ -43,19 +56,22 @@ export default function Login({navigation}) {
 
         <TextInput
           style={StyleOf.input}
-          placeholder="YOUR NAME"
+          placeholder="Enter Email"
+          onChangeText={(email) => setEmail(email)}
         />
 
         <TextInput
           style={StyleOf.input}
           placeholder="Enter Password"
+          secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
         />
 
-        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed]}>
+        <TouchableOpacity onPress={get_me_login} style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed]}>
             <Text style={StyleOf.btnLabel}>Login</Text>
         </TouchableOpacity>
 
-        <Text  onPress={alertit} style={{marginTop:20}}>
+        <Text  style={{marginTop:20}}>
           Forgot password?
         </Text>
 

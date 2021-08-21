@@ -6,6 +6,7 @@ import SocialBtns from '../components/SocialBtns';
 
 
 export default function SignUp({navigation}) {
+  
   return (
     <View style={[StyleOf.container, StyleOf.bgWhite]}>
       
