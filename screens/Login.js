@@ -1,11 +1,34 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import {Alert, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
 import StyleOf from '../assets/AppStyles';
 import SocialBtns from '../components/SocialBtns';
 
 
+
+
 export default function Login({navigation}) {
+
+
+  let product_img_url = SecureStore.getItemAsync('product_images_base_url');
+
+  const alertit = () =>
+  Alert.alert(
+    "Alert Title",
+    product_img_url,
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ],
+    { cancelable: false }
+  );
+
+  
+
   return (
     <View style={[StyleOf.container, StyleOf.bgWhite]}>
       
@@ -32,13 +55,11 @@ export default function Login({navigation}) {
             <Text style={StyleOf.btnLabel}>Login</Text>
         </TouchableOpacity>
 
-        <Text style={{marginTop:20}}>
+        <Text  onPress={alertit} style={{marginTop:20}}>
           Forgot password?
         </Text>
 
       </View>
-
-
 
 
       <View style={StyleOf.rowItemCenter} >
