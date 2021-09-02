@@ -14,8 +14,6 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
 
   function get_me_login(){
-    alert(email);
-    alert(password);
 
     const data = { api_token: '3154f2a10b4aecaa9ae8c10468cd8227',email:email,password:password };
     fetch('https://www.marchamarlo.com/api/login', {
@@ -31,7 +29,7 @@ export default function Login({navigation}) {
       if(json.status=='Success'){
 
       }else{
-        console.log(json.result.email);
+        alert('Invalid user');
       }
       
     })

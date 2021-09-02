@@ -34,23 +34,24 @@ fetch('https://www.marchamarlo.com/api/get_config', {
   },
   body: JSON.stringify(data),
 })
-.then(response => response.json())
-.then((json) =>  {
-  
-  //console.log(json);
+  .then(response => response.json())
+  .then((json) => {
 
-    if(json.status=='Success'){
-    var data=json.result[0];
-    save('product_image_url', data.product_images_base_url);
-    save('user_image_url', data.user_image_base_url);
-    save('chat_attachments_url', data.chat_attachments_base_url);
-  }
+    //console.log(json);
 
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+    if (json.status == 'Success') {
+      var data = json.result;
+      console.log(data);
+      save('product_image_url', data.product_images_base_url);
+      save('user_image_url', data.user_image_base_url);
+      save('chat_attachments_url', data.chat_attachments_base_url);
+    }
 
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+/*
 async function getValueFor(key) {
   let result = await SecureStore.getItemAsync(key);
   return result;
@@ -60,66 +61,68 @@ async function getValueFor(key) {
     alert('No values stored under that key.');
   }
 }
-alert(getValueFor('chat_attachments_url'));
+//alert(getValueFor('chat_attachments_url'));
 */
+
 
 
 const Stack = createStackNavigator();
 
 function App() {
+  
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
 
-        <Stack.Screen 
-          name="Home" 
+        <Stack.Screen
+          name="Home"
           component={Home}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
 
-        <Stack.Screen 
-          name="Login" 
+        <Stack.Screen
+          name="Login"
           component={Login}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
-        <Stack.Screen 
-          name="SignUp" 
+        <Stack.Screen
+          name="SignUp"
           component={SignUp}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
-        <Stack.Screen 
-          name="MarchaHome" 
+        <Stack.Screen
+          name="MarchaHome"
           component={MarchaHome}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
 
-        <Stack.Screen 
-          name="ExploreProducts" 
+        <Stack.Screen
+          name="ExploreProducts"
           component={ExploreProducts}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
-        <Stack.Screen 
-          name="MyProducts" 
+        <Stack.Screen
+          name="MyProducts"
           component={MyProducts}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
-        <Stack.Screen 
-          name="Chats" 
+        <Stack.Screen
+          name="Chats"
           component={Chats}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
-        <Stack.Screen 
-          name="AddProduct" 
+        <Stack.Screen
+          name="AddProduct"
           component={AddProduct}
-          options={{headerShown: false}}
-        />   
+          options={{ headerShown: false }}
+        />
 
 
       </Stack.Navigator>
