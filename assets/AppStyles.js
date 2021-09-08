@@ -204,6 +204,11 @@ export default StyleSheet.create({
             shadowRadius: 4,
             elevation: 5
           },
+          modalHeading: {
+              fontSize:20,
+            marginBottom: 25,
+            textAlign: "center"
+          },
           modalText: {
             marginBottom: 15,
             textAlign: "center"

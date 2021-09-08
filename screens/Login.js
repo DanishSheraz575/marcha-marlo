@@ -1,6 +1,6 @@
 //import React from 'react';
 import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, TextInput, Modal, StyleSheet, Pressable } from 'react-native';
+import {View, Text, TouchableOpacity, TextInput, Modal, Alert, Pressable } from 'react-native';
 
 import StyleOf from '../assets/AppStyles';
 import SocialBtns from '../components/SocialBtns';
@@ -10,6 +10,7 @@ import SocialBtns from '../components/SocialBtns';
 export default function Login({navigation}) {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [password_recover_email, setPasswordRecoverEmail] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -91,7 +92,7 @@ export default function Login({navigation}) {
             
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
@@ -101,10 +102,13 @@ export default function Login({navigation}) {
       >
         <View style={StyleOf.centeredView}>
           <View style={StyleOf.modalView}>
+            <Text style={StyleOf.modalHeading}>
+              Recover Your Password
+            </Text>
           <TextInput
           style={StyleOf.input}
           placeholder="Enter Email"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(password_recover_email) => setPasswordRecoverEmail(password_recover_email)}
         />
             <Pressable
               style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence]}
