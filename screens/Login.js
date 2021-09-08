@@ -40,6 +40,32 @@ export default function Login({navigation}) {
 
   }
   
+  function reset_my_password(){
+    const data = { api_token: '3154f2a10b4aecaa9ae8c10468cd8227',email:password_recover_email };
+    fetch('https://www.marchamarlo.com/api/forget_password', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then((json) =>  {
+      
+
+      if(json.status=='Success'){
+        alert(json.result);
+        setModalVisible(false);
+      }else{
+        alert(json.result);
+      }
+
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+  }
 
   return (
     <View style={[StyleOf.container, StyleOf.bgWhite]}>
@@ -102,9 +128,9 @@ export default function Login({navigation}) {
       >
         <View style={StyleOf.centeredView}>
           <View style={StyleOf.modalView}>
-            <Text style={StyleOf.modalHeading}>
-              Recover Your Password
-            </Text>
+
+            <Text style={[StyleOf.modalHeading, StyleOf.textRadicalRed]}>Recover Your Password</Text>  
+
           <TextInput
           style={StyleOf.input}
           placeholder="Enter Email"
@@ -112,7 +138,7 @@ export default function Login({navigation}) {
         />
             <Pressable
               style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={reset_my_password}
             >
               <Text style={StyleOf.btnLabel}>Submit</Text>
             </Pressable>
