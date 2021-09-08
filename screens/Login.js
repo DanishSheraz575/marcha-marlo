@@ -1,6 +1,6 @@
 //import React from 'react';
 import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, TextInput } from 'react-native';
+import {View, Text, TouchableOpacity, TextInput, Modal, StyleSheet, Pressable } from 'react-native';
 
 import StyleOf from '../assets/AppStyles';
 import SocialBtns from '../components/SocialBtns';
@@ -9,7 +9,7 @@ import SocialBtns from '../components/SocialBtns';
 
 export default function Login({navigation}) {
 
-
+  const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -27,7 +27,7 @@ export default function Login({navigation}) {
     .then((json) =>  {
       
       if(json.status=='Success'){
-
+        navigation.navigate('MarchaHome');
       }else{
         alert('Invalid user');
       }
@@ -69,7 +69,7 @@ export default function Login({navigation}) {
             <Text style={StyleOf.btnLabel}>Login</Text>
         </TouchableOpacity>
 
-        <Text  style={{marginTop:20}}>
+        <Text onPress={() => setModalVisible(true)} style={{marginTop:20}}>
           Forgot password?
         </Text>
 
@@ -89,6 +89,35 @@ export default function Login({navigation}) {
         </View>
       </View>
             
+
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={StyleOf.centeredView}>
+          <View style={StyleOf.modalView}>
+          <TextInput
+          style={StyleOf.input}
+          placeholder="Enter Email"
+          onChangeText={(email) => setEmail(email)}
+        />
+            <Pressable
+              style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={StyleOf.btnLabel}>Submit</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+
+
     </View>
   );
-}
+};
