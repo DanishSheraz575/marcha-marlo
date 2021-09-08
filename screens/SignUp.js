@@ -7,6 +7,53 @@ import SocialBtns from '../components/SocialBtns';
 
 export default function SignUp({navigation}) {
   
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [conpassword, setConfirmPassword] = useState('');
+  const [gender, setGender] = useState('');
+  const [contact, setContact] = useState('');
+  const [city, setCity] = useState('');
+
+
+  function get_me_signup(){
+
+    const data = { 
+      api_token: '3154f2a10b4aecaa9ae8c10468cd8227',
+      name:name,
+      email:email,
+      password:password, 
+      gender:gender, 
+      contact:contact, 
+      city:city, 
+    };
+    fetch('https://www.marchamarlo.com/api/register', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then((json) =>  {
+      
+      if(json.status=='Success'){
+        navigation.navigate('MarchaHome');
+      }else{
+        alert('Invalid user');
+      }
+      
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+  }
+
+
+
+
+
   return (
     <View style={[StyleOf.container, StyleOf.bgWhite]}>
       
@@ -21,20 +68,42 @@ export default function SignUp({navigation}) {
 
         <TextInput
           style={StyleOf.input}
-          placeholder="YOUR NAME"
+          placeholder="Your Name"
+          onChangeText={(name) => setName(name)}
         />
 
         <TextInput
           style={StyleOf.input}
-          placeholder="YOUR EMAIL"
+          placeholder="Your Email"
+          onChangeText={(email) => setEmail(email)}
         />
         <TextInput
           style={StyleOf.input}
-          placeholder="ENTER PASSWORD"
+          placeholder="Enter Password"
+          onChangeText={(password) => setPassword(password)}
         />
         <TextInput
           style={StyleOf.input}
-          placeholder="CONFIRM PASSWORD"
+          placeholder="Confirm Password"
+          onChangeText={(conpassword) => setConfirmPassword(conpassword)}
+        />
+
+        <TextInput
+          style={StyleOf.input}
+          placeholder="Gender"
+          onChangeText={(gender) => setGender(gender)}
+        />
+
+        <TextInput
+          style={StyleOf.input}
+          placeholder="Contact"
+          onChangeText={(contact) => setContact(contact)}
+        />
+
+        <TextInput
+          style={StyleOf.input}
+          placeholder="Contact"
+          onChangeText={(city) => setCity(city)}
         />
 
         <TouchableOpacity onPress={() => navigation.navigate('MarchaHome')} style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence,{marginTop:20}]}>
