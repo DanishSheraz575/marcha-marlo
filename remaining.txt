@@ -7,3 +7,20 @@ SIGNUP SCREEN:
 
 LOGIN SCREEN:
     1 - show loader when working at background
+
+
+
+
+
+
+
+
+
+
+
+CONVERSATION WITH DANISH:
+
+9-Sep-2021:
+Login:
+	1 - user info should be out of array on index 0
+	2 - if user did not activated his account yet then show message accordingly

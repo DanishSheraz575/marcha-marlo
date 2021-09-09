@@ -15,7 +15,7 @@ export default function MarchaHome({ }) {
           {/* <ScreenHeader title="Marcha Marlo" /> */}
 
           <View style={StyleOf.container}>
-            <Text>Marcha Marlo Home</Text>
+            <Text>Marcha Marlo Home {global.uid}</Text>
           </View>
 
           <BottomLinks active="home" />

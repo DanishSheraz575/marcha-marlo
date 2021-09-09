@@ -19,6 +19,17 @@ import Chats from './screens/Chats';
 import AddProduct from './screens/AddProduct';
 
 
+global.token = '3154f2a10b4aecaa9ae8c10468cd8227';
+global.api = 'https://www.marchamarlo.com/api/';
+global.uid=0;
+global.ufull_name='Marcha Marlo User';
+global.uemail='';
+global.uimage='';
+global.ugender='';
+global.ucountry='';
+global.ucity='';
+global.ucontact_number='';
+global.ustatus=1;
 
 
 /*

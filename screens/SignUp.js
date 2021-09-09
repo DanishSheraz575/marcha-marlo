@@ -23,7 +23,7 @@ export default function SignUp({ navigation }) {
 
   function get_me_signup() {
     const data = {
-      api_token: "3154f2a10b4aecaa9ae8c10468cd8227",
+      api_token: global.token,
       full_name: name,
       email: email,
       password: password,
@@ -31,7 +31,7 @@ export default function SignUp({ navigation }) {
       contact_number: contact,
       city: city,
     };
-    fetch("https://www.marchamarlo.com/api/register", {
+    fetch(global.api + "register", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +122,6 @@ export default function SignUp({ navigation }) {
           >
             <Text style={StyleOf.btnLabel}>sign up</Text>
           </TouchableOpacity>
-
         </View>
       </View>
     </ScrollView>
