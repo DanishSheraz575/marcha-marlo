@@ -1,0 +1,5 @@
+SIGNUP SCREEN:
+    1 - form validation
+    2 - dropdown for gender
+    3 - TextInput type for email
+    

@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,StatusBar } from 'react-native';
+
 
 //const AppStyles = StyleSheet.create({
 export default StyleSheet.create({
@@ -117,7 +118,7 @@ export default StyleSheet.create({
         fullContainer: {
             flex: 1,
             flexDirection: "column",
-            
+            paddingTop: StatusBar.currentHeight,
         },
 
         container: {
@@ -154,6 +155,7 @@ export default StyleSheet.create({
             alignItems:'center',
             justifyContent: 'center',
         },
+
 
         moveToBottom:{
             bottom:0,
