@@ -1,6 +1,6 @@
 //import React from 'react';
 import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, TextInput, Modal, Alert, Pressable } from 'react-native';
+import {View, Text, TouchableOpacity, TextInput, Modal, Alert, Pressable,ActivityIndicator } from 'react-native';
 
 import StyleOf from '../assets/AppStyles';
 import SocialBtns from '../components/SocialBtns';
@@ -145,8 +145,6 @@ export default function Login({navigation}) {
           </View>
         </View>
       </Modal>
-
-
 
     </View>
   );

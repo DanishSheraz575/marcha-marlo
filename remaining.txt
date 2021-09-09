@@ -2,4 +2,8 @@ SIGNUP SCREEN:
     1 - form validation
     2 - dropdown for gender
     3 - TextInput type for email
-    
+    4 - on error show perticular input level error
+    5 - show loader when working at background
+
+LOGIN SCREEN:
+    1 - show loader when working at background

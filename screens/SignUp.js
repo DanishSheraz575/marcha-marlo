@@ -56,7 +56,11 @@ export default function SignUp({ navigation }) {
     <ScrollView>
       <View style={[StyleOf.fullContainer]}>
         <View style={StyleOf.rowItemCenter}>
-          <Text style={[StyleOf.textLg, StyleOf.textEminence,{ marginTop: 30}]}>Sign up</Text>
+          <Text
+            style={[StyleOf.textLg, StyleOf.textEminence, { marginTop: 30 }]}
+          >
+            Sign up
+          </Text>
           <Text
             style={[StyleOf.textMd, StyleOf.textCodGray, { marginBottom: 30 }]}
           >
@@ -72,7 +76,7 @@ export default function SignUp({ navigation }) {
           <TextInput
             style={StyleOf.input}
             placeholder="Your Email"
-            autoCompleteType ='email'
+            autoCompleteType="email"
             onChangeText={(email) => setEmail(email)}
           />
           <TextInput
@@ -97,7 +101,7 @@ export default function SignUp({ navigation }) {
           <TextInput
             style={StyleOf.input}
             placeholder="Contact"
-            keyboardType='phone-pad'
+            keyboardType="phone-pad"
             onChangeText={(contact) => setContact(contact)}
           />
 
@@ -108,7 +112,7 @@ export default function SignUp({ navigation }) {
           />
 
           <TouchableOpacity
-             onPress={get_me_signup}
+            onPress={get_me_signup}
             style={[
               StyleOf.btn,
               StyleOf.dropShadow,
@@ -118,6 +122,7 @@ export default function SignUp({ navigation }) {
           >
             <Text style={StyleOf.btnLabel}>sign up</Text>
           </TouchableOpacity>
+
         </View>
       </View>
     </ScrollView>
