@@ -47,7 +47,7 @@ export default StyleSheet.create({
   textEminence: {
     color: "#662D91",
   },
-  textWelcome:{
+  textWelcome: {
     color: "#9852CC",
   },
   // TEXT RELATED STYLES - size
@@ -68,30 +68,29 @@ export default StyleSheet.create({
   },
 
   // PADDING STYLE
-  p10:{
-    padding:10
+  p10: {
+    padding: 10,
   },
-  p20:{
-    padding:20
+  p20: {
+    padding: 20,
   },
-  p30:{
-    padding:30
+  p30: {
+    padding: 30,
   },
-  px20:{
-    paddingLeft:20,
-    paddingRight:20
+  px20: {
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  py10:{
-    paddingTop:10,
-    paddingBottom:10
+  py10: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
-  pt10:{
-    paddingTop:10,
+  pt10: {
+    paddingTop: 10,
   },
-  pb10:{
-    paddingBottom:10
+  pb10: {
+    paddingBottom: 10,
   },
-
 
   // BOX SHADOW STYLES - size
   dropShadow: {
@@ -104,7 +103,6 @@ export default StyleSheet.create({
     shadowRadius: 10.32,
     elevation: 16,
   },
-
 
   // INPUT STYLES - size
   input: {
@@ -128,7 +126,6 @@ export default StyleSheet.create({
     textTransform: "uppercase",
   },
 
-
   // BUTTON STYLES - size
   btn: {
     width: 260,
@@ -145,11 +142,9 @@ export default StyleSheet.create({
     textTransform: "uppercase",
   },
 
-
-  justifyContent:{
+  justifyContent: {
     justifyContent: "center",
   },
-
 
   // CONTAINER STYLES - size
   flexIt: {
@@ -163,7 +158,7 @@ export default StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
   },
 
-/*
+  /*
   container: {
     flex: 1,
     flexDirection: "column",
@@ -177,7 +172,7 @@ export default StyleSheet.create({
   containerInner: {
     flex: 1,
   },
-/*
+  /*
   itemCenter: {
     alignItems: "center",
   },
@@ -201,14 +196,27 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
 
-  dashboardContainer:{
+  dashboardContainer: {
     flex: 1,
     alignItems: "center",
-    padding:30,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    backgroundColor:"#f9f1ff",
-    marginTop:20,
+    padding: 30,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    backgroundColor: "#f9f1ff",
+    marginTop: 20,
+    flexDirection: "column",
+  },
+  dashboardRow: {
+    flexDirection: "row",
+    height: 100,
+  },
+  dashboardBox: {
+    flex: 0.5,
+    margin: 5,
+    padding:10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth:6,
   },
 
   moveToBottom: {
@@ -231,7 +239,6 @@ export default StyleSheet.create({
   twitterButton: {
     backgroundColor: "#76A9EA",
   },
-
 
   // MODAL STYLES - size
   centeredView: {
@@ -264,8 +271,5 @@ export default StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
-
-
-
 });
 //export default AppStyles;

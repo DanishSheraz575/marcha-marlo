@@ -16,8 +16,8 @@ import SocialBtns from "../components/SocialBtns";
 export default function Login({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [password_recover_email, setPasswordRecoverEmail] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("mhaneef05@gmail.com");
+  const [password, setPassword] = useState("asd123");
 
   function get_me_login() {
     const data = { api_token: global.token, email: email, password: password };
@@ -90,6 +90,7 @@ export default function Login({ navigation }) {
         <TextInput
           style={StyleOf.input}
           placeholder="Enter Email"
+          value={email}
           onChangeText={(email) => setEmail(email)}
         />
 
@@ -97,6 +98,7 @@ export default function Login({ navigation }) {
           style={StyleOf.input}
           placeholder="Enter Password"
           secureTextEntry={true}
+          value={password}
           onChangeText={(password) => setPassword(password)}
         />
 
