@@ -47,6 +47,9 @@ export default StyleSheet.create({
   textEminence: {
     color: "#662D91",
   },
+  textWelcome:{
+    color: "#9852CC",
+  },
   // TEXT RELATED STYLES - size
   f26: {
     fontSize: 26,
@@ -82,6 +85,13 @@ export default StyleSheet.create({
     paddingTop:10,
     paddingBottom:10
   },
+  pt10:{
+    paddingTop:10,
+  },
+  pb10:{
+    paddingBottom:10
+  },
+
 
   // BOX SHADOW STYLES - size
   dropShadow: {

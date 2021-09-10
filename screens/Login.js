@@ -31,8 +31,7 @@ export default function Login({ navigation }) {
       .then((response) => response.json())
       .then((json) => {
         if (json.status == "Success") {
-          
-          uinfo=json.result[0];
+          const uinfo=json.result;
           global.uid=uinfo.user_id;
           global.ufull_name=uinfo.full_name;
           global.uemail=uinfo.email;
@@ -45,7 +44,7 @@ export default function Login({ navigation }) {
 
           navigation.navigate("Dashboard");
         } else {
-          alert("Invalid user");
+          alert(json.result);
         }
       })
       .catch((error) => {

@@ -13,12 +13,15 @@ export default function Dashboard({}) {
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="Dashboard" backbtn="0" />
       <View style={[StyleOf.containerInner, StyleOf.bgEminence]}>
-        <View style={[StyleOf.px20, StyleOf.py10]}>
+        <View style={[StyleOf.px20, StyleOf.pb10]}>
+        <Text style={[StyleOf.f12, StyleOf.textWelcome]}>
+            welcome,
+          </Text>
           <Text style={[StyleOf.textLgMd, StyleOf.textWhite]}>
             {global.ufull_name}
           </Text>
           <Text style={[StyleOf.f12, StyleOf.textWhite]}>
-            Last updated, {global.ulast_login}
+            {global.uemail}
           </Text>
         </View>
 
