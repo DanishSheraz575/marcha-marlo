@@ -19,6 +19,11 @@ import Chats from './screens/Chats';
 import AddProduct from './screens/AddProduct';
 import Notifications from './screens/Notifications';
 
+import MarchaDone from './screens/MarchaDone';
+import MarchaRequestReceived from './screens/MarchaRequestReceived';
+import MarchaRequestSent from './screens/MarchaRequestSent';
+import MarchaDoneRequests from './screens/MarchaDoneRequests';
+
 
 global.token = '3154f2a10b4aecaa9ae8c10468cd8227';
 global.api = 'https://www.marchamarlo.com/api/';
@@ -142,6 +147,38 @@ function App() {
           component={Notifications}
           options={{ headerShown: false }}
         />
+
+
+<Stack.Screen
+          name="MarchaDone"
+          component={MarchaDone}
+          options={{ headerShown: false }}
+        />
+
+        
+<Stack.Screen
+          name="MarchaRequestReceived"
+          component={MarchaRequestReceived}
+          options={{ headerShown: false }}
+        />
+
+        
+<Stack.Screen
+          name="MarchaRequestSent"
+          component={MarchaRequestSent}
+          options={{ headerShown: false }}
+        />
+
+        
+<Stack.Screen
+          name="MarchaDoneRequests"
+          component={MarchaDoneRequests}
+          options={{ headerShown: false }}
+        />
+
+
+
+
 
       </Stack.Navigator>
     </NavigationContainer>

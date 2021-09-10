@@ -7,17 +7,17 @@ import StyleOf from '../assets/AppStyles';
 import ScreenHeader from '../components/ScreenHeader';
 import BottomLinks from '../components/BottomLinks';
 
-export default function AddProduct({ }) {
+export default function MarchaDone({ }) {
   return (
     <View style={StyleOf.fullContainer}>
 
-      <ScreenHeader title="Add Product" />
+      <ScreenHeader title="Marcha Done" />
 
       <View style={StyleOf.containerInner}>
-        <Text>Add Product</Text>
+        <Text>Marcha Done</Text>
       </View>
       
-      <BottomLinks active="add" />
+      <BottomLinks active="" />
     </View>
   );
 }

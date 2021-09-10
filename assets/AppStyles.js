@@ -200,15 +200,16 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 30,
+    // paddingTop:30,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     backgroundColor: "#f9f1ff",
-    marginTop: 20,
+    marginTop: 0,
     flexDirection: "column",
   },
   dashboardRow: {
     flexDirection: "row",
-    height: 100,
+    // height: 100,
   },
   dashboardBox: {
     flex: 0.5,
@@ -217,7 +218,47 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth:6,
+    borderRadius:3
   },
+  dashboardBoxLabel:{
+    fontSize: 11,
+    color:"#ffffff",
+    textAlign:"center",
+    fontWeight:"bold",
+    textTransform: "uppercase",
+  },
+  dashboardBoxImg:{
+    width:50,
+    height:50,
+    marginBottom:6
+  },
+  dashboardBoxGreen: {
+    borderColor:"#5ad170",
+    backgroundColor: "#4cbb60",
+  },
+  dashboardBoxBlue: {
+    borderColor:"#1f74be",
+    backgroundColor: "#1963a3",
+  },
+  dashboardBoxYellow: {
+    borderColor:"#f8c234",
+    backgroundColor: "#f3b101",
+  },
+  dashboardBoxRed: {
+    borderColor:"#f86074",
+    backgroundColor: "#fa3b54",
+  },
+  dashboardBoxGray: {
+    borderColor:"#bbbbbb",
+    backgroundColor: "#848484",
+  },
+  dashboardBoxMagenta: {
+    borderColor:"#bd85e7",
+    backgroundColor: "#662d91",
+  },
+
+
+
 
   moveToBottom: {
     bottom: 0,

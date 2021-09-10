@@ -13,7 +13,7 @@ export default function BottomLinks({active}) {
         <View style={[StyleOf.flexIt,{paddingHorizontal:10, paddingVertical:0, backgroundColor:'#fff', alignItems: 'center'}]}>
 
             <View style={styles.myNav}>                  
-                <TouchableOpacity style={StyleOf.itemCenter}  onPress={()=>navigation.navigate('MarchaHome')}>
+                <TouchableOpacity style={StyleOf.itemCenter}  onPress={()=>navigation.navigate('Dashboard')}>
                     <Entypo name="home" color={active==='home' ? '#FF3D57':'#C5C5C5'} size={24} />
                     <Text style={styles.myNavText,[active==='home' ? styles.myNavTextActive:styles.myNavText]}>HOME</Text>
                 </TouchableOpacity>

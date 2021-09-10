@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, LinearGradient } from "react-native";
+import { View, Text, Image, Pressable, TouchableOpacity } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -8,7 +8,7 @@ import BottomLinks from "../components/BottomLinks";
 
 import Logo from "../components/Logo";
 
-export default function Dashboard({}) {
+export default function Dashboard({navigation}) {
   return (
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="Dashboard" backbtn="0" />
@@ -22,22 +22,82 @@ export default function Dashboard({}) {
         </View>
 
         <View style={[StyleOf.dashboardContainer]}>
+          <View style={StyleOf.dashboardRow}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MyProducts')}
+              style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGreen]}
+            >
+              <Image
+                style={StyleOf.dashboardBoxImg}
+                source={require("../assets/marcha_icon.png")}
+              />
+              <Text style={StyleOf.dashboardBoxLabel}>My products</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ExploreProducts')}
+              style={[StyleOf.dashboardBox, StyleOf.dashboardBoxBlue]}
+            >
+              <Image
+                style={StyleOf.dashboardBoxImg}
+                source={require("../assets/marcha_icon.png")}
+              />
+              <Text style={StyleOf.dashboardBoxLabel}>Explore Products</Text>
+            </TouchableOpacity>
+          </View>
 
-            <View style={StyleOf.dashboardRow}>
-              <View style={[StyleOf.dashboardBox,{ backgroundColor: "blue"}]}>
-                <Text>Column1</Text>
-              </View>
-              <View style={[StyleOf.dashboardBox,{ backgroundColor: "red"}]}>
-                <Text>Column1</Text>
-              </View>
-            </View>
+          <View style={StyleOf.dashboardRow}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MarchaDone')}
+              style={[StyleOf.dashboardBox, StyleOf.dashboardBoxYellow]}
+            >
+              <Image
+                style={StyleOf.dashboardBoxImg}
+                source={require("../assets/marcha_icon.png")}
+              />
+              <Text style={StyleOf.dashboardBoxLabel}>
+                Marcha Done list
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MarchaRequestReceived')}
+              style={[StyleOf.dashboardBox, StyleOf.dashboardBoxRed]}
+            >
+              <Image
+                style={StyleOf.dashboardBoxImg}
+                source={require("../assets/marcha_icon.png")}
+              />
+              <Text style={StyleOf.dashboardBoxLabel}>
+                Marcha Request received
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-
-
-
-
-            
-
+          <View style={StyleOf.dashboardRow}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MarchaRequestSent')}
+              style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGray]}
+            >
+              <Image
+                style={StyleOf.dashboardBoxImg}
+                source={require("../assets/marcha_icon.png")}
+              />
+              <Text style={StyleOf.dashboardBoxLabel}>
+                Marcha Request sent
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MarchaDoneRequests')}
+              style={[StyleOf.dashboardBox, StyleOf.dashboardBoxMagenta]}
+            >
+              <Image
+                style={StyleOf.dashboardBoxImg}
+                source={require("../assets/marcha_icon.png")}
+              />
+              <Text style={StyleOf.dashboardBoxLabel}>
+                Marcha Done Requests
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 
