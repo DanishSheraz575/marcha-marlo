@@ -191,6 +191,16 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
 
+  dashboardContainer:{
+    flex: 1,
+    alignItems: "center",
+    padding:30,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    backgroundColor:"#f9f1ff",
+    marginTop:20,
+  },
+
   moveToBottom: {
     bottom: 0,
     position: "absolute",

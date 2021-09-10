@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
 
           <View style={StyleOf.rowItemCenter} >
 
-            <Text style={[StyleOf.textLg, {marginTop:50,marginBottom:50,textAlign:'center'}]}>
+            <Text style={[StyleOf.f26,StyleOf.fwBold, {marginTop:40,marginBottom:40,textAlign:'center'}]}>
               Be together, 
               {'\n'}
               anytime, everywhere

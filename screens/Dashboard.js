@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, LinearGradient } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -13,8 +13,7 @@ export default function Dashboard({}) {
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="Dashboard" backbtn="0" />
       <View style={[StyleOf.containerInner, StyleOf.bgEminence]}>
-
-        <View style={[StyleOf.px20,StyleOf.py10]}>
+        <View style={[StyleOf.px20, StyleOf.py10]}>
           <Text style={[StyleOf.textLgMd, StyleOf.textWhite]}>
             {global.ufull_name}
           </Text>
@@ -23,7 +22,11 @@ export default function Dashboard({}) {
           </Text>
         </View>
 
+        <View style={[StyleOf.dashboardContainer]}>
+          
 
+
+        </View>
       </View>
       <BottomLinks active="home" />
     </View>
