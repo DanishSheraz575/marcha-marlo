@@ -57,12 +57,12 @@ export default function SignUp({ navigation }) {
       <View style={[StyleOf.fullContainer]}>
         <View style={StyleOf.rowItemCenter}>
           <Text
-            style={[StyleOf.textLg, StyleOf.textEminence, { marginTop: 30 }]}
+            style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textEminence, { marginTop: 30 }]}
           >
             Sign up
           </Text>
           <Text
-            style={[StyleOf.textMd, StyleOf.textCodGray, { marginBottom: 30 }]}
+            style={[StyleOf.f14, StyleOf.fwBold, StyleOf.textCodGray, { marginBottom: 30 }]}
           >
             Please sign up to enter in a app.
           </Text>

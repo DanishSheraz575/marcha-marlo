@@ -48,20 +48,41 @@ export default StyleSheet.create({
     color: "#662D91",
   },
   // TEXT RELATED STYLES - size
-  textLg: {
+  f26: {
     fontSize: 26,
-    fontWeight: "bold",
   },
-  textMd: {
+  textLgMd: {
+    fontSize: 20,
+  },
+  f14: {
     fontSize: 14,
-    fontWeight: "bold",
+  },
+  f12: {
+    fontSize: 12,
   },
   fwBold: {
     fontWeight: "bold",
   },
 
+  // PADDING STYLE
+  p10:{
+    padding:10
+  },
+  p20:{
+    padding:20
+  },
+  p30:{
+    padding:30
+  },
+  px20:{
+    paddingLeft:20,
+    paddingRight:20
+  },
+  py10:{
+    paddingTop:10,
+    paddingBottom:10
+  },
 
-  
   // BOX SHADOW STYLES - size
   dropShadow: {
     shadowColor: "#000",
@@ -115,6 +136,10 @@ export default StyleSheet.create({
   },
 
 
+  justifyContent:{
+    justifyContent: "center",
+  },
+
 
   // CONTAINER STYLES - size
   flexIt: {
@@ -127,6 +152,8 @@ export default StyleSheet.create({
     flexDirection: "column",
     paddingTop: StatusBar.currentHeight,
   },
+
+/*
   container: {
     flex: 1,
     flexDirection: "column",
@@ -136,15 +163,20 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-
+*/
   containerInner: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
-
+/*
   itemCenter: {
     alignItems: "center",
+  },
+*/
+  hCenter: {
+    alignItems: "center",
+  },
+  vCenter: {
+    justifyContent: "center",
   },
 
   bgImage: {

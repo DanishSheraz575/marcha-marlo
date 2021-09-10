@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
           global.ucontact_number=uinfo.contact_number;
           global.ustatus=uinfo.status;
 
-          navigation.navigate("MarchaHome");
+          navigation.navigate("Dashboard");
         } else {
           alert("Invalid user");
         }
@@ -77,12 +77,12 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <View style={[StyleOf.container, StyleOf.bgWhite]}>
+    <View style={[StyleOf.fullContainer, StyleOf.bgWhite]}>
       <View style={StyleOf.rowItemCenter}>
-        <Text style={[StyleOf.textLg, StyleOf.textRadicalRed]}>
+        <Text style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textRadicalRed]}>
           Welcome back,
         </Text>
-        <Text style={[StyleOf.textMd, StyleOf.textCodGray]}>
+        <Text style={[StyleOf.f14, StyleOf.fwBold, StyleOf.textCodGray]}>
           Log in with your account
         </Text>
       </View>

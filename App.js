@@ -12,11 +12,12 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 
-import MarchaHome from './screens/MarchaHome';
+import Dashboard from './screens/Dashboard';
 import ExploreProducts from './screens/ExploreProducts';
 import MyProducts from './screens/MyProducts';
 import Chats from './screens/Chats';
 import AddProduct from './screens/AddProduct';
+import Notifications from './screens/Notifications';
 
 
 global.token = '3154f2a10b4aecaa9ae8c10468cd8227';
@@ -29,6 +30,7 @@ global.ugender='';
 global.ucountry='';
 global.ucity='';
 global.ucontact_number='';
+global.ulast_login='09 Sep 2021';
 global.ustatus=1;
 
 
@@ -105,8 +107,8 @@ function App() {
         />
 
         <Stack.Screen
-          name="MarchaHome"
-          component={MarchaHome}
+          name="Dashboard"
+          component={Dashboard}
           options={{ headerShown: false }}
         />
 
@@ -135,6 +137,11 @@ function App() {
           options={{ headerShown: false }}
         />
 
+        <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{ headerShown: false }}
+        />
 
       </Stack.Navigator>
     </NavigationContainer>
