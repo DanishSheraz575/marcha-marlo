@@ -24,7 +24,7 @@ export default function ScreenHeader({ title, backbtn = 1 }) {
             if (backbtn == "1") {
               return (
                 <TouchableOpacity
-                  style={StyleOf.itemCenter}
+                  style={[StyleOf.itemCenter,StyleOf.iconBox]}
                   onPress={() => navigation.goBack()}
                 >
                   <Image source={require("../assets/arrow-left.png")} />

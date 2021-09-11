@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -12,11 +12,15 @@ export default function Dashboard({navigation}) {
   return (
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="Dashboard" backbtn="0" />
+
       <View style={[StyleOf.containerInner, StyleOf.bgEminence]}>
         <View style={[StyleOf.px20, StyleOf.pb10]}>
           <Text style={[StyleOf.f12, StyleOf.textWelcome]}>welcome,</Text>
           <Text style={[StyleOf.textLgMd, StyleOf.textWhite]}>
-            {global.ufull_name}
+            {global.ufull_name} 
+            <TouchableOpacity onPress={() => navigation.navigate('MyProfile')}>
+              <Image source={require('../assets/edit_icon.png')} />
+            </TouchableOpacity>
           </Text>
           <Text style={[StyleOf.f12, StyleOf.textWhite]}>{global.uemail}</Text>
         </View>

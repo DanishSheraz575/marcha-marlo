@@ -38,6 +38,9 @@ export default StyleSheet.create({
   textWhite: {
     color: "#FFFFFF",
   },
+  textBlack: {
+    color: "#000000",
+  },
   textCodGray: {
     color: "#1A1A1A",
   },
@@ -92,6 +95,12 @@ export default StyleSheet.create({
     paddingBottom: 10,
   },
 
+  // ICON STYLES
+  editIcon:{
+
+  },
+
+
   // BOX SHADOW STYLES - size
   dropShadow: {
     shadowColor: "#000",
@@ -106,13 +115,14 @@ export default StyleSheet.create({
 
   // INPUT STYLES - size
   input: {
-    height: 40,
+    height: 45,
     width: 260,
     marginBottom: 15,
     borderWidth: 0,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal:20,
     borderRadius: 50,
-    lineHeight: 40,
+    lineHeight: 25,
     backgroundColor: "#FFFFFF",
     borderColor: "#F3F3F3",
     shadowColor: "#000",
@@ -123,7 +133,7 @@ export default StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
-    textTransform: "uppercase",
+    // textTransform: "uppercase",
   },
 
   // BUTTON STYLES - size
@@ -172,11 +182,17 @@ export default StyleSheet.create({
   containerInner: {
     flex: 1,
   },
-  /*
+  
   itemCenter: {
     alignItems: "center",
   },
-*/
+
+  iconBox:{
+    width:30,
+    height:30,
+    justifyContent: "center",
+  },
+
   hCenter: {
     alignItems: "center",
   },
@@ -200,7 +216,7 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 30,
-    // paddingTop:30,
+    paddingTop:35,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     backgroundColor: "#f9f1ff",
@@ -209,7 +225,7 @@ export default StyleSheet.create({
   },
   dashboardRow: {
     flexDirection: "row",
-    // height: 100,
+    flex: 1,
   },
   dashboardBox: {
     flex: 0.5,
@@ -218,7 +234,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth:6,
-    borderRadius:3
+    borderRadius:3,    
   },
   dashboardBoxLabel:{
     fontSize: 11,
@@ -230,7 +246,7 @@ export default StyleSheet.create({
   dashboardBoxImg:{
     width:50,
     height:50,
-    marginBottom:6
+    marginBottom:'10%'
   },
   dashboardBoxGreen: {
     borderColor:"#5ad170",
@@ -256,6 +272,11 @@ export default StyleSheet.create({
     borderColor:"#bd85e7",
     backgroundColor: "#662d91",
   },
+
+
+
+
+
 
 
 

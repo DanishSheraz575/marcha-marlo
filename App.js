@@ -12,6 +12,7 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 
+import MyProfile from './screens/MyProfile';
 import Dashboard from './screens/Dashboard';
 import ExploreProducts from './screens/ExploreProducts';
 import MyProducts from './screens/MyProducts';
@@ -108,6 +109,12 @@ function App() {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MyProfile"
+          component={MyProfile}
           options={{ headerShown: false }}
         />
 
