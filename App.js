@@ -38,6 +38,7 @@ global.ucity='';
 global.ucontact_number='';
 global.ulast_login='09 Sep 2021';
 global.ustatus=1;
+global.borderDanger="#ffb2b2";
 
 
 /*

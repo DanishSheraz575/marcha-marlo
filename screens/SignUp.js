@@ -18,16 +18,32 @@ export default function SignUp({ navigation }) {
   const genders = ["Male", "Female"];
 
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState(false);
+
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
   const [conpassword, setConfirmPassword] = useState("");
-  const [gender, setGender] = useState("");
+  const [conpasswordError, setConfirmPasswordError] = useState(false);
+
   const [contact, setContact] = useState("");
+  const [contactError, setContactError] = useState(false);
+
+  const [gender, setGender] = useState("");
   const [city, setCity] = useState("");
 
+
   function get_me_signup() {
-    alert(gender);
-    return false;
+
+    if (name === "") { setNameError(true); }
+    if (email === "") { setEmailError(true); }
+    if (password === "") { setPasswordError(true); }
+    if (conpassword === "") { setConfirmPasswordError(true); }
+    if (contact === "") { setContactError(true); }
+
     const data = {
       api_token: global.token,
       full_name: name,
@@ -75,36 +91,41 @@ export default function SignUp({ navigation }) {
           </Text>
 
           <TextInput
-            style={StyleOf.input}
+            style={[StyleOf.input, nameError ? { borderColor: global.borderDanger} : '']}
             placeholder="Your Name"
             onChangeText={(name) => setName(name)}
+            onFocus={() => setNameError(false)}
           />
 
           <TextInput
-            style={StyleOf.input}
+            style={[StyleOf.input, emailError ? { borderColor: global.borderDanger} : '']}
             placeholder="Your Email"
             autoCompleteType="email"
             onChangeText={(email) => setEmail(email)}
+            onFocus={() => setEmailError(false)}
           />
           <TextInput
-            style={StyleOf.input}
+            style={[StyleOf.input, passwordError ? { borderColor: global.borderDanger} : '']}
             placeholder="Enter Password"
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
+            onFocus={() => setPasswordError(false)}
           />
           <TextInput
-            style={StyleOf.input}
+            style={[StyleOf.input, conpasswordError ? { borderColor: global.borderDanger} : '']}
             placeholder="Confirm Password"
             secureTextEntry={true}
             onChangeText={(conpassword) => setConfirmPassword(conpassword)}
+            onFocus={() => setConfirmPasswordError(false)}
           />
 
 
           <TextInput
-            style={StyleOf.input}
+            style={[StyleOf.input, contactError ? { borderColor: global.borderDanger} : '']}
             placeholder="Contact"
             keyboardType="phone-pad"
             onChangeText={(contact) => setContact(contact)}
+            onFocus={() => setContactError(false)}
           />
 
 
@@ -115,7 +136,7 @@ export default function SignUp({ navigation }) {
   buttonTextStyleAfterSelection={[{color:'#000000'}]}
   defaultButtonText={"Gender"}
 	data={genders}
-	onSelect={(gender) => setContact(gender)}
+	onSelect={(gender) => setGender(gender)}
 	buttonTextAfterSelection={(selectedItem, index) => {
 		// text represented after item is selected ,color:"#afafaf",
 		// if data array is an array of objects then return selectedItem.property to render after item is selected
