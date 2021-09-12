@@ -100,14 +100,6 @@ export default function MyProfile({ }) {
             onChangeText={(gender) => setGender(gender)}
           />
 
-<Picker
-        selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Male" value="Male" />
-        <Picker.Item label="Female" value="Female" />
-      </Picker>
-
         <TextInput
             style={StyleOf.input}
             placeholder="City"
@@ -116,7 +108,7 @@ export default function MyProfile({ }) {
           />
 
         <TouchableOpacity
-          style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence,{marginBottom:30}]}
+          style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence,{marginBottom:40}]}
         >
           <Text style={StyleOf.btnLabel}>Update</Text>
         </TouchableOpacity>

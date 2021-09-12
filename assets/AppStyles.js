@@ -116,7 +116,7 @@ export default StyleSheet.create({
   // INPUT STYLES - size
   input: {
     height: 45,
-    width: 260,
+    width: "85%",
     marginBottom: 15,
     borderWidth: 0,
     paddingVertical: 10,
@@ -135,6 +135,8 @@ export default StyleSheet.create({
     elevation: 2,
     // textTransform: "uppercase",
   },
+
+
 
   // BUTTON STYLES - size
   btn: {

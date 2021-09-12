@@ -8,7 +8,11 @@ SIGNUP SCREEN:
 LOGIN SCREEN:
     1 - show loader when working at background
 
-
+PROFILE SCREEN:
+    1 - change profile image
+    2 - gendar dropdown
+    3 - update profile values
+ 
 
 
 
@@ -24,3 +28,9 @@ CONVERSATION WITH DANISH:
 Login:
 	1 - user info should be out of array on index 0
 	2 - if user did not activated his account yet then show message accordingly
+
+12-Sep-2021:
+Notification:
+	1 - need user image url
+	2 - need product image url in notificatio about product
+	3 - 3 min ago

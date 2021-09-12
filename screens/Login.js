@@ -147,7 +147,7 @@ export default function Login({ navigation }) {
             </Text>
 
             <TextInput
-              style={StyleOf.input}
+              style={[StyleOf.input,{width:"100%"}]}
               placeholder="Enter Email"
               onChangeText={(password_recover_email) =>
                 setPasswordRecoverEmail(password_recover_email)

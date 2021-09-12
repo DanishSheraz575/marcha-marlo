@@ -5,14 +5,26 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ScrollView,
+  ScrollView
 } from "react-native";
+
 
 import StyleOf from "../assets/AppStyles";
 
 // import SocialBtns from "../components/SocialBtns";
 
 export default function SignUp({ navigation }) {
+
+  /*
+  constructor(props):{
+    super(props);
+    this.state = {value : "Select Me Please"}
+  }
+  onSelect(value, label):{
+    this.setState({value : value});
+  }
+  */
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +34,7 @@ export default function SignUp({ navigation }) {
   const [city, setCity] = useState("");
 
   function get_me_signup() {
+
     const data = {
       api_token: global.token,
       full_name: name,
@@ -56,6 +69,7 @@ export default function SignUp({ navigation }) {
     <ScrollView>
       <View style={[StyleOf.fullContainer]}>
         <View style={StyleOf.rowItemCenter}>
+
           <Text
             style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textEminence, { marginTop: 30 }]}
           >
@@ -92,11 +106,6 @@ export default function SignUp({ navigation }) {
             onChangeText={(conpassword) => setConfirmPassword(conpassword)}
           />
 
-          <TextInput
-            style={StyleOf.input}
-            placeholder="Gender"
-            onChangeText={(gender) => setGender(gender)}
-          />
 
           <TextInput
             style={StyleOf.input}
