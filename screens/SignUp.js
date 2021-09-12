@@ -8,22 +8,14 @@ import {
   ScrollView
 } from "react-native";
 
-
+import SelectDropdown from 'react-native-select-dropdown';
 import StyleOf from "../assets/AppStyles";
 
 // import SocialBtns from "../components/SocialBtns";
 
 export default function SignUp({ navigation }) {
 
-  /*
-  constructor(props):{
-    super(props);
-    this.state = {value : "Select Me Please"}
-  }
-  onSelect(value, label):{
-    this.setState({value : value});
-  }
-  */
+  const genders = ["Male", "Female"];
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +26,8 @@ export default function SignUp({ navigation }) {
   const [city, setCity] = useState("");
 
   function get_me_signup() {
-
+    alert(gender);
+    return false;
     const data = {
       api_token: global.token,
       full_name: name,
@@ -113,6 +106,28 @@ export default function SignUp({ navigation }) {
             keyboardType="phone-pad"
             onChangeText={(contact) => setContact(contact)}
           />
+
+
+
+<SelectDropdown 
+  buttonStyle={StyleOf.input}
+  buttonTextStyle={[{textAlign:'left'}]}
+  buttonTextStyleAfterSelection={[{color:'#000000'}]}
+  defaultButtonText={"Gender"}
+	data={genders}
+	onSelect={(gender) => setContact(gender)}
+	buttonTextAfterSelection={(selectedItem, index) => {
+		// text represented after item is selected ,color:"#afafaf",
+		// if data array is an array of objects then return selectedItem.property to render after item is selected
+		return selectedItem
+	}}
+	rowTextForSelection={(item, index) => {
+		// text represented for each item in dropdown
+		// if data array is an array of objects then return item.property to represent item in dropdown
+		return item
+	}}
+/>
+
 
           <TextInput
             style={StyleOf.input}

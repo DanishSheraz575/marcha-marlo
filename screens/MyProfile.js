@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text,TextInput,TouchableOpacity,ScrollView,StyleSheet,Image,Picker } from 'react-native';
+import { View, Text,TextInput,TouchableOpacity,ScrollView,StyleSheet,Image } from 'react-native';
 
 import StyleOf from '../assets/AppStyles';
 
