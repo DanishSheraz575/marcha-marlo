@@ -2,47 +2,48 @@ import React, { useState } from "react";
 import { View, Text,TextInput,TouchableOpacity,ScrollView,StyleSheet,Image } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
-
 import StyleOf from '../assets/AppStyles';
-
-
 import ScreenHeader from '../components/ScreenHeader';
+
+
+
 
 export default function MyProfile({ }) {
 
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
-
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-
-  const [contact, setContact] = useState("");
-  const [contactError, setContactError] = useState(false);
-
-
-
   const genders = ["Male", "Female"];
 
-  //const [name, setName] = useState(false);
-  //const [email, setEmail] = useState(false);
-  //const [image, setImage] = global.uimage;
-  //const [password, setPassword] = useState(false);
-  //const [contact, setPhone] = useState(false);
-  const [gender, setGender] = useState(false);
-  const [city, setCity] = useState(false);
+  const [name, setName] = useState(global.ufull_name);
+  const [nameError, setNameError] = useState(false);
+
+  //const [email, setEmail] = useState("");
+  //const [emailError, setEmailError] = useState(false);
+
+  const [password, setPassword] = useState("");
+  //const [passwordError, setPasswordError] = useState(false);
+
+  const [contact, setContact] = useState(global.ucontact_number);
+  const [contactError, setContactError] = useState(false);
+
+  const [gender, setGender] = useState(global.ugender);
+  const [city, setCity] = useState(global.ucity);
 
   function update_profile() {
 
-    if (name === "") { setNameError(true); }
-    if (contact === "") { setContactError(true); }
+
+    if (name === "") { 
+      setNameError(true); 
+      return false;
+    }
+    if (contact === "") { 
+      setContactError(true); 
+      return false;
+    }
 
     const data = {
       api_token: global.token,
       user_id: global.uid,
       password: password,
+      full_name: name,
       gender: gender,
       contact_number: contact,
       city: city,
@@ -56,8 +57,11 @@ export default function MyProfile({ }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        alert(json.result);
+
         if (json.status == "Success") {
+          global.ufull_name=name;
+          global.ugender=gender;
+          global.ucity=city;
           alert(json.result);
         } else {
           alert(json.result);
@@ -87,14 +91,14 @@ export default function MyProfile({ }) {
         <View style={styles.profileImageContainer}>
           <Image style={styles.profileImage} source={global.uimage} />
           <TouchableOpacity style={[{elevation:3}]} >
-            <Image style={[StyleOf.editIcon,{marginTop:-36,marginLeft:100,zIndex:2,position:"relative",elevation:3}]} source={require('../assets/camera_icon.png')} />
+            <Image style={[StyleOf.editIcon,{marginTop:-36,marginLeft:100,zIndex:2}]} source={require('../assets/camera_icon.png')} />
           </TouchableOpacity>
         </View>
 
         <TextInput
           style={[StyleOf.input, nameError ? { borderColor: global.borderDanger} : '']}
           placeholder="Enter Name"
-          value={global.ufull_name}
+          value={name}
           onChangeText={(name) => setName(name)}
           onFocus={() => setNameError(false)}
         />
@@ -117,8 +121,8 @@ export default function MyProfile({ }) {
         <TextInput
           style={[StyleOf.input, contactError ? { borderColor: global.borderDanger} : '']}
           placeholder="Enter Contact"
-          value={global.ucontact_number}
-          onChangeText={(contact) => setPassword(contact)}
+          value={contact}
+          onChangeText={(contact) => setContact(contact)}
           onFocus={() => setContactError(false)}
         />
 
@@ -126,7 +130,7 @@ export default function MyProfile({ }) {
   buttonStyle={StyleOf.input}
   buttonTextStyle={[{textAlign:'left',color:'#000000'}]}
   buttonTextStyleAfterSelection={[{color:'#000000'}]}
-  defaultButtonText={global.ugender}
+  defaultButtonText={gender}
 	data={genders}
 	onSelect={(gender) => setGender(gender)}
 	buttonTextAfterSelection={(selectedItem, index) => {
@@ -144,7 +148,7 @@ export default function MyProfile({ }) {
         <TextInput
             style={StyleOf.input}
             placeholder="City"
-            value={global.ucity}
+            value={city}
             onChangeText={(city) => setCity(city)}
           />
 
@@ -183,7 +187,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    elevation: 2,
     zIndex:1,
   },
   profileImageContainer:{
