@@ -1,4 +1,5 @@
 import { StyleSheet, StatusBar } from "react-native";
+import { color } from "react-native-reanimated";
 
 //const AppStyles = StyleSheet.create({
 export default StyleSheet.create({
@@ -53,18 +54,28 @@ export default StyleSheet.create({
   textWelcome: {
     color: "#9852CC",
   },
+
   // TEXT RELATED STYLES - size
-  f26: {
-    fontSize: 26,
-  },
-  textLgMd: {
-    fontSize: 20,
+  f12: {
+    fontSize: 12,
   },
   f14: {
     fontSize: 14,
   },
-  f12: {
-    fontSize: 12,
+  f16: {
+    fontSize: 16,
+  },
+  f18: {
+    fontSize: 18,
+  },
+  f20: {
+    fontSize: 20,
+  },
+  textLgMd: {
+    fontSize: 20,
+  },
+  f26: {
+    fontSize: 26,
   },
   fwBold: {
     fontWeight: "bold",
@@ -94,6 +105,39 @@ export default StyleSheet.create({
   pb10: {
     paddingBottom: 10,
   },
+
+
+    // MARGIN STYLE
+    m10: {
+      margin: 10,
+    },
+    m20: {
+      margin: 20,
+    },
+    m30: {
+      margin: 30,
+    },
+    mx20: {
+      marginLeft: 20,
+      marginRight: 20,
+    },
+    my10: {
+      marginTop: 10,
+      marginBottom: 10,
+    },
+    mt10: {
+      marginTop: 10,
+    },
+    mb10: {
+      marginBottom: 10,
+    },
+    mb20:{
+      marginBottom: 20,
+    },
+    mb30:{
+      marginBottom: 30,
+    },
+
 
   // ICON STYLES
   editIcon:{
@@ -137,6 +181,51 @@ export default StyleSheet.create({
     // textTransform: "uppercase",
   },
 
+
+
+  labelLight:{
+    color:"#9A9A9A",
+    marginBottom:10,
+  },
+  labelDark:{
+    color:"#000000",
+    fontSize:18,
+  },
+  addProductInput:{
+    lineHeight:45,
+    height:45,
+    width:"100%",
+    color:"#000000",
+    paddingHorizontal:5,
+    borderBottomWidth:1,
+  },
+  smallText:{
+    fontSize:12,
+    color:"#9A9A9A",
+    marginTop:6,
+  },
+
+  productTypeButton:{
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 10.32,
+    paddingHorizontal:30,
+    paddingVertical:10,
+    width:"40%",
+    backgroundColor:"#ffffff",
+    margin:20,
+    //height:45
+  },
+
+  productTypeButtonLabel:{
+fontSize:16,
+textAlign:"center",
+color:"#919191",
+  },
 
 
   // BUTTON STYLES - size
