@@ -26,11 +26,11 @@ export default function MyProfile({ }) {
 
   const genders = ["Male", "Female"];
 
-  const [name, setName] = useState(false);
-  const [email, setEmail] = useState(false);
+  //const [name, setName] = useState(false);
+  //const [email, setEmail] = useState(false);
   //const [image, setImage] = global.uimage;
-  const [password, setPassword] = useState(false);
-  const [contact, setPhone] = useState(false);
+  //const [password, setPassword] = useState(false);
+  //const [contact, setPhone] = useState(false);
   const [gender, setGender] = useState(false);
   const [city, setCity] = useState(false);
 

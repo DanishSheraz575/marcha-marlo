@@ -1,15 +1,12 @@
 SIGNUP SCREEN:
-    1 - form validation
-    3 - TextInput type for email
-    4 - on error show perticular input level error
-    5 - show loader when working at background
+    1 - show loader when working at background
 
 LOGIN SCREEN:
     1 - show loader when working at background
 
 PROFILE SCREEN:
     1 - change profile image
-    3 - update profile values
+    2 - update profile values
  
 
 

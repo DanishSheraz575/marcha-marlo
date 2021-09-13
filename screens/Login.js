@@ -88,6 +88,7 @@ export default function Login({ navigation }) {
 
       <View style={StyleOf.rowItemCenter}>
         <TextInput
+          keyboardType ="email-address"
           style={StyleOf.input}
           placeholder="Enter Email"
           value={email}

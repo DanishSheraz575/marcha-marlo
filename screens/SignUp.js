@@ -98,6 +98,7 @@ export default function SignUp({ navigation }) {
           />
 
           <TextInput
+            keyboardType ="email-address"
             style={[StyleOf.input, emailError ? { borderColor: global.borderDanger} : '']}
             placeholder="Your Email"
             autoCompleteType="email"
