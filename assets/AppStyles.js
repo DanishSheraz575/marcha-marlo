@@ -127,6 +127,9 @@ export default StyleSheet.create({
     m30: {
       margin: 30,
     },
+    m40: {
+      margin: 40,
+    },
     mx20: {
       marginLeft: 20,
       marginRight: 20,
@@ -147,7 +150,9 @@ export default StyleSheet.create({
     mb30:{
       marginBottom: 30,
     },
-
+    mb40:{
+      marginBottom: 40,
+    },
 
   // ICON STYLES
   editIcon:{
@@ -214,6 +219,20 @@ export default StyleSheet.create({
     color:"#9A9A9A",
     marginTop:6,
   },
+  textArea: {
+    height: 150,
+    justifyContent: "flex-start",
+    textAlignVertical: 'top',
+    //borderColor:"#B1B1B1",
+    //borderWidth:1,
+    marginTop:10,
+    padding:10,
+    backgroundColor: "#E9E9E9",
+    borderColor: "#F3F3F3",
+    color:"#000000",
+    borderBottomWidth:1,
+    borderBottomColor:"#000000",
+  },
 
   productTypeButton:{
     shadowColor: "#000",
@@ -234,13 +253,21 @@ export default StyleSheet.create({
   productTypeButtonLabel:{
 fontSize:16,
 textAlign:"center",
-color:"#919191",
+//color:"#919191",
+color:"#cccccc",
   },
 
+  productTypeButtonLabelActive:{
+    fontSize:16,
+    textAlign:"center",
+    color:"#000000",
+    borderColor:"#000000",
+      },
+    
 
   // BUTTON STYLES - size
   btn: {
-    width: 260,
+    width: '85%',
     alignItems: "center",
     padding: 15,
     borderRadius: 50,
@@ -297,7 +324,9 @@ color:"#919191",
   },
 
   hCenter: {
-    alignItems: "center",
+    //alignItems: "center",
+    justifyContent: 'center',
+    flexDirection:'row'
   },
   vCenter: {
     justifyContent: "center",

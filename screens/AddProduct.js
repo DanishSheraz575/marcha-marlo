@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, CheckBox, StyleSheet } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -9,11 +9,71 @@ import ScreenHeader from '../components/ScreenHeader';
 import BottomLinks from '../components/BottomLinks';
 
 export default function AddProduct({ }) {
-  
-  const categories = ["Male", "Female"];
+
+  const [product_type, setProductType] = useState(false);
+  const [locations, setLocations] = useState([]);
+  const [location, setLocation] = useState(false);
+  const data = { api_token: global.token };  
+  useEffect(() => {
+    fetch(global.api + "locations", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == "Success") {
+          setLocations(json.result)
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
+
+
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(0);
+  useEffect(() => {
+    fetch(global.api + "categories", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == "Success") {
+          setCategories(json.result)
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);  
+
+
+
   const [customCategory, setCustomCategory] = useState(false);
-  const [categor, setCategory] = useState("");
-  
+  /*
+  function set_product_type(t){
+    setProductType(t);
+  }
+  */
+
+  function upload_product() {
+    alert(product_type);
+    if(category){
+      alert(category.category_id);
+    }else{
+      alert("Please select category");
+    }
+  }
+
   return (
     
     <View style={StyleOf.fullContainer}>
@@ -43,12 +103,31 @@ export default function AddProduct({ }) {
               <Text style={[StyleOf.labelDark]}>Select Condition*</Text>
 
               <View style={StyleOf.flexIt}>
-                <TouchableOpacity  style={[StyleOf.productTypeButton]}>
-                <Text style={[StyleOf.productTypeButtonLabel]}>New</Text>
+                <TouchableOpacity 
+                  onPress={(product_type) => setProductType('New')} 
+                  style={[StyleOf.productTypeButton]}
+                >
+                  {
+                  product_type=='New'
+                  ?
+                    <Text style={[StyleOf.productTypeButtonLabelActive]}>New</Text>
+                  :
+                    <Text style={[StyleOf.productTypeButtonLabel]}>New</Text>
+                  }
                 </TouchableOpacity>       
 
-                <TouchableOpacity  style={[StyleOf.productTypeButton]}>
-                  <Text style={[StyleOf.productTypeButtonLabel]}>Used</Text>
+                <TouchableOpacity 
+                  onPress={(product_type) => setProductType('Used')} 
+                  style={[StyleOf.productTypeButton,{product_type}]}
+                >
+                  {
+                  product_type=='Used'
+                  ?
+                    <Text style={[StyleOf.productTypeButtonLabelActive]}>Used</Text>
+                  :
+                    <Text style={[StyleOf.productTypeButtonLabel]}>Used</Text>
+                  }
+
                 </TouchableOpacity>      
               </View>
             </View>
@@ -59,10 +138,14 @@ export default function AddProduct({ }) {
               <Text style={[StyleOf.labelLight]}>Product Information</Text>
               <Text style={[StyleOf.labelDark]}>Describe what you are selling</Text>
               <TextInput
-                style={[StyleOf.addProductInput]}
+                style={[StyleOf.textArea]}
+                placeholder="Type something"
+                placeholderTextColor="grey"
+                numberOfLines={10}
+                multiline={true}
               />
               <Text style={[StyleOf.smallText]}>
-              Include condition, features and other information about the product
+                Include condition, features and other information about the product
               </Text>
             </View>        
 
@@ -86,12 +169,12 @@ export default function AddProduct({ }) {
                     buttonTextStyle={[{textAlign:'left'}]}
                     buttonTextStyleAfterSelection={[{color:'#000000'}]}
                     data={categories}
-                    onSelect={(categor) => setCategory(categor)}
+                    onSelect={(category) => setCategory(category)}
                     buttonTextAfterSelection={(selectedItem, index) => {
-                      return selectedItem
+                      return selectedItem.title;
                     }}
                     rowTextForSelection={(item, index) => {
-                      return item
+                      return item.title;
                     }}
                   />
                 </View>
@@ -117,8 +200,8 @@ export default function AddProduct({ }) {
                   buttonStyle={StyleOf.addProductInput}
                   buttonTextStyle={[{textAlign:'left'}]}
                   buttonTextStyleAfterSelection={[{color:'#000000'}]}
-                  data={categories}
-                  onSelect={(categor) => setCategory(categor)}
+                  data={locations}
+                  onSelect={(location) => setLocation(location)}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem
                   }}
@@ -132,8 +215,11 @@ export default function AddProduct({ }) {
 
             <View style={[StyleOf.mb30]}>  
               <Text style={[StyleOf.labelLight]}>Select The Best Price of Your Product</Text>
-              <Text style={[StyleOf.labelDark]}>Product Price</Text>
-              <TextInput style={[StyleOf.addProductInput]} />
+              <Text style={[StyleOf.labelDark]}>Product Price in PKR</Text>
+              <TextInput 
+                style={[StyleOf.addProductInput]} 
+                placeholder="Rs."
+              />
             </View>
 
 
@@ -149,9 +235,13 @@ export default function AddProduct({ }) {
               </Text>
             </View>
 
-            <TouchableOpacity style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed,StyleOf.mb30]}>
-              <Text style={StyleOf.btnLabel}>Upload NOW!</Text>
-            </TouchableOpacity>
+            <View style={[StyleOf.mb40,StyleOf.hCenter]}>
+              <TouchableOpacity 
+                onPress={upload_product}
+                style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed, StyleOf.hCenter]}>
+                <Text style={StyleOf.btnLabel}>Upload NOW!</Text>
+              </TouchableOpacity>
+            </View>
 
             
           </ScrollView>
