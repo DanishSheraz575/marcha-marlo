@@ -13,7 +13,7 @@ export default function Home({ navigation }) {
   return (
     <View style={StyleOf.fullContainer}>
 
-      {/* <ImageBackground source={image} style={StyleOf.bgImage}> */}
+      <ImageBackground source={image} style={StyleOf.bgImage}>
       
         <View style={StyleOf.containerInner}>    
 
@@ -47,7 +47,7 @@ export default function Home({ navigation }) {
 
         </View>
         
-      {/* </ImageBackground> */}
+      </ImageBackground>
 
     </View>
   );

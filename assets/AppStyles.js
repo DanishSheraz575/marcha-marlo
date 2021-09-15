@@ -85,11 +85,18 @@ export default StyleSheet.create({
   p10: {
     padding: 10,
   },
+  p15: {
+    padding: 15,
+  },
   p20: {
     padding: 20,
   },
   p30: {
     padding: 30,
+  },
+  px10: {
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   px20: {
     paddingLeft: 20,
@@ -316,7 +323,7 @@ color:"#919191",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     backgroundColor: "#f9f1ff",
-    marginTop: 0,
+    marginTop: 10,
     flexDirection: "column",
   },
   dashboardRow: {

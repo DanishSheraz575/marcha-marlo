@@ -149,8 +149,8 @@ export default function AddProduct({ }) {
               </Text>
             </View>
 
-            <TouchableOpacity style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed]}>
-              <Text style={StyleOf.btnLabel}>Upload</Text>
+            <TouchableOpacity style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed,StyleOf.mb30]}>
+              <Text style={StyleOf.btnLabel}>Upload NOW!</Text>
             </TouchableOpacity>
 
             

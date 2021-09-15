@@ -3,20 +3,18 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
-export default function ScreenHeader({ title, backbtn = 1 }) {
+export default function ScreenHeader({ title, backbtn = 1, bgColor= StyleOf.bgEminence}) {
   const navigation = useNavigation();
 
   return (
     <View>
       <View
         style={[
-          StyleOf.flexIt,
+          StyleOf.flexIt,StyleOf.p15, 
           {
-            paddingHorizontal: 10,
-            paddingVertical: 15,
-            backgroundColor: "#662D91",
             alignItems: "center",
           },
+          bgColor
         ]}
       >
         <View>
