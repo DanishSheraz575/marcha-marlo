@@ -378,7 +378,8 @@ color:"#cccccc",
   dashboardBoxImg:{
     width:50,
     height:50,
-    marginBottom:'10%'
+    marginBottom:'8%',
+    marginTop:'3%',
   },
   dashboardBoxGreen: {
     borderColor:"#5ad170",

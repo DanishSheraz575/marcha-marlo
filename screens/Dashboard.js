@@ -6,6 +6,7 @@ import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 
+
 import Logo from "../components/Logo";
 
 export default function Dashboard({navigation}) {
@@ -26,6 +27,10 @@ export default function Dashboard({navigation}) {
             </Text>
             <Text style={[StyleOf.f12, StyleOf.textWhite]}>{global.uemail}</Text>
           </View>
+          
+
+
+
 
           <View style={[StyleOf.dashboardContainer]}>
             <View style={StyleOf.dashboardRow}>
@@ -34,20 +39,27 @@ export default function Dashboard({navigation}) {
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGreen]}
               >
                 <Image
+                        resizeMethod="scale" 
+                        resizeMode="center"
                   style={StyleOf.dashboardBoxImg}
-                  source={require("../assets/marcha_icon.png")}
+                  source={require("../assets/marcha_requests.png")}
                 />
-                <Text style={StyleOf.dashboardBoxLabel}>My products</Text>
+                {/* <Text style={StyleOf.dashboardBoxLabel}>My products</Text> 
+                <Text style={StyleOf.dashboardBoxLabel}>NUMBER OF MARCHA'S REQUESTS</Text>*/}
+                <Text style={StyleOf.dashboardBoxLabel}>MARCHA'S REQUESTS</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate('ExploreProducts')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxBlue]}
               >
                 <Image
+                        resizeMethod="auto" 
+                        resizeMode="center"
                   style={StyleOf.dashboardBoxImg}
-                  source={require("../assets/marcha_icon.png")}
+                  source={require("../assets/explore_products.png")}
                 />
-                <Text style={StyleOf.dashboardBoxLabel}>Explore Products</Text>
+                {/* <Text style={StyleOf.dashboardBoxLabel}>Explore Products</Text> */}
+                <Text style={StyleOf.dashboardBoxLabel}>EXPLORE ALL PRODUCTS</Text>
               </TouchableOpacity>
             </View>
 
@@ -57,11 +69,14 @@ export default function Dashboard({navigation}) {
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxYellow]}
               >
                 <Image
+                        resizeMethod="auto" 
+                        resizeMode="center"
                   style={StyleOf.dashboardBoxImg}
-                  source={require("../assets/marcha_icon.png")}
+                  source={require("../assets/marcha_done.png")}
                 />
                 <Text style={StyleOf.dashboardBoxLabel}>
-                  Marcha Done list
+                  {/* Marcha Done list */}
+                  NUMBER OF MARCHA'S DONE
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -69,11 +84,14 @@ export default function Dashboard({navigation}) {
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxRed]}
               >
                 <Image
+                        resizeMethod="auto" 
+                        resizeMode="center"
                   style={StyleOf.dashboardBoxImg}
-                  source={require("../assets/marcha_icon.png")}
+                  source={require("../assets/pending_requests.png")}
                 />
                 <Text style={StyleOf.dashboardBoxLabel}>
-                  Marcha Request received
+                  {/* Marcha Request received */}
+                  PENDING REQUESTS
                 </Text>
               </TouchableOpacity>
             </View>
@@ -85,22 +103,28 @@ export default function Dashboard({navigation}) {
               >
                 <Image
                   style={StyleOf.dashboardBoxImg}
-                  source={require("../assets/marcha_icon.png")}
+                  resizeMethod="auto" 
+                  resizeMode="center"
+                  source={require("../assets/live_chat.png")}
                 />
                 <Text style={StyleOf.dashboardBoxLabel}>
-                  Marcha Request sent
+                  {/* Marcha Request sent */}
+                  LIVE CHAT
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaDoneRequests')}
+                 onPress={() => navigation.navigate('MyProfile')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxMagenta]}
               >
                 <Image
+                  resizeMethod="auto" 
+                  resizeMode="center"
                   style={StyleOf.dashboardBoxImg}
-                  source={require("../assets/marcha_icon.png")}
+                  source={require("../assets/user_profile.png")}
                 />
                 <Text style={StyleOf.dashboardBoxLabel}>
-                  Marcha Done Requests
+                  {/* Marcha Done Requests */}
+                  USER PROFILE
                 </Text>
               </TouchableOpacity>
             </View>
