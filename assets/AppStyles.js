@@ -185,7 +185,7 @@ export default StyleSheet.create({
 
   labelLight:{
     color:"#9A9A9A",
-    marginBottom:10,
+    marginBottom:0,
   },
   labelDark:{
     color:"#000000",
@@ -273,6 +273,7 @@ color:"#919191",
 */
   containerInner: {
     flex: 1,
+    flexDirection: "column",
   },
   
   itemCenter: {

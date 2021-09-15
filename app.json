@@ -4,11 +4,11 @@
     "slug": "marcha-marlo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app_icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F1F1F1"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
