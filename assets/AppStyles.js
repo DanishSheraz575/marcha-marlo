@@ -108,6 +108,9 @@ export default StyleSheet.create({
 
 
     // MARGIN STYLE
+    m5: {
+      margin: 5,
+    },
     m10: {
       margin: 10,
     },
@@ -369,7 +372,12 @@ color:"#919191",
 
 
 
-
+  checkboxContainer: {
+    flexDirection: "row",
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
 
 
 
