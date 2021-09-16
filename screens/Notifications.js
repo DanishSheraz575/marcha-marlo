@@ -47,7 +47,7 @@ export default function Notifications({}) {
             {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
           ]}
           renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}p</Text>}
           keyExtractor={(item, index) => index}
         />
       </View>

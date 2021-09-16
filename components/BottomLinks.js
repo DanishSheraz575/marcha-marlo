@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     },
     myNavText:{
         fontSize:11,
-        color:'#C5C5C5'
+        color:'#C5C5C5',
+        textAlign:"center"
     },
     myNavTextActive:{
         fontSize:11,

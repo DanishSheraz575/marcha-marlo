@@ -90,7 +90,6 @@ export default function MyProfile({}) {
     data.append('gender', gender);
     data.append('contact_number', contact);
     data.append('city', city);
-    data.append('',);
     /*
     const asdata = {
       api_token: global.token,
