@@ -52,7 +52,7 @@ export default StyleSheet.create({
     color: "#662D91",
   },
   textWelcome: {
-    color: "#9852CC",
+    color: "#D49BFF",
   },
 
   // TEXT RELATED STYLES - size

@@ -42,49 +42,9 @@ global.ulast_login='09 Sep 2021';
 global.ustatus=1;
 global.borderDanger="#ffb2b2";
 
-
-/*
-import * as SecureStore from 'expo-secure-store';
-async function save(key, value) {
-  await SecureStore.setItemAsync(key, value);
-}
-const data = { api_token: '3154f2a10b4aecaa9ae8c10468cd8227' };
-fetch('https://www.marchamarlo.com/api/get_config', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-  .then(response => response.json())
-  .then((json) => {
-
-    //console.log(json);
-
-    if (json.status == 'Success') {
-      var data = json.result;
-      console.log(data);
-      save('product_image_url', data.product_images_base_url);
-      save('user_image_url', data.user_image_base_url);
-      save('chat_attachments_url', data.chat_attachments_base_url);
-    }
-
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-/*
-async function getValueFor(key) {
-  let result = await SecureStore.getItemAsync(key);
-  return result;
-  if (result) {
-    alert("🔐 Here's your value 🔐 \n" + result);
-  } else {
-    alert('No values stored under that key.');
-  }
-}
-//alert(getValueFor('chat_attachments_url'));
-*/
+global.product_images_base_url="";
+global.chat_attachments_base_url="";
+global.user_image_base_url="";
 
 
 

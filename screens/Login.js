@@ -19,9 +19,38 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("mhaneef05@gmail.com");
   const [password, setPassword] = useState("asd123");
 
+
+  const data = { api_token: global.token};
+
+  fetch(global.api + "get_config", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json.status == "Success") {
+        const config=json.result;
+
+        global.product_images_base_url=config.product_images_base_url;
+        global.chat_attachments_base_url=config.chat_attachments_base_url;
+        global.user_image_base_url=config.user_image_base_url;
+
+      } else {
+        alert(json.result);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
+
   function get_me_login() {
     
     const data = { api_token: global.token, email: email, password: password };
+
     fetch(global.api + "login", {
       method: "POST", // or 'PUT'
       headers: {
@@ -38,7 +67,7 @@ export default function Login({ navigation }) {
           global.uemail=uinfo.email;
 
           if(uinfo.image!=''){
-            global.uimage=uinfo.image;
+            global.uimage=global.user_image_base_url+uinfo.image;
           }
 
           global.ugender=uinfo.gender;
