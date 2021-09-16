@@ -20,6 +20,7 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("asd123");
 
   function get_me_login() {
+    
     const data = { api_token: global.token, email: email, password: password };
     fetch(global.api + "login", {
       method: "POST", // or 'PUT'
@@ -35,7 +36,11 @@ export default function Login({ navigation }) {
           global.uid=uinfo.user_id;
           global.ufull_name=uinfo.full_name;
           global.uemail=uinfo.email;
-          global.uimage=uinfo.image;
+
+          if(uinfo.image!=''){
+            global.uimage=uinfo.image;
+          }
+
           global.ugender=uinfo.gender;
           global.ucountry=uinfo.country;
           global.ucity=uinfo.city;

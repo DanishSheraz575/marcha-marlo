@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text,TextInput,TouchableOpacity,ScrollView,StyleSheet,Image } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
+import * as ImagePicker from 'expo-image-picker';
+
 import StyleOf from '../assets/AppStyles';
 import ScreenHeader from '../components/ScreenHeader';
 
@@ -73,6 +75,34 @@ export default function MyProfile({ }) {
   }
 
 
+  
+  let [profileImage, setProfileImage] = useState(global.uimage);
+  //let [image1, setImage1] = React.useState(null);
+
+function callingme(){
+  alert("calling me");
+}
+
+  let openImagePickerAsync = async () => {
+    alert("called");
+    //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+    let img={localUri: pickerResult.uri};
+    //let img={localUri: pickerResult.uri};
+    //console.log(img);
+    //setImage1(img);
+    setProfileImage(img.localUri);
+  };
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -83,14 +113,23 @@ export default function MyProfile({ }) {
         
       <ScrollView>
 
+      
+
       <View style={StyleOf.rowItemCenter}>
         <Text style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textBlack,{marginTop:10}]}>
           Edit Your Profile,
         </Text>
-
         <View style={styles.profileImageContainer}>
-          <Image style={styles.profileImage} source={global.uimage} />
-          <TouchableOpacity style={[{elevation:3}]} >
+          {/* <Image style={styles.profileImage} source={global.uimage} /> */}
+          {
+            profileImage==''
+            ?
+            <Image source={require('../assets/user_profile.png')} style={styles.profileImage} />
+            :
+            <Image source={{ uri: profileImage }} style={styles.profileImage} />
+          }
+          
+          <TouchableOpacity onPress={callingme} style={[{elevation:3}]} >
             <Image style={[StyleOf.editIcon,{marginTop:-36,marginLeft:100,zIndex:2}]} source={require('../assets/camera_icon.png')} />
           </TouchableOpacity>
         </View>
@@ -102,6 +141,8 @@ export default function MyProfile({ }) {
           onChangeText={(name) => setName(name)}
           onFocus={() => setNameError(false)}
         />
+
+
 
         <TextInput
           style={StyleOf.input}
@@ -188,6 +229,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     zIndex:1,
+
   },
   profileImageContainer:{
     marginTop:20,

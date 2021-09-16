@@ -25,12 +25,14 @@ import MarchaRequestReceived from './screens/MarchaRequestReceived';
 import MarchaRequestSent from './screens/MarchaRequestSent';
 import MarchaDoneRequests from './screens/MarchaDoneRequests';
 
+//let noImage = '../assets/user_profile.png';
 
 global.token = '3154f2a10b4aecaa9ae8c10468cd8227';
 global.api = 'https://www.marchamarlo.com/api/';
 global.uid=0;
 global.ufull_name='Marcha Marlo User';
 global.uemail='';
+//global.uimage=noImage;
 global.uimage='';
 global.ugender='';
 global.ucountry='';

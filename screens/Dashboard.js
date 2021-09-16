@@ -21,9 +21,11 @@ export default function Dashboard({navigation}) {
             <Text style={[StyleOf.f12, StyleOf.textWelcome]}>welcome,</Text>
             <Text style={[StyleOf.textLgMd, StyleOf.textWhite]}>
               {global.ufull_name} 
+{/*               
               <TouchableOpacity onPress={() => navigation.navigate('MyProfile')}>
                 <Image source={require('../assets/edit_icon.png')} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
             </Text>
             <Text style={[StyleOf.f12, StyleOf.textWhite]}>{global.uemail}</Text>
           </View>
