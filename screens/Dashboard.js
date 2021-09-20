@@ -51,7 +51,7 @@ export default function Dashboard({navigation}) {
                 <Text style={StyleOf.dashboardBoxLabel}>MARCHA'S REQUESTS</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ExploreProducts')}
+                onPress={() => navigation.navigate('MyProducts')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxBlue]}
               >
                 <Image
@@ -61,7 +61,7 @@ export default function Dashboard({navigation}) {
                   source={require("../assets/explore_products.png")}
                 />
                 {/* <Text style={StyleOf.dashboardBoxLabel}>Explore Products</Text> */}
-                <Text style={StyleOf.dashboardBoxLabel}>EXPLORE ALL PRODUCTS</Text>
+                <Text style={StyleOf.dashboardBoxLabel}>MY PRODUCTS</Text>
               </TouchableOpacity>
             </View>
 

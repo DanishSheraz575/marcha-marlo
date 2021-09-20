@@ -181,55 +181,78 @@ export default function AddProduct({}) {
 
   function upload_product() {
 
-
     var data = new FormData();
+
+    let category_id=0;
+    if(productCategory){
+      category_id=productCategory.category_id;
+    }
+
+    if(!productTitle){
+      alert("Please enter product title.");
+      return false;
+    }
+
+    if(!productCondition){
+      alert("Please select your product condition.");
+      return false;
+    }
+
+    if(!productCondition){
+      alert("Please select your product condition.");
+      return false;
+    }
+
+    if(!productDescription){
+      alert("Please enter detail about product.");
+      return false;
+    }
+
+    if(!productCustomCategory && category_id<1){
+      alert("Please select product category.");
+      return false;
+    }
+
+    if(!productLocation){
+      alert("Please select product location.");
+      return false;
+    }
+
+    if(!productValue){
+      alert("Please enter product price.");
+      return false;
+    }
+
+    if(!productImage1 && !productImage2 && !productImage3 && !productImage4 ){
+      alert("Please select product image.");
+      return false;
+    }
 
     data.append("api_token", global.token);
     data.append("user_id", global.uid);
     data.append("title", productTitle);
     data.append("condition", productCondition);
-    data.append("value", productValue);
     data.append("description", productDescription);
     data.append("location", productLocation);
-    //data.append("category_id", productCategory);
-    data.append("category_id", 3);
+    data.append("value", productValue);
+    data.append("category_id", category_id);
     data.append("category", productCustomCategory);
     data.append("images",'');
-//*alert('productCategory '+productCategory);
-//data.append('images', {productImage1});
 
-data.append('images[]', { uri: productImage1, name:'image1', type: 'image/jpg'});
-data.append('images[]', { uri: productImage2, name:'image2', type: 'image/jpg'});
-data.append('images[]', { uri: productImage3, name:'image3', type: 'image/jpg'});
-data.append('images[]', { uri: productImage4, name:'image4', type: 'image/jpg'});
-
-/*
-data.append("images[]", {productImage1,productImage2,productImage3,productImage4});
-data.append("images", [
-                            {
-                              'uri': productImage1,
-                              'name': "file",
-                              'type': "image/jpg",
-                            },
-                            {
-                              'uri': productImage2,
-                              'name': "file",
-                              'type': "image/jpg",
-                            },
-                            {
-                              'uri': productImage3,
-                              'name': "file",
-                              'type': "image/jpg",
-                            },
-                            {
-                              'uri': productImage4,
-                              'name': "file",
-                              'type': "image/jpg",
-                            }
-                          ]
-    );
-    */
-
+    if(productImage1){
+      data.append('images[]', { uri: productImage1, name:'image1', type: 'image/jpg'});
+    }
+    if(productImage2){
+      data.append('images[]', { uri: productImage2, name:'image2', type: 'image/jpg'});
+    }
+    if(productImage3){
+      data.append('images[]', { uri: productImage3, name:'image3', type: 'image/jpg'});  
+    }
+    if(productImage4){
+      data.append('images[]', { uri: productImage4, name:'image4', type: 'image/jpg'});
+    }
+    
+  
     fetch(global.api + "add_product", {
       method: "POST", // or 'PUT'
       headers: {
@@ -389,6 +412,7 @@ data.append("images", [
             <Text style={[StyleOf.labelDark]}>Product Price in PKR</Text>
             <TextInput 
               style={[StyleOf.addProductInput]} placeholder="Rs." 
+              keyboardType="numeric"
               onChangeText={(productValue) => setProductValue(productValue)}
             />
           </View>

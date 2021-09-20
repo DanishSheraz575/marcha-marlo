@@ -4,9 +4,14 @@ SIGNUP SCREEN:
 LOGIN SCREEN:
     1 - show loader when working at background
 
-PROFILE SCREEN:
-    1 - change profile image
-    2 - update profile values
+MY PRODUCTS:
+    1 - get values of selected checkboxes
+    2 - click on go for marcha button
+
+EXPLORE PRODUCTS:
+    1 - search input feild UI and function
+    2 -  filters UI & funcationality
+    
  
 
 
