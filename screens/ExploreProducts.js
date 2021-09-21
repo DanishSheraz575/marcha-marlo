@@ -12,7 +12,7 @@ import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
-import ExploreMyProductsCard from "../components/ExploreMyProductsCard";
+import ExploreMyProductsCard from "../components/MyProductsCard";
 
 const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
@@ -33,7 +33,8 @@ export default function ExploreProducts({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "success") {
+        var status = json.status.toLowerCase();
+        if (status == "success") {
           let productList = [];
 
           json.result.forEach((item) => {

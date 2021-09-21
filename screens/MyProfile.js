@@ -113,7 +113,8 @@ export default function MyProfile({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase();
+        if (status == "success") {
           global.ufull_name = name;
           global.ugender = gender;
           global.ucity = city;

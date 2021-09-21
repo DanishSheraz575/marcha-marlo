@@ -31,7 +31,8 @@ export default function Login({ navigation }) {
   })
     .then((response) => response.json())
     .then((json) => {
-      if (json.status == "Success") {
+      var status = json.status.toLowerCase();
+        if (status == "success") {
         const config=json.result;
 
         global.product_images_base_url=config.product_images_base_url;
@@ -60,7 +61,8 @@ export default function Login({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase();
+        if (status == "success") {
           const uinfo=json.result;
           global.uid=uinfo.user_id;
           global.ufull_name=uinfo.full_name;
@@ -97,7 +99,8 @@ export default function Login({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase();
+        if (status == "success") {
           alert(json.result);
           setModalVisible(false);
         } else {

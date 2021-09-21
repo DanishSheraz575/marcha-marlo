@@ -148,7 +148,8 @@ export default function AddProduct({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase() ;
+        if (status == "success") {
           setLocations(json.result);
         }
       })
@@ -169,7 +170,8 @@ export default function AddProduct({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase() ;
+        if (status == "success") {
           setCategories(json.result);
         }
       })
@@ -264,7 +266,8 @@ export default function AddProduct({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase() ;
+        if (status == "success") {
           alert(json.result);
         } else {
           alert(json.result);

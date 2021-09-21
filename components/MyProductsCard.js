@@ -11,14 +11,14 @@ import {
 
 import StyleOf from "../assets/AppStyles";
 
-import ScreenHeader from "../components/ScreenHeader";
-import BottomLinks from "../components/BottomLinks";
-import MarchaSpinner from "../components/MarchaSpinner";
+import ScreenHeader from "./ScreenHeader";
+import BottomLinks from "./BottomLinks";
+import MarchaSpinner from "./MarchaSpinner";
 
 const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
-export default function ExploreMyProductsCard({ data, checkbox = false }) {
+export default function MyProductsCard({ data }) {
   const [isChecked, setChecked] = useState(global.myProductSelectedId);
 
   //const [dataList, setDataList] = useState([]);

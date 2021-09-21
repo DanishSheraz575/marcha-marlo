@@ -84,10 +84,11 @@ export default function MyProducts({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase();
+        if (status == "success") {
           let myProductList=[];
 
-          json.products.forEach(item => {
+          json.result.forEach(item => {
 
             let images = item.images.split(",");
             let img=item.product_images_base_url+images[0];

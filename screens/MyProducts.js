@@ -6,7 +6,8 @@ import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
-import ExploreMyProductsCard from "../components/ExploreMyProductsCard";
+import MyProductsCard from "../components/MyProductsCard";
+import ProductsNotFound from "../components/ProductsNotFound";
 
 const numColumns = 2;
 
@@ -14,7 +15,7 @@ const WIDTH = Dimensions.get("window").width;
 
 export default function MyProducts({ navigation }) {
   const [myProductsState, setMyProductsState] = useState(0);
-  const [productId, setProductId] = useState(0);
+  //const [productId, setProductId] = useState(0);
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
@@ -29,10 +30,11 @@ export default function MyProducts({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json.status == "Success") {
+        const status = json.status.toLowerCase() ;
+        if (status == "success") {
           let myProductList = [];
 
-          json.products.forEach((item) => {
+          json.result.forEach((item) => {
             let images = item.images.split(",");
             let img = item.product_images_base_url + images[0];
             myProductList.push({
@@ -44,8 +46,6 @@ export default function MyProducts({ navigation }) {
             });
           });
           setDataList(myProductList);
-
-          //setDataList(json.products);
           setMyProductsState(2);
         } else {
           setMyProductsState(1);
@@ -57,7 +57,11 @@ export default function MyProducts({ navigation }) {
   }, []);
 
   function nowGoForMarcha() {
-    alert(global.myProductSelectedId);
+    if(global.myProductSelectedId<1){
+      alert("Please select product first by touch on prduct image.");
+    }else{
+      navigation.navigate('GoForMarcha');
+    }
   }
 
   return (
@@ -67,9 +71,7 @@ export default function MyProducts({ navigation }) {
         {(() => {
           if (myProductsState == 0) {
             return (
-              <View style={StyleOf.rowItemCenter}>
                 <MarchaSpinner size={70} />
-              </View>
             );
           }
           return null;
@@ -78,42 +80,8 @@ export default function MyProducts({ navigation }) {
         {(() => {
           if (myProductsState == 1) {
             return (
-              <View style={StyleOf.rowItemCenter}>
-                <Text
-                  style={{
-                    fontSize: 42,
-                    fontWeight: "bold",
-                    marginBottom: 30,
-                    textAlign: "center",
-                  }}
-                >
-                  AWW !!
-                </Text>
-                <Image source={require("../assets/oh.png")} />
-                <Text
-                  style={{
-                    fontSize: 26,
-                    fontWeight: "bold",
-                    marginVertical: 20,
-                    textAlign: "center",
-                  }}
-                >
-                  No products found
-                </Text>
-
-                <TouchableOpacity
-                  style={[
-                    StyleOf.btn,
-                    StyleOf.dropShadow,
-                    StyleOf.bgEminence,
-                    { marginTop: 40 },
-                  ]}
-                  onPress={() => navigation.navigate("AddProduct")}
-                >
-                  <Text style={StyleOf.btnLabel}>add product now!</Text>
-                </TouchableOpacity>
-              </View>
-            );
+              <ProductsNotFound btnType= "MyProductBtn" />
+            );            
           }
           return null;
         })()}
@@ -133,7 +101,7 @@ export default function MyProducts({ navigation }) {
                   Select product to start Marcha
                 </Text>
 
-                <ExploreMyProductsCard data={dataList} checkbox={true} />
+                <MyProductsCard data={dataList} />
 
                 <TouchableOpacity
                   onPress={nowGoForMarcha}

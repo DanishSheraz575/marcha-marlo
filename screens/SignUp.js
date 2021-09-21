@@ -63,7 +63,8 @@ export default function SignUp({ navigation }) {
       .then((response) => response.json())
       .then((json) => {
         alert(json.result);
-        if (json.status == "Success") {
+        var status = json.status.toLowerCase();
+        if (status == "success") {
           alert(json.result);
         } else {
           alert(json.result);
