@@ -9,6 +9,7 @@ import MarchaSpinner from "../components/MarchaSpinner";
 import ExploreMyProductsCard from "../components/ExploreMyProductsCard";
 
 const numColumns = 2;
+
 const WIDTH = Dimensions.get("window").width;
 
 export default function MyProducts({ navigation }) {
@@ -18,6 +19,7 @@ export default function MyProducts({ navigation }) {
 
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
+    global.myProductSelectedId =0;
     fetch(global.api + "my_products", {
       method: "POST", // or 'PUT'
       headers: {
@@ -55,7 +57,7 @@ export default function MyProducts({ navigation }) {
   }, []);
 
   function nowGoForMarcha() {
-    alert(productId);
+    alert(global.myProductSelectedId);
   }
 
   return (

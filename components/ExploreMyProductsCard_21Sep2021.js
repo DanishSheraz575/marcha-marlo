@@ -6,7 +6,7 @@ import {
   StyleSheet,
   FlatList,
   Dimensions,
-  TouchableOpacity,
+  CheckBox,
 } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
@@ -18,16 +18,13 @@ import MarchaSpinner from "../components/MarchaSpinner";
 const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
-export default function ExploreMyProductsCard({ data, checkbox = false }) {
-  const [isChecked, setChecked] = useState(global.myProductSelectedId);
+export default function ExploreMyProductsCard({ data, checkbox=false }) {
+
+    const [isChecked, setChecked] = useState(false);   
 
   //const [dataList, setDataList] = useState([]);
 
-  function selectProductToMarcha(id = 0) {
-    global.myProductSelectedId = id;
-    setChecked(id);
-  }
-
+  
   function formatData(dataList, numColumns) {
     const totalRows = Math.floor(dataList.length / numColumns);
     let totalLastRow = dataList.length - totalRows * numColumns;
@@ -44,27 +41,23 @@ export default function ExploreMyProductsCard({ data, checkbox = false }) {
     }
     return (
       <View style={Styles.productCard}>
-        <TouchableOpacity onPress={() => selectProductToMarcha(item.id)}>
-          {global.myProductSelectedId == item.id ? (
-            <View style={[Styles.productImageContainer,Styles.selectedProduct]}>
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={Styles.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          ) : (
-            <View style={[Styles.productImageContainer]}>
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={Styles.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          )}
-        </TouchableOpacity>
+        <View style={Styles.productImageContainer}>
+        {(() => {
+          if (checkbox) {
+            return (
+                <CheckBox 
+                //value={isChecked} 
+                testID="p"
+                onValueChange={setChecked}
+                style={Styles.checkbox}
+                />
+            );
+          }
+          return null;
+        })()}
+          <Image style={Styles.productImage} source={{ uri: item.image }} />
+          {/* <Image  style={Styles.productImage} source={{uri:'https://www.marchamarlo.com/product_images/163183568819.jpg'}} /> */}
+        </View>
         <Text style={Styles.productPrice}>Rs. {item.value}</Text>
         <Text style={Styles.productTitle}>{item.title}</Text>
         <Text style={Styles.productLocation}>
@@ -102,27 +95,24 @@ const Styles = StyleSheet.create({
   },
   productImageContainer: {
     backgroundColor: "#ffffff",
-    borderWidth: 2,
-    borderColor: "#ffffff",
     justifyContent: "center",
-    padding: 20,
+    padding: 4,
     borderRadius: 10,
     marginBottom: 6,
     alignItems: "center",
     justifyContent: "center",
   },
-  selectedProduct: {
-    borderColor: "red",
-  },
-  checkbox: {
-    alignSelf: "flex-start",
-    position: "relative",
-    elevation: 4,
+  checkbox:{
+    alignSelf:'flex-start',
+    position:'relative',
+    elevation: 4
   },
   productImage: {
     width: 130,
     height: 130,
-    alignSelf: "center",
+    position:'relative',
+    marginBottom:10,
+    marginTop:-8,
   },
   productPrice: {
     color: "#000000",
