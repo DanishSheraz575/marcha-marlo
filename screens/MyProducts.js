@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -19,6 +13,7 @@ const WIDTH = Dimensions.get("window").width;
 
 export default function MyProducts({ navigation }) {
   const [myProductsState, setMyProductsState] = useState(0);
+  const [productId, setProductId] = useState(0);
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
@@ -58,6 +53,10 @@ export default function MyProducts({ navigation }) {
         console.error("Error:", error);
       });
   }, []);
+
+  function nowGoForMarcha() {
+    alert(productId);
+  }
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -120,7 +119,7 @@ export default function MyProducts({ navigation }) {
         {(() => {
           if (myProductsState == 2) {
             return (
-              <View  style={[{marginBottom:60}]}>
+              <View style={[{ marginBottom: 60 }]}>
                 <Text
                   style={{
                     fontSize: 20,
@@ -134,7 +133,10 @@ export default function MyProducts({ navigation }) {
 
                 <ExploreMyProductsCard data={dataList} checkbox={true} />
 
-                <TouchableOpacity style={[{alignSelf:'center'}]}>
+                <TouchableOpacity
+                  onPress={nowGoForMarcha}
+                  style={[{ alignSelf: "center" }]}
+                >
                   <Image source={require("../assets/go_for_marcha_btn.png")} />
                 </TouchableOpacity>
               </View>

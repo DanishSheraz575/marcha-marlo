@@ -16,6 +16,7 @@ import MyProfile from './screens/MyProfile';
 import Dashboard from './screens/Dashboard';
 import ExploreProducts from './screens/ExploreProducts';
 import MyProducts from './screens/MyProducts';
+import GoForMarcha from './screens/GoForMarcha';
 import Chats from './screens/Chats';
 import AddProduct from './screens/AddProduct';
 import Notifications from './screens/Notifications';
@@ -143,6 +144,11 @@ function App() {
 <Stack.Screen
           name="MarchaDoneRequests"
           component={MarchaDoneRequests}
+          options={{ headerShown: false }}
+        />
+<Stack.Screen
+          name="GoForMarcha"
+          component={GoForMarcha}
           options={{ headerShown: false }}
         />
 

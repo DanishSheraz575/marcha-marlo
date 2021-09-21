@@ -24,6 +24,7 @@ export default function ExploreMyProductsCard({ data, checkbox=false }) {
 
   //const [dataList, setDataList] = useState([]);
 
+  
   function formatData(dataList, numColumns) {
     const totalRows = Math.floor(dataList.length / numColumns);
     let totalLastRow = dataList.length - totalRows * numColumns;
