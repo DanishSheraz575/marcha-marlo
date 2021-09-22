@@ -6,6 +6,7 @@ import PagerView from "react-native-pager-view";
 import ScreenHeader from "../components/ScreenHeader";
 import MarchaSpinner from "../components/MarchaSpinner";
 import ProductsNotFound from "../components/ProductsNotFound";
+import ProductPager from "../components/ProductPager";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -60,7 +61,7 @@ export default function GoForMarcha({ navigation }) {
   return (
     <View style={StyleOf.fullContainer}>
       {/* <ScreenHeader title="Available Products For Marcha" /> */}
-      <View style={[StyleOf.containerInner, { paddingBottom: 80 }]}>
+      <View style={[StyleOf.containerInner]}>
         {(() => {
           if (productsState == 0) {
             return (
@@ -82,25 +83,7 @@ export default function GoForMarcha({ navigation }) {
         {(() => {
           if (productsState == 2) {
             return (
-              <View style={{ flex: 1 }}>
-                <PagerView style={styles.viewPager} initialPage={0}>
-                  
-                  <View style={styles.page} key="1">
-                    <Text>First page {pid}</Text>
-                    <Text>Swipe ➡️</Text>
-                  </View>
-                  
-                  <View style={styles.page} key="2">
-                    <Text>Second page {pid}</Text>
-                  </View>
-                  
-                  <View style={styles.page} key="3">
-                    <Text>Third page {pid}</Text>
-                  </View>
-
-
-                </PagerView>
-              </View>
+              <ProductPager data={dataList} />
             );
           }
           return null;
@@ -109,13 +92,3 @@ export default function GoForMarcha({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  viewPager: {
-    flex: 1,
-  },
-  page: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
