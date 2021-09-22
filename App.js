@@ -25,6 +25,7 @@ import MarchaDone from './screens/MarchaDone';
 import MarchaRequestReceived from './screens/MarchaRequestReceived';
 import MarchaRequestSent from './screens/MarchaRequestSent';
 import MarchaDoneRequests from './screens/MarchaDoneRequests';
+import MarchaPendingRequests from './screens/MarchaPendingRequests';
 
 //let noImage = '../assets/user_profile.png';
 
@@ -149,6 +150,11 @@ function App() {
 <Stack.Screen
           name="GoForMarcha"
           component={GoForMarcha}
+          options={{ headerShown: false }}
+        />
+<Stack.Screen
+          name="MarchaPendingRequests"
+          component={MarchaPendingRequests}
           options={{ headerShown: false }}
         />
 

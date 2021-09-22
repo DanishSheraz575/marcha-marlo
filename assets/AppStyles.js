@@ -113,52 +113,48 @@ export default StyleSheet.create({
     paddingBottom: 10,
   },
 
-
-    // MARGIN STYLE
-    m5: {
-      margin: 5,
-    },
-    m10: {
-      margin: 10,
-    },
-    m20: {
-      margin: 20,
-    },
-    m30: {
-      margin: 30,
-    },
-    m40: {
-      margin: 40,
-    },
-    mx20: {
-      marginLeft: 20,
-      marginRight: 20,
-    },
-    my10: {
-      marginTop: 10,
-      marginBottom: 10,
-    },
-    mt10: {
-      marginTop: 10,
-    },
-    mb10: {
-      marginBottom: 10,
-    },
-    mb20:{
-      marginBottom: 20,
-    },
-    mb30:{
-      marginBottom: 30,
-    },
-    mb40:{
-      marginBottom: 40,
-    },
-
-  // ICON STYLES
-  editIcon:{
-
+  // MARGIN STYLE
+  m5: {
+    margin: 5,
+  },
+  m10: {
+    margin: 10,
+  },
+  m20: {
+    margin: 20,
+  },
+  m30: {
+    margin: 30,
+  },
+  m40: {
+    margin: 40,
+  },
+  mx20: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  my10: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  mt10: {
+    marginTop: 10,
+  },
+  mb10: {
+    marginBottom: 10,
+  },
+  mb20: {
+    marginBottom: 20,
+  },
+  mb30: {
+    marginBottom: 30,
+  },
+  mb40: {
+    marginBottom: 40,
   },
 
+  // ICON STYLES
+  editIcon: {},
 
   // BOX SHADOW STYLES - size
   dropShadow: {
@@ -179,7 +175,7 @@ export default StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     paddingVertical: 10,
-    paddingHorizontal:20,
+    paddingHorizontal: 20,
     borderRadius: 50,
     lineHeight: 25,
     backgroundColor: "#FFFFFF",
@@ -192,49 +188,47 @@ export default StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
-    textAlign:'left'
+    textAlign: "left",
     // textTransform: "uppercase",
   },
 
-
-
-  labelLight:{
-    color:"#9A9A9A",
-    marginBottom:0,
+  labelLight: {
+    color: "#9A9A9A",
+    marginBottom: 0,
   },
-  labelDark:{
-    color:"#000000",
-    fontSize:18,
+  labelDark: {
+    color: "#000000",
+    fontSize: 18,
   },
-  addProductInput:{
-    lineHeight:45,
-    height:45,
-    width:"100%",
-    color:"#000000",
-    paddingHorizontal:5,
-    borderBottomWidth:1,
+  addProductInput: {
+    lineHeight: 45,
+    height: 45,
+    width: "100%",
+    color: "#000000",
+    paddingHorizontal: 5,
+    borderBottomWidth: 1,
   },
-  smallText:{
-    fontSize:12,
-    color:"#9A9A9A",
-    marginTop:6,
+  smallText: {
+    fontSize: 12,
+    color: "#9A9A9A",
+    marginTop: 6,
   },
   textArea: {
     height: 150,
     justifyContent: "flex-start",
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
     //borderColor:"#B1B1B1",
     //borderWidth:1,
-    marginTop:10,
-    padding:10,
+    marginTop: 10,
+    padding: 10,
     backgroundColor: "#E9E9E9",
     borderColor: "#F3F3F3",
-    color:"#000000",
-    borderBottomWidth:1,
-    borderBottomColor:"#000000",
+    color: "#000000",
+    borderBottomWidth: 1,
+    borderBottomColor: "#000000",
   },
 
-  productTypeButton:{
+  productTypeButton: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -242,32 +236,31 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.44,
     shadowRadius: 10.32,
-    paddingHorizontal:30,
-    paddingVertical:10,
-    width:"40%",
-    backgroundColor:"#ffffff",
-    margin:20,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    width: "40%",
+    backgroundColor: "#ffffff",
+    margin: 20,
     //height:45
   },
 
-  productTypeButtonLabel:{
-fontSize:16,
-textAlign:"center",
-//color:"#919191",
-color:"#cccccc",
+  productTypeButtonLabel: {
+    fontSize: 16,
+    textAlign: "center",
+    //color:"#919191",
+    color: "#cccccc",
   },
 
-  productTypeButtonLabelActive:{
-    fontSize:16,
-    textAlign:"center",
-    color:"#000000",
-    borderColor:"#000000",
-      },
-    
+  productTypeButtonLabelActive: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#000000",
+    borderColor: "#000000",
+  },
 
   // BUTTON STYLES - size
   btn: {
-    width: '85%',
+    width: "85%",
     alignItems: "center",
     padding: 15,
     borderRadius: 50,
@@ -312,21 +305,21 @@ color:"#cccccc",
     flex: 1,
     flexDirection: "column",
   },
-  
+
   itemCenter: {
     alignItems: "center",
   },
 
-  iconBox:{
-    width:30,
-    height:30,
+  iconBox: {
+    width: 30,
+    height: 30,
     justifyContent: "center",
   },
 
   hCenter: {
     //alignItems: "center",
-    justifyContent: 'center',
-    flexDirection:'row'
+    justifyContent: "center",
+    flexDirection: "row",
   },
   vCenter: {
     justifyContent: "center",
@@ -348,7 +341,7 @@ color:"#cccccc",
     flex: 1,
     alignItems: "center",
     padding: 30,
-    paddingTop:35,
+    paddingTop: 35,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     backgroundColor: "#f9f1ff",
@@ -362,52 +355,49 @@ color:"#cccccc",
   dashboardBox: {
     flex: 0.5,
     margin: 5,
-    padding:10,
+    padding: 10,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth:6,
-    borderRadius:3,    
+    borderWidth: 6,
+    borderRadius: 3,
   },
-  dashboardBoxLabel:{
+  dashboardBoxLabel: {
     fontSize: 11,
-    color:"#ffffff",
-    textAlign:"center",
-    fontWeight:"bold",
+    color: "#ffffff",
+    textAlign: "center",
+    fontWeight: "bold",
     textTransform: "uppercase",
   },
-  dashboardBoxImg:{
-    width:50,
-    height:50,
-    marginBottom:'8%',
-    marginTop:'3%',
+  dashboardBoxImg: {
+    width: 50,
+    height: 50,
+    marginBottom: "8%",
+    marginTop: "3%",
   },
   dashboardBoxGreen: {
-    borderColor:"#5ad170",
+    borderColor: "#5ad170",
     backgroundColor: "#4cbb60",
   },
   dashboardBoxBlue: {
-    borderColor:"#1f74be",
+    borderColor: "#1f74be",
     backgroundColor: "#1963a3",
   },
   dashboardBoxYellow: {
-    borderColor:"#f8c234",
+    borderColor: "#f8c234",
     backgroundColor: "#f3b101",
   },
   dashboardBoxRed: {
-    borderColor:"#f86074",
+    borderColor: "#f86074",
     backgroundColor: "#fa3b54",
   },
   dashboardBoxGray: {
-    borderColor:"#bbbbbb",
+    borderColor: "#bbbbbb",
     backgroundColor: "#848484",
   },
   dashboardBoxMagenta: {
-    borderColor:"#bd85e7",
+    borderColor: "#bd85e7",
     backgroundColor: "#662d91",
   },
-
-
-
 
   checkboxContainer: {
     flexDirection: "row",
@@ -415,9 +405,6 @@ color:"#cccccc",
   checkbox: {
     alignSelf: "center",
   },
-
-
-
 
   moveToBottom: {
     bottom: 0,
