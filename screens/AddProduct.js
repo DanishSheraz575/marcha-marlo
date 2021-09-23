@@ -384,7 +384,7 @@ export default function AddProduct({}) {
               <CheckBox
                 value={productCustomCategory}
                 onValueChange={setProductCustomCategory}
-                style={StyleOf.checkbox}
+                style={StyleOf.selfCenter}
               />
               <Text style={StyleOf.m5}>Do you like React Native?</Text>
             </View>

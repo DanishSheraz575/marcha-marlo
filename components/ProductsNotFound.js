@@ -50,7 +50,7 @@ export default function ProductsNotFound({ btnType }) {
       })()}
 
       {(() => {
-        if (btnType == "GoForMarchaBtn") {
+        if (btnType == "GoBackToMyProducts") {
           return (
             <TouchableOpacity
               style={[

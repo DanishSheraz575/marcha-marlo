@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Image,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
 } from "react-native";
@@ -13,7 +12,7 @@ import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
 import MarchaSpinner from "../components/MarchaSpinner";
-import ProductsNotFound from "../components/ProductsNotFound";
+import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
 
 export default function MarchaPendingRequests({}) {
@@ -61,9 +60,12 @@ export default function MarchaPendingRequests({}) {
       });
   }, []);
 
-  function cancelMarchaRequest(id){
-
-    const data = { api_token: global.token, user_id: global.uid, request_id:id };
+  function cancelMarchaRequest(id) {
+    const data = {
+      api_token: global.token,
+      user_id: global.uid,
+      request_id: id,
+    };
     fetch(global.api + "cancel_marcha", {
       method: "POST", // or 'PUT'
       headers: {
@@ -84,103 +86,63 @@ export default function MarchaPendingRequests({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
-
   }
 
   function renderRequestBox({ item }) {
     return (
-      <View style={{ margin: 20 }}>
-        <View
-          style={{
-            marginHorizontal: 10,
-            paddingVertical: 6,
-            paddingHorizontal: 10,
-            backgroundColor: "#EBEBEB",
-            borderTopEndRadius: 10,
-            borderTopStartRadius: 10,
-          }}
-        >
-          <Text style={{ alignSelf: "center" }}>
-            <Text style={{ color: "#818181" }}>Request sent to </Text>
-            <Text
-              style={{ color: "#000000", fontWeight: "bold", fontSize: 22 }}
-            >
+      <View key={item.marcha_request_id}  style={StyleOf.requestBox}>
+        <View style={StyleOf.rbHeader}>
+          <Text style={StyleOf.selfCenter}>
+            <Text style={StyleOf.textGray}>Request sent to </Text>
+            <Text style={StyleOf.rbHeaderBold}>
               {item.requested_username}
             </Text>
           </Text>
         </View>
 
-        <View
-          style={{ borderRadius: 15, backgroundColor: "#ffffff", padding: 20 }}
-        >
-          <View style={styles.rowContainer}>
-            <View style={styles.colSmall}>
+        <View style={StyleOf.rbBody}>
+          <View style={StyleOf.colContainerRow}>
+            <View style={[StyleOf.col,StyleOf.col4]}>
               <Image
-                style={{
-                  height: 100,
-                  width: "100%",
-                  borderColor: "#EFEFEF",
-                  borderWidth: 2,
-                  marginBottom: 10,
-                }}
+                style={StyleOf.rbBodyImg}
                 source={{ uri: item.requested_product_image }}
               />
-              <Text
-                style={{
-                  padding: 5,
-                  fontSize: 9,
-                  backgroundColor: "#EBEBEB",
-                  alignSelf: "center",
-                }}
-              >
+              <Text style={StyleOf.rbBodyDate}>
                 <Image source={require("../assets/clock-icon.png")} />
                 {item.marcha_date}
               </Text>
             </View>
 
-            <View style={styles.colLarge}>
-              <Text style={{ fontSize: 20, marginBottom: 5 }}>
+            <View style={[StyleOf.col,StyleOf.col6]}>
+              <Text style={[StyleOf.rbBodyProductTitle]}>
                 {item.requested_product_title}
               </Text>
-              <Text
-                style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}
-              >
+              <Text style={StyleOf.rbBodyProductPrice}>
                 Marcha Price: {item.requested_product_value}
               </Text>
-              <View style={[styles.rowContainer, { marginBottom: 5 }]}>
-                <View style={styles.colHalf}>
+              <View style={[StyleOf.colContainerRow,StyleOf.mb5]}>
+                <View style={StyleOf.col5}>
                   <Text>
                     <Image source={require("../assets/location-icon2.png")} />{" "}
                     {item.requested_product_location}
                   </Text>
                 </View>
-                <View style={styles.colHalf}>
+                <View style={StyleOf.col5}>
                   <Text>Condition: {item.requested_product_condition}</Text>
                 </View>
               </View>
-              <View
-                style={{
-                  padding: 10,
-                  backgroundColor: "#EBEBEB",
-                  marginBottom: 10,
-                  borderRadius: 6,
-                }}
-              >
+              <View style={StyleOf.rbBodyMarchaAgainstBox}>
                 <Text>Marcha against:</Text>
-                <Text style={{ fontWeight: "bold" }}>
+                <Text style={StyleOf.fwBold}>
                   {item.marcha_against_product_title}
                 </Text>
               </View>
 
               <TouchableOpacity
                 onPress={() => cancelMarchaRequest(item.marcha_request_id)}
-                style={{
-                  padding: 10,
-                  backgroundColor: "#C5C5C5",
-                  borderRadius: 6,
-                }}
+                style={StyleOf.rbBodyBtnLight}
               >
-                <Text style={{ alignSelf: "center", color: "#ffffff" }}>
+                <Text style={[StyleOf.selfCenter, StyleOf.textWhite]}>
                   <Image source={require("../assets/cross-icon.png")} />
                   CANCEL
                 </Text>
@@ -206,14 +168,14 @@ export default function MarchaPendingRequests({}) {
 
         {(() => {
           if (myProductsState == 1) {
-            return <ProductsNotFound btnType="BackToDashboard" />;
+            return <RequestsNotFound btnType="BackToDashboard" />;
           }
           return null;
         })()}
 
         {(() => {
           if (myProductsState == 2) {
-            return <FlatList data={dataList} renderItem={renderRequestBox} />;
+            return <FlatList data={dataList} renderItem={renderRequestBox} keyExtractor={(item, index) => index.toString()} />;
           }
           return null;
         })()}
@@ -223,23 +185,3 @@ export default function MarchaPendingRequests({}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  rowContainer: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start", // if you want to fill rows left to right
-  },
-  colSmall: {
-    width: "39%", // is 50% of container width
-    marginRight: "1%",
-  },
-  colLarge: {
-    width: "59%", // is 50% of container width
-    marginLeft: "1%",
-  },
-  colHalf: {
-    width: "50%", // is 50% of container width
-  },
-});

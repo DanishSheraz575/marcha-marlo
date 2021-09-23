@@ -84,6 +84,7 @@ export default function MyProductsCard({ data }) {
       data={formatData(data, numColumns)}
       renderItem={renderProductCard}
       // keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id}
       numColumns={numColumns}
     />
   );

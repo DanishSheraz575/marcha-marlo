@@ -45,6 +45,9 @@ export default StyleSheet.create({
   textCodGray: {
     color: "#1A1A1A",
   },
+  textGray: {
+    color: "#818181",
+  },
   textRadicalRed: {
     color: "#FF3D57",
   },
@@ -139,6 +142,9 @@ export default StyleSheet.create({
   },
   mt10: {
     marginTop: 10,
+  },
+  mb5: {
+    marginBottom: 5,
   },
   mb10: {
     marginBottom: 10,
@@ -402,7 +408,7 @@ export default StyleSheet.create({
   checkboxContainer: {
     flexDirection: "row",
   },
-  checkbox: {
+  selfCenter: {
     alignSelf: "center",
   },
 
@@ -458,5 +464,84 @@ export default StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+
+  // GRID SYSTEM - starting
+  colContainerRow: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  col:{
+    padding:"1%"
+  },
+  col4:{
+    width: "40%"
+  },
+  col5:{
+    width: "50%"
+  },
+  col6:{
+    width: "60%"
+  },
+  // GRID SYSTEM - ending
+
+  // REQUEST BOX STYLES - starting
+  requestBox: {
+    margin: 20,
+  },
+  rbHeader: {
+    marginHorizontal: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    backgroundColor: "#EBEBEB",
+    borderTopEndRadius: 10,
+    borderTopStartRadius: 10,
+  },
+  rbHeaderBold: {
+    color: "#000000",
+    fontWeight: "bold",
+    fontSize: 22,
+  },
+  rbBody: {
+    borderRadius: 15,
+    backgroundColor: "#ffffff",
+    padding: 20,
+  },
+  rbBodyImg: {
+    height: 100,
+    width: "100%",
+    borderColor: "#EFEFEF",
+    borderWidth: 2,
+    marginBottom: 10,
+  },
+  rbBodyDate: {
+    padding: 5,
+    fontSize: 9,
+    backgroundColor: "#EBEBEB",
+    alignSelf: "center",
+  },
+  rbBodyProductTitle: {
+    fontSize: 18,
+    fontWeight:"bold",
+    lineHeight:18,
+  },
+  rbBodyProductPrice: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  rbBodyMarchaAgainstBox: {
+    padding: 10,
+    backgroundColor: "#EBEBEB",
+    marginBottom: 10,
+    borderRadius: 6,
+  },
+  rbBodyBtnLight: {
+    padding: 10,
+    backgroundColor: "#C5C5C5",
+    borderRadius: 6,
+  },
+  // REQUEST BOX STYLES - ending
 });
 //export default AppStyles;

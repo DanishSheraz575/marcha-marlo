@@ -74,7 +74,7 @@ export default function GoForMarcha({ navigation }) {
         {(() => {
           if (productsState == 1) {
             return (
-              <ProductsNotFound btnType="GoForMarchaBtn" />            
+              <ProductsNotFound btnType="GoBackToMyProducts" />            
             );
           }
           return null;

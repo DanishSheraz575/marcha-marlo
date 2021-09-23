@@ -18,8 +18,7 @@ import PagerView from "react-native-pager-view";
 
 import StyleOf from "../assets/AppStyles";
 
-export default function ProductPager({data }) {
-
+export default function ProductPager({ data }) {
   const navigation = useNavigation();
   //const [detailsOf, setDetailsOf] = useState(0);
 
@@ -29,9 +28,13 @@ export default function ProductPager({data }) {
     setProductsDetailState(id);
   }
 
-  function marchaMarnaHy(id){
-
-    const data = { api_token: global.token, user_id: global.uid, product_ids:global.myProductSelectedId, marcha_product_id:id };
+  function marchaMarnaHy(id) {
+    const data = {
+      api_token: global.token,
+      user_id: global.uid,
+      product_ids: global.myProductSelectedId,
+      marcha_product_id: id,
+    };
 
     fetch(global.api + "send_marcha_request", {
       method: "POST", // or 'PUT'
@@ -42,10 +45,10 @@ export default function ProductPager({data }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        const status = json.status.toLowerCase() ;
+        const status = json.status.toLowerCase();
         if (status == "success") {
           alert(json.result);
-          navigation.navigate('MarchaPendingRequests')
+          navigation.navigate("MarchaPendingRequests");
         } else {
           alert(json.result);
         }
@@ -66,7 +69,7 @@ export default function ProductPager({data }) {
             source={{
               uri: p.images_base_url + p.images,
             }}
-            style={[styles.image]}
+            style={[styles.bgImage]}
           >
             <View>
               <LinearGradient
@@ -77,12 +80,12 @@ export default function ProductPager({data }) {
               >
                 <View style={{ flex: 1, bottom: 0, width: "100%" }}>
                   <Text
-                    style={[StyleOf.mb10, StyleOf.textWhite, styles.pTitle]}
+                    style={[StyleOf.textWhite, styles.pTitle]}
                   >
                     {p.title}
                   </Text>
                   <Text
-                    style={[StyleOf.mb10, StyleOf.textWhite, { fontSize: 16 }]}
+                    style={[StyleOf.textWhite, styles.font16]}
                   >
                     Condition: {p.condition}
                     <Image
@@ -91,37 +94,25 @@ export default function ProductPager({data }) {
                     {p.location}
                   </Text>
                   <Text
-                    style={[
-                      StyleOf.mb10,
-                      StyleOf.textWhite,
-                      { fontSize: 20, fontWeight: "bold" },
-                    ]}
+                    style={[StyleOf.textWhite, styles.pPrice ]}
                   >
                     Marcha Price: Rs. {p.value}
                   </Text>
 
                   <TouchableOpacity
-                    style={{ backgroundColor: "green" }}
+                    style={[
+                      StyleOf.btn,
+                      StyleOf.bgRadicalRed,
+                      {
+                        position: "absolute",
+                        bottom: 0,
+                        paddingTop: 10,
+                        alignSelf: "center",
+                      },
+                    ]}
                     onPress={() => showDetailOf(p.product_id)}
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      paddingTop: 10,
-                    }}
                   >
-                    <Text
-                      style={[
-                        StyleOf.textRadicalRed,
-                        {
-                          fontSize: 14,
-                          textAlign: "center",
-                        },
-                      ]}
-                    >
-                      VIEW DETAILS
-                    </Text>
+                    <Text style={StyleOf.btnLabel}> VIEW DETAILS</Text>
                   </TouchableOpacity>
                 </View>
               </LinearGradient>
@@ -132,13 +123,12 @@ export default function ProductPager({data }) {
             if (productsDetailState == p.product_id) {
               return (
                 <View style={styles.detailsContainer}>
-
                   <TouchableOpacity
-                    style={{padding:15 }}
+                    style={{ padding: 15 }}
                     onPress={() => showDetailOf(0)}
                   >
                     <Image
-                      style={{alignSelf:"center"}}
+                      style={{ alignSelf: "center" }}
                       source={require("../assets/close_bars.png")}
                     />
                   </TouchableOpacity>
@@ -146,51 +136,34 @@ export default function ProductPager({data }) {
                   <Text style={[styles.detailsText, styles.pTitle]}>
                     {p.title}
                   </Text>
-                  <Text style={[styles.detailsText, { fontSize: 16 }]}>
+                  <Text style={[styles.detailsText, styles.font16]}>
                     Condition: {p.condition}
                     <Image
                       source={require("../assets/location-icon2-back.png")}
                     />
                     {p.location}
                   </Text>
-                  <Text
-                    style={[
-                      styles.detailsText,
-                      { fontSize: 20, fontWeight: "bold" },
-                    ]}
-                  >
+                  <Text style={[styles.detailsText, styles.pPrice]}>
                     Marcha Price: Rs. {p.value}
                   </Text>
-                  <Text
-                    style={[
-                      styles.detailsText,
-                      { fontSize: 20, fontWeight: "bold" },
-                    ]}
-                  >
+                  <Text style={[styles.detailsText, styles.pPrice]}>
                     Description
                   </Text>
                   <ScrollView>
                     <Text>{p.description}</Text>
                   </ScrollView>
 
-                  <View
-                    style={{
-                      fontSize: 20,
-                      textAlign: "center",
-                      paddingVertical: 10,
-                    }}
-                  >
-                    <TouchableOpacity
+                  <TouchableOpacity
                       style={[
                         StyleOf.btn,
                         StyleOf.bgEminence,
                         { alignSelf: "center" },
                       ]}
                       onPress={() => marchaMarnaHy(p.product_id)}
-                    >
+                  >
                       <Text style={StyleOf.btnLabel}>marcha marna hai?</Text>
-                    </TouchableOpacity>
-                  </View>
+                  </TouchableOpacity>
+                  
                 </View>
               );
             }
@@ -206,13 +179,12 @@ const styles = StyleSheet.create({
   viewPager: {
     flex: 1,
   },
-  image: {
+  bgImage: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "flex-end",
     width: "100%",
     height: "100%",
-    //backgroundColor:"blue"
   },
   page: {
     flex: 1,
@@ -232,9 +204,17 @@ const styles = StyleSheet.create({
 
   pTitle: {
     fontSize: 26,
-    lineHeight: 30,
+    lineHeight: 28,
   },
 
+  font16: {
+    fontSize: 16,
+  },
+
+  pPrice: {
+    fontSize: 20, 
+    fontWeight: "bold"
+  },
   detailsContainer: {
     flex: 1,
     //    alignItems: "center",
