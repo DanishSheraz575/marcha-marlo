@@ -82,7 +82,7 @@ export default function Dashboard({navigation}) {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaRequestReceived')}
+                onPress={() => navigation.navigate('MarchaPendingRequests')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxRed]}
               >
                 <Image

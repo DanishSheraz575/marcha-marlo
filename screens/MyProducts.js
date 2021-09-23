@@ -4,6 +4,7 @@ import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
+import ScreenSubTitleHeader from '../components/ScreenSubTitleHeader';
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
 import MyProductsCard from "../components/MyProductsCard";
@@ -90,16 +91,8 @@ export default function MyProducts({ navigation }) {
           if (myProductsState == 2) {
             return (
               <View style={[{ marginBottom: 60 }]}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textAlign: "center",
-                    padding: 10,
-                    backgroundColor: "#ffffff",
-                  }}
-                >
-                  Select product to start Marcha
-                </Text>
+
+                <ScreenSubTitleHeader title="Select product to start Marcha" />
 
                 <MyProductsCard data={dataList} />
 

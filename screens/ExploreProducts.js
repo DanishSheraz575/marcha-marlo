@@ -12,6 +12,7 @@ import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
+import ProductsNotFound from "../components/ProductsNotFound";
 import ExploreMyProductsCard from "../components/MyProductsCard";
 
 const numColumns = 2;
@@ -77,29 +78,7 @@ export default function ExploreProducts({ navigation }) {
         {(() => {
           if (productsState == 1) {
             return (
-              <View style={StyleOf.rowItemCenter}>
-                <Text
-                  style={{
-                    fontSize: 42,
-                    fontWeight: "bold",
-                    marginBottom: 30,
-                    textAlign: "center",
-                  }}
-                >
-                  AWW !!
-                </Text>
-                <Image source={require("../assets/oh.png")} />
-                <Text
-                  style={{
-                    fontSize: 26,
-                    fontWeight: "bold",
-                    marginVertical: 20,
-                    textAlign: "center",
-                  }}
-                >
-                  No products found
-                </Text>
-              </View>
+              <ProductsNotFound btnType= "BackToDashboard" />
             );
           }
           return null;

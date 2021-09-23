@@ -1,12 +1,12 @@
 //import * as React from "react";
 import React, { useEffect, useState } from "react";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
-export default function ProductsNotFound({btnType}) {
-  const navigation = useNavigation(); 
+export default function ProductsNotFound({ btnType }) {
+  const navigation = useNavigation();
   return (
     <View style={StyleOf.rowItemCenter}>
       <Text
@@ -49,8 +49,7 @@ export default function ProductsNotFound({btnType}) {
         }
       })()}
 
-
-{(() => {
+      {(() => {
         if (btnType == "GoForMarchaBtn") {
           return (
             <TouchableOpacity
@@ -63,6 +62,24 @@ export default function ProductsNotFound({btnType}) {
               onPress={() => navigation.navigate("MyProducts")}
             >
               <Text style={StyleOf.btnLabel}>Go Back To My Product List</Text>
+            </TouchableOpacity>
+          );
+        }
+      })()}
+
+{(() => {
+        if (btnType == "BackToDashboard") {
+          return (
+            <TouchableOpacity
+              style={[
+                StyleOf.btn,
+                StyleOf.dropShadow,
+                StyleOf.bgEminence,
+                { marginTop: 40 },
+              ]}
+              onPress={() => navigation.navigate("Dashboard")}
+            >
+              <Text style={StyleOf.btnLabel}>Back To Dashbaord</Text>
             </TouchableOpacity>
           );
         }
