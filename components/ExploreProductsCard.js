@@ -5,7 +5,6 @@ import {
   Image,
   FlatList,
   Dimensions,
-  TouchableOpacity,
 } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
@@ -17,15 +16,7 @@ import StyleOf from "../assets/AppStyles";
 const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
-export default function MyProductsCard({ data }) {
-  const [isChecked, setChecked] = useState(global.myProductSelectedId);
-
-  //const [dataList, setDataList] = useState([]);
-
-  function selectProductToMarcha(id = 0) {
-    global.myProductSelectedId = id;
-    setChecked(id);
-  }
+export default function ExploreProductsCard({ data }) {
 
   function formatData(dataList, numColumns) {
     const totalRows = Math.floor(dataList.length / numColumns);
@@ -43,9 +34,7 @@ export default function MyProductsCard({ data }) {
     }
     return (
       <View style={StyleOf.productCard}>
-        <TouchableOpacity onPress={() => selectProductToMarcha(item.id)}>
-          {global.myProductSelectedId == item.id ? (
-            <View style={[StyleOf.productImageContainer,StyleOf.selectedProduct]}>
+        <View style={[StyleOf.productImageContainer]}>
               <Image
                 resizeMode="contain"
                 resizeMethod="auto"
@@ -53,17 +42,6 @@ export default function MyProductsCard({ data }) {
                 source={{ uri: item.image }}
               />
             </View>
-          ) : (
-            <View style={[StyleOf.productImageContainer]}>
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={StyleOf.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          )}
-        </TouchableOpacity>
         <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
         <Text style={StyleOf.productTitle}>{item.title}</Text>
         <Text style={StyleOf.productLocation}>

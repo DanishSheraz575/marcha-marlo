@@ -506,7 +506,7 @@ export default StyleSheet.create({
   rbBody: {
     borderRadius: 15,
     backgroundColor: "#ffffff",
-    padding: 20,
+    padding: 15,
   },
   rbBodyImg: {
     height: 100,
@@ -538,10 +538,84 @@ export default StyleSheet.create({
     borderRadius: 6,
   },
   rbBodyBtnLight: {
-    padding: 10,
+    padding: 6,
     backgroundColor: "#C5C5C5",
     borderRadius: 6,
   },
+  rbBodyBtnRed: {
+    padding: 6,
+    backgroundColor: "#FF3D57",
+    borderRadius: 6,
+  },
   // REQUEST BOX STYLES - ending
+
+
+
+// PRODUCT CARD STYLES - starting
+productCard: {
+  //alignItems: "center",
+  justifyContent: "center",
+  flex: 1,
+  margin: 10,
+  //height: WIDTH / numColumns,
+},
+productImageContainer: {
+  backgroundColor: "#ffffff",
+  borderWidth: 2,
+  borderColor: "#ffffff",
+  justifyContent: "center",
+  padding: 20,
+  borderRadius: 10,
+  marginBottom: 6,
+  alignItems: "center",
+  justifyContent: "center",
+},
+selectedProduct: {
+  borderColor: "red",
+},
+checkbox: {
+  alignSelf: "flex-start",
+  position: "relative",
+  elevation: 4,
+},
+productImage: {
+  width: 130,
+  height: 130,
+  alignSelf: "center",
+},
+productPrice: {
+  color: "#000000",
+  textAlign: "left",
+  fontSize: 16,
+  marginBottom: 6,
+},
+productTitle: {
+  color: "#9F9F9F",
+  fontSize: 13,
+  marginBottom: 6,
+  height: 15,
+},
+productLocation: {
+  color: "#9F9F9F",
+  textAlign: "left",
+  marginBottom: 6,
+},
+productLocationMarker: {
+  marginRight: 10,
+},
+itemInvisible: {
+  backgroundColor: "transparent",
+},
+// PRODUCT CARD STYLES - ending
+
+
+
+
+
+
+
+
+
+
 });
 //export default AppStyles;

@@ -37,7 +37,7 @@ export default function Dashboard({navigation}) {
           <View style={[StyleOf.dashboardContainer]}>
             <View style={StyleOf.dashboardRow}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MyProducts')}
+                onPress={() => navigation.navigate('MarchaRequestReceived')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGreen]}
               >
                 <Image

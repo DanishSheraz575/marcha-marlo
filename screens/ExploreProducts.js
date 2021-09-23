@@ -10,10 +10,11 @@ import {
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
+import ScreenSubTitleHeader from "../components/ScreenSubTitleHeader";
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
 import ProductsNotFound from "../components/ProductsNotFound";
-import ExploreMyProductsCard from "../components/MyProductsCard";
+import ExploreProductsCard from "../components/ExploreProductsCard";
 
 const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
@@ -88,17 +89,8 @@ export default function ExploreProducts({ navigation }) {
           if (productsState == 2) {
             return (
               <View  style={[{marginBottom:60}]}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textAlign: "center",
-                    padding: 10,
-                    backgroundColor: "#ffffff",
-                  }}
-                >
-                  Select product to start Marcha
-                </Text>
-                <ExploreMyProductsCard data={dataList} />
+                <ScreenSubTitleHeader title="Select product to start Marcha" />
+                <ExploreProductsCard data={dataList} />
               </View>
             );
           }
