@@ -67,7 +67,7 @@ export default function MarchaRequestReceived({}) {
 
   return (
     <View style={StyleOf.fullContainer}>
-      <ScreenHeader title="Marcha Pending Requests" backbtn="0" />
+      <ScreenHeader title="Marcha Requests" />
 
       <View style={[StyleOf.containerInner]}>
         {(() => {

@@ -49,7 +49,7 @@ export default function Notifications({}) {
 
   function renderNotiSlot({ item }) {
     return (
-      <View style={StyleOf.rowStrip}>
+      <View style={[StyleOf.rowStrip,StyleOf.rowStripBottomBorder]}>
         <View style={StyleOf.colContainerRow}>
           <View style={StyleOf.col2}>
             <Image source={require("../assets/marcha_icon.png")} />

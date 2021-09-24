@@ -59,6 +59,9 @@ export default StyleSheet.create({
   },
 
   // TEXT RELATED STYLES - size
+  f11: {
+    fontSize: 11,
+  },
   f12: {
     fontSize: 12,
   },
@@ -472,7 +475,7 @@ export default StyleSheet.create({
 
   // GRID SYSTEM - starting
   colContainerRow: {
-    flex: 1,
+   // flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
@@ -622,8 +625,10 @@ itemInvisible: {
 
 // MESSAGES/NOTIFICATION STRIP STYLES - starting
 rowStrip:{
-  padding:20,
+  padding:15,
   backgroundColor:"#ffffff",
+},
+rowStripBottomBorder:{
   borderBottomWidth:1,
   borderBottomColor:"#979797"
 },

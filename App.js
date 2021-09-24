@@ -23,7 +23,7 @@ import Notifications from './screens/Notifications';
 
 import MarchaDone from './screens/MarchaDone';
 import MarchaRequestReceived from './screens/MarchaRequestReceived';
-import MarchaRequestSent from './screens/MarchaRequestSent';
+///import MarchaRequestSent from './screens/MarchaRequestSent';
 import MarchaDoneRequests from './screens/MarchaDoneRequests';
 import MarchaPendingRequests from './screens/MarchaPendingRequests';
 
@@ -135,11 +135,11 @@ function App() {
         />
 
         
-<Stack.Screen
+{/* <Stack.Screen
           name="MarchaRequestSent"
           component={MarchaRequestSent}
           options={{ headerShown: false }}
-        />
+        /> */}
 
         
 <Stack.Screen

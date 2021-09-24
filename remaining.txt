@@ -6,7 +6,8 @@ EXPLORE PRODUCTS:
     2 -  filters UI & funcationality
     
 NOTIFICATION:
-    1 - give link on notification 
+    1 - give link on notification
+    2 - display image 
 
 
 

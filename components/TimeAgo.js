@@ -61,6 +61,6 @@ export default function TimeAgo({dated}) {
       
 
   return (
-    <Text style={[StyleOf.f12,StyleOf.textGray]}>{time_ago(dated)}</Text>
+    <Text style={[StyleOf.f11,StyleOf.textGray]}>{time_ago(dated)}</Text>
   );
 }

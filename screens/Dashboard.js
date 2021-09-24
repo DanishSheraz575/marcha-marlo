@@ -100,7 +100,7 @@ export default function Dashboard({navigation}) {
 
             <View style={StyleOf.dashboardRow}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaRequestSent')}
+                onPress={() => navigation.navigate('Chats')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGray]}
               >
                 <Image
