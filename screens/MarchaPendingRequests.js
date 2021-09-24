@@ -78,7 +78,7 @@ export default function MarchaPendingRequests({}) {
 
         {(() => {
           if (myProductsState == 1) {
-            return <RequestsNotFound btnType="BackToDashboard" />;
+            return <RequestsNotFound btnType="BackToDashboardBtn" message="You have not have any pending Marcha requests." />;
           }
           return null;
         })()}

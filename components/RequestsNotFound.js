@@ -5,11 +5,10 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
-export default function RequestsNotFound({ btnType }) {
+export default function RequestsNotFound({ btnType='', message='Sorry! Nothing found here.' }) {
   const navigation = useNavigation();
   return (
     <View style={StyleOf.rowItemCenter}>
-      
       <Image source={require("../assets/empy_device.png")} />
       <Text
         style={{
@@ -21,30 +20,43 @@ export default function RequestsNotFound({ btnType }) {
       >
         Nothing here !!!
       </Text>
-      <Text>
-        You have not received any Marcha requests yet.
-        </Text>
+      <Text>{message}</Text>
 
-      
-    {(() => {
-        if (btnType == "BackToDashboard") {
+      {(() => {
+        if (btnType == "BackToDashboardBtn") {
           return (
-            <TouchableOpacity
-              style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgEminence,
-                { marginTop: 20 },
-              ]}
-              onPress={() => navigation.navigate("Dashboard")}
-            >
-              <Text style={StyleOf.btnLabel}>Back To Dashbaord</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  StyleOf.btn,
+                  StyleOf.dropShadow,
+                  StyleOf.bgEminence,
+                  { marginTop: 20 },
+                ]}
+                onPress={() => navigation.navigate("Dashboard")}
+              >
+                <Text style={StyleOf.btnLabel}>Back To Dashbaord</Text>
+              </TouchableOpacity>
           );
         }
       })()}
 
-
+      {(() => {
+        if (btnType == "NotificationBackToDashboardBtn") {
+          return (
+              <TouchableOpacity
+                style={[
+                  StyleOf.btn,
+                  StyleOf.dropShadow,
+                  StyleOf.bgSelectiveYellow,
+                  { marginTop: 20 },
+                ]}
+                onPress={() => navigation.navigate("Dashboard")}
+              >
+                <Text style={StyleOf.btnLabel}>Back To Dashbaord</Text>
+              </TouchableOpacity>
+          );
+        }
+      })()}
     </View>
   );
 }

@@ -83,7 +83,9 @@ export default StyleSheet.create({
   fwBold: {
     fontWeight: "bold",
   },
-
+  fwNormal: {
+    fontWeight:"normal"
+  },
   // PADDING STYLE
   p10: {
     padding: 10,
@@ -267,10 +269,11 @@ export default StyleSheet.create({
   // BUTTON STYLES - size
   btn: {
     width: "85%",
-    alignItems: "center",
+    //alignItems: "center",
     padding: 15,
     borderRadius: 50,
     margin: 10,
+    alignSelf:"center"
   },
 
   btnLabel: {
@@ -278,6 +281,7 @@ export default StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 14,
     textTransform: "uppercase",
+    textAlign:"center"
   },
 
   justifyContent: {
@@ -341,6 +345,7 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width:"100%",
   },
 
   dashboardContainer: {
@@ -475,6 +480,9 @@ export default StyleSheet.create({
   col:{
     padding:"1%"
   },
+  col2:{
+    width: "20%"
+  },
   col4:{
     width: "40%"
   },
@@ -483,6 +491,9 @@ export default StyleSheet.create({
   },
   col6:{
     width: "60%"
+  },
+  col8:{
+    width: "80%"
   },
   // GRID SYSTEM - ending
 
@@ -607,6 +618,16 @@ itemInvisible: {
   backgroundColor: "transparent",
 },
 // PRODUCT CARD STYLES - ending
+
+
+// MESSAGES/NOTIFICATION STRIP STYLES - starting
+rowStrip:{
+  padding:20,
+  backgroundColor:"#ffffff",
+  borderBottomWidth:1,
+  borderBottomColor:"#979797"
+},
+// MESSAGES/NOTIFICATION STRIP STYLES - ending
 
 
 

@@ -79,14 +79,14 @@ export default function MarchaRequestReceived({}) {
 
         {(() => {
           if (myProductsState == 1) {
-            return <RequestsNotFound btnType="BackToDashboard" />;
+            return <RequestsNotFound btnType="BackToDashboard" message="You have not received any Marcha requests yet." />;
           }
           return null;
         })()}
 
         {(() => {
           if (myProductsState == 2) {
-            return <FlatList data={dataList} renderItem={renderRequestCard} keyExtractor={(item, index) => index.toString()} />;
+            return <FlatList data={dataList} renderItem={renderRequestCard} keyExtractor={(item, index) => index.toString()} />
           }
           return null;
         })()}

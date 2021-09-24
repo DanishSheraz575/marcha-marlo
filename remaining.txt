@@ -1,18 +1,12 @@
-SIGNUP SCREEN:
+COMMON:
     1 - show loader when working at background
-
-LOGIN SCREEN:
-    1 - show loader when working at background
-
-MY PRODUCTS:
-    1 - get values of selected checkboxes
-    2 - click on go for marcha button
 
 EXPLORE PRODUCTS:
     1 - search input feild UI and function
     2 -  filters UI & funcationality
     
- 
+NOTIFICATION:
+    1 - give link on notification 
 
 
 
