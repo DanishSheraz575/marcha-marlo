@@ -11,7 +11,10 @@ import BottomLinks from "../components/BottomLinks";
 import TimeAgo from "../components/TimeAgo";
 
 export default function Chats({}) {
-  const [notificationState, setNotificationState] = useState(0);
+
+  const [newMessage, setNewMessage] = useState(0);
+  
+  const [messageState, setMessageState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
@@ -28,18 +31,32 @@ export default function Chats({}) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success") {
+          var messagesData = json.result;
           let myProductList = [];
-          json.result.forEach((item) => {
+          var title = "Message";
+          var img = "product_placeholder.png";
+          messagesData.forEach((item) => {
+            if (item.added_by.user_id == global.uid) {
+              title = item.requested_product.title;
+              var images = item.requested_product.images.split(",");
+              var img = item.product_images_base_url + images[0];
+            } else {
+              title = item.requester_product.title;
+              var images = item.requester_product.images.split(",");
+              var img = item.product_images_base_url + images[0];
+            }
             myProductList.push({
+              title: title,
+              image: img,
               message: item.last_chat.msg,
               type: item.type,
               ago: item.added_on,
             });
           });
           setDataList(myProductList);
-          setNotificationState(2);
+          setMessageState(2);
         } else {
-          setNotificationState(1);
+          setMessageState(1);
         }
       })
       .catch((error) => {
@@ -52,23 +69,27 @@ export default function Chats({}) {
       <View style={StyleOf.rowStrip}>
         <View style={StyleOf.colContainerRow}>
           <View style={StyleOf.col2}>
-            <Image source={require("../assets/marcha_icon.png")} />
+            <Image
+                 style={StyleOf.rowStripImage}
+                 resizeMode="contain"
+                source={{ uri: item.image }}
+              />
           </View>
           <View style={StyleOf.col8}>
             <View style={{ marginLeft: 10 }}>
               <View style={StyleOf.colContainerRow}>
                 <View style={StyleOf.col8}>
                   <Text
-                    style={[StyleOf.textBlack, StyleOf.f18, StyleOf.fwBold]}
+                    style={[StyleOf.textBlack, StyleOf.f14, StyleOf.fwBold]}
                   >
-                    Messages
+                    {item.title}
                   </Text>
                 </View>
                 <View style={StyleOf.col2}>
                   <TimeAgo dated={item.ago} />
                 </View>
               </View>
-              <Text style={[StyleOf.textGray, StyleOf.f14, StyleOf.fwNormal]}>
+              <Text style={[StyleOf.textGray, StyleOf.f12, StyleOf.fwNormal]}>
                 {item.message}
               </Text>
             </View>
@@ -84,14 +105,14 @@ export default function Chats({}) {
 
       <View style={[StyleOf.containerInner]}>
         {(() => {
-          if (notificationState == 0) {
+          if (messageState == 0) {
             return <MarchaSpinner size={70} />;
           }
           return null;
         })()}
 
         {(() => {
-          if (notificationState == 1) {
+          if (messageState == 1) {
             return (
               <RequestsNotFound
                 btnType="NotificationBackToDashboardBtn"
@@ -103,16 +124,17 @@ export default function Chats({}) {
         })()}
 
         {(() => {
-          if (notificationState == 2) {
+          if (messageState == 2) {
             return (
               <View>
                 <View style={[StyleOf.textGray, { padding: 20 }]}>
                   <View style={StyleOf.colContainerRow}>
                     <View style={StyleOf.col8}>
-                      <Text>You have 1 new message</Text>
+                      <Text>You have {newMessage} new message</Text>
                     </View>
-                    <View style={StyleOf.col2}>
-                      <Image source={require("../assets/message_bubble.png")} />
+                    <View style={[StyleOf.col2]}>
+                      <Image style={{alignSelf:"center"}} source={require("../assets/message_bubble.png")} />
+                      <Text  style={{alignSelf:"center",position:"absolute"}}>{newMessage}</Text>
                     </View>
                   </View>
                 </View>

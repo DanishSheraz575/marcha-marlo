@@ -480,8 +480,8 @@ export default StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "flex-start",
   },
-  col:{
-    padding:"1%"
+  col1:{
+    padding:"10%"
   },
   col2:{
     width: "20%"
@@ -497,6 +497,9 @@ export default StyleSheet.create({
   },
   col8:{
     width: "80%"
+  },
+  col9:{
+    width: "90%"
   },
   // GRID SYSTEM - ending
 
@@ -631,6 +634,11 @@ rowStrip:{
 rowStripBottomBorder:{
   borderBottomWidth:1,
   borderBottomColor:"#979797"
+},
+rowStripImage:{
+  width:"100%",
+  height:"100%",
+  alignSelf:"flex-start"
 },
 // MESSAGES/NOTIFICATION STRIP STYLES - ending
 
