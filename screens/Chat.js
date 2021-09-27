@@ -41,7 +41,25 @@ export default function Chat({ route }) {
 
   useEffect(() => {
     getChatHistory();
+
+/*
+    const interval = setInterval(function() {
+      getChatHistory();
+    }, 100);
+   clearInterval(interval); // thanks @Luca D'Amico
+
+   setTimeout(
+    () => getChatHistory(),
+    3000
+  );
+*/
   }, []);
+
+  //setTimeout(function(){getChatHistory()}.bind(this), 5000)
+
+
+  //setTimeout(()=>getChatHistory(), 3000); 
+
 
   function getChatHistory() {
     const data = {
@@ -77,7 +95,7 @@ export default function Chat({ route }) {
     return (
       <View style={styles.speachBubbleContainer}>
         {(() => {
-          if (item.from_product_id == myProductId) {
+          if (item.added_by == global.uid) {
             return (
               // Sent
               <View>
@@ -104,7 +122,7 @@ export default function Chat({ route }) {
                 <View style={StyleOf.colContainerRow}>
                   <View style={[StyleOf.col10]}>
                     <View style={[styles.speachBubble]}>
-                      <Text>{item.msg}</Text>
+                      <Text style={StyleOf.textBlack}>{item.msg}</Text>
                     </View>
                   </View>
                   <View style={[StyleOf.col10]}>
@@ -249,7 +267,7 @@ export default function Chat({ route }) {
           </View>
         </View>
 
-        <View style={{ padding: 5 }}>
+        <View style={[StyleOf.dropShadow, { padding: 5,backgroundColor:"#ffffff" }]}>
           <View style={[StyleOf.colContainerRow]}>
             <View style={[StyleOf.col5]}>
                 <TouchableOpacity
@@ -296,7 +314,7 @@ export default function Chat({ route }) {
               return (
                 <FlatList
                   data={dataList}
-                  inverted={true}
+                  //inverted={true}
                   renderItem={renderChat}
                   keyExtractor={(item, index) => index.toString()}
                 />

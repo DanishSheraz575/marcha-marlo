@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import StyleOf from "../assets/AppStyles";
 
-export default function AcceptMarchaBtn({ request_id = 0, title = "ACCEPT" }) {
+export default function AcceptMarchaBtn({ request_id = 0, requester_id = 0, requester_name="User", requester_email='', requester_image='', my_product_id=0, marcha_product_id=0  }) {
   const navigation = useNavigation();
 
   function acceptMarchaRequest(request_id) {
@@ -27,7 +27,17 @@ export default function AcceptMarchaBtn({ request_id = 0, title = "ACCEPT" }) {
         const status = json.status.toLowerCase();
         if (status == "success") {
           alert(json.result);
-          navigation.navigate("Dashboard");
+          
+          navigation.navigate("Chat", {
+            request_id: request_id,
+            requester_id: requester_id,
+            requester_name: requester_name,
+            requester_email: requester_email,
+            requester_image: requester_image,
+            my_product_id: my_product_id,
+            marcha_product_id: marcha_product_id,
+          })
+
         } else {
           alert(json.result);
         }
@@ -42,7 +52,7 @@ export default function AcceptMarchaBtn({ request_id = 0, title = "ACCEPT" }) {
       onPress={() => acceptMarchaRequest(request_id)}
       style={[StyleOf.rbBodyBtnRed,StyleOf.m5]}
     >
-      <Text style={[StyleOf.selfCenter, StyleOf.textWhite, StyleOf.rbBtnLable]}>{title}</Text>
+      <Text style={[StyleOf.selfCenter, StyleOf.textWhite, StyleOf.rbBtnLable]}>ACCEPT</Text>
     </TouchableOpacity>
   );
 }

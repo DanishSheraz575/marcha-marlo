@@ -119,7 +119,15 @@ export default function MarchaRequestCard({
                 return (
                   <View style={[StyleOf.colContainerRow, StyleOf.mb5]}>
                     <View style={[StyleOf.col5]}>
-                      <AcceptMarchaBtn request_id={item.marcha_request_id} />
+                      <AcceptMarchaBtn 
+                        request_id={item.marcha_request_id}
+                        requester_id={item.requester_id}
+                        requester_name={item.requester_name}
+                        requester_email={item.requester_email}
+                        requester_image={item.requester_image} 
+                        my_product_id={item.my_product_id}
+                        marcha_product_id={item.marcha_product_id}
+                      />
                     </View>
                     <View style={[StyleOf.col5]}>
                       <DeclineMarchaBtn request_id={item.marcha_request_id} />
