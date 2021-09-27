@@ -41,10 +41,9 @@ export default function CancelMarchaBtn({request_id=0}) {
   return (
     <TouchableOpacity
       onPress={() => declineMarchaRequest(request_id)}
-      style={[StyleOf.rbBodyBtnLight,{margin:5}]}
+      style={[StyleOf.rbBodyBtnLight,StyleOf.m5]}
     >
-      <Text style={[StyleOf.selfCenter, StyleOf.textWhite,{textAlign:"center"}]}>
-        <Image source={require("../assets/cross-icon.png")} />
+      <Text style={[StyleOf.selfCenter, StyleOf.textWhite,StyleOf.rbBtnLable,{textAlign:"center"}]}>
         DECLINE
       </Text>
     </TouchableOpacity>

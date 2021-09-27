@@ -66,7 +66,7 @@ export default function MyProductsCard({ data }) {
         </TouchableOpacity>
         <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
         <Text style={StyleOf.productTitle}>{item.title}</Text>
-        <Text style={StyleOf.productLocation}>
+        <Text style={[StyleOf.productLocation,StyleOf.f12]}>
           <Image
             style={StyleOf.productLocationMarker}
             source={require("../assets/location-icon.png")}

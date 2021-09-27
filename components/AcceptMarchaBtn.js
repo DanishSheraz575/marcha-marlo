@@ -40,9 +40,9 @@ export default function AcceptMarchaBtn({ request_id = 0, title = "ACCEPT" }) {
   return (
     <TouchableOpacity
       onPress={() => acceptMarchaRequest(request_id)}
-      style={StyleOf.rbBodyBtnRed}
+      style={[StyleOf.rbBodyBtnRed,StyleOf.m5]}
     >
-      <Text style={[StyleOf.selfCenter, StyleOf.textWhite]}>{title}</Text>
+      <Text style={[StyleOf.selfCenter, StyleOf.textWhite, StyleOf.rbBtnLable]}>{title}</Text>
     </TouchableOpacity>
   );
 }

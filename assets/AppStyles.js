@@ -480,6 +480,9 @@ export default StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "flex-start",
   },
+  col:{
+    padding:3
+  },
   col1:{
     width:"10%"
   },
@@ -508,7 +511,9 @@ export default StyleSheet.create({
 
   // REQUEST BOX STYLES - starting
   requestBox: {
-    margin: 20,
+    marginHorizontal: 20,
+    marginBottom:30,
+    marginTop:10
   },
   rbHeader: {
     marginHorizontal: 10,
@@ -521,7 +526,7 @@ export default StyleSheet.create({
   rbHeaderBold: {
     color: "#000000",
     fontWeight: "bold",
-    fontSize: 22,
+    fontSize: 18,
   },
   rbBody: {
     borderRadius: 15,
@@ -542,20 +547,21 @@ export default StyleSheet.create({
     alignSelf: "center",
   },
   rbBodyProductTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight:"bold",
-    lineHeight:18,
+    lineHeight:16,
   },
   rbBodyProductPrice: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 10,
   },
   rbBodyMarchaAgainstBox: {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical:5,
     backgroundColor: "#EBEBEB",
-    marginBottom: 10,
+    //marginBottom: 10,
     borderRadius: 6,
+    fontSize: 14,
   },
   rbBodyBtnLight: {
     padding: 6,
@@ -566,6 +572,9 @@ export default StyleSheet.create({
     padding: 6,
     backgroundColor: "#FF3D57",
     borderRadius: 6,
+  },
+  rbBtnLable:{
+    fontSize:12,
   },
   // REQUEST BOX STYLES - ending
 
@@ -606,19 +615,19 @@ productImage: {
 productPrice: {
   color: "#000000",
   textAlign: "left",
-  fontSize: 16,
-  marginBottom: 6,
+  fontSize: 14,
+  marginBottom: 5,
 },
 productTitle: {
   color: "#9F9F9F",
-  fontSize: 13,
-  marginBottom: 6,
-  height: 15,
+  fontSize: 12,
+  marginBottom: 5,
+  height: 18,
 },
 productLocation: {
   color: "#9F9F9F",
   textAlign: "left",
-  marginBottom: 6,
+  marginBottom: 5,
 },
 productLocationMarker: {
   marginRight: 10,

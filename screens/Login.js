@@ -15,9 +15,10 @@ import StyleOf from "../assets/AppStyles";
 import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
+
 export default function Login({ navigation }) {
 
-  
+  const [showLoader, setShowLoader] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [password_recover_email, setPasswordRecoverEmail] = useState("");
@@ -54,7 +55,7 @@ export default function Login({ navigation }) {
 
 
   function get_me_login() {
-    
+    setShowLoader(true);
     const data = { api_token: global.token, email: email, password: password };
 
     fetch(global.api + "login", {
@@ -66,8 +67,10 @@ export default function Login({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
+        setShowLoader(false);
         var status = json.status.toLowerCase();
         if (status == "success") {
+          
           const uinfo=json.result;
           global.uid=uinfo.user_id;
           global.ufull_name=uinfo.full_name;
@@ -208,7 +211,7 @@ export default function Login({ navigation }) {
       </Modal>
     
     
-    
+      <Loader showit={showLoader} />
     </View>
   );
 }

@@ -22,7 +22,7 @@ export default function MarchaRequestCard({
       {(() => {
         if (showHeader == 1) {
           return (
-            <View style={StyleOf.rbHeader}>
+            <View style={[StyleOf.rbHeader,StyleOf.dropShadow]}>
               <Text style={StyleOf.selfCenter}>
                 <Text style={StyleOf.textGray}>Request sent to </Text>
                 <Text style={StyleOf.rbHeaderBold}>
@@ -35,7 +35,7 @@ export default function MarchaRequestCard({
         return null;
       })()}
 
-      <View style={StyleOf.rbBody}>
+      <View style={[StyleOf.rbBody,StyleOf.dropShadow]}>
         <View style={StyleOf.colContainerRow}>
           <View style={[StyleOf.col, StyleOf.col4]}>
             <Image
@@ -49,7 +49,7 @@ export default function MarchaRequestCard({
           </View>
 
           <View style={[StyleOf.col, StyleOf.col6]}>
-            <Text style={[StyleOf.rbBodyProductTitle]}>
+            <Text style={[StyleOf.rbBodyProductTitle,StyleOf.mb5]}>
               {item.requested_product_title}
             </Text>
 
@@ -80,14 +80,22 @@ export default function MarchaRequestCard({
             })()}
 
             <View style={[StyleOf.colContainerRow, StyleOf.mb5]}>
-              <View style={StyleOf.col5}>
-                <Text>
-                  <Image source={require("../assets/location-icon2.png")} />{" "}
-                  {item.requested_product_location}
+              <View style={StyleOf.col10}>
+                <Text style={[StyleOf.f12]}>
+                  Location: {" "}
+                  <Text style={[StyleOf.f12,StyleOf.fwBold]}>
+                    <Image source={require("../assets/location-icon2.png")} />{" "}
+                    {item.requested_product_location}
+                  </Text>
                 </Text>
               </View>
-              <View style={StyleOf.col5}>
-                <Text>Condition: {item.requested_product_condition}</Text>
+              <View style={StyleOf.col10}>
+                <Text style={[StyleOf.f12]}>
+                  Condition: {" "}
+                  <Text style={[StyleOf.f12,StyleOf.fwBold]}>
+                    {item.requested_product_condition}
+                  </Text>
+                </Text>
               </View>
             </View>
             <View style={StyleOf.rbBodyMarchaAgainstBox}>

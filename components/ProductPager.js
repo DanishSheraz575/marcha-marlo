@@ -64,8 +64,8 @@ export default function ProductPager({ data }) {
         <View style={styles.page} key={index}>
           <ImageBackground
             //resizeMode= "cover"
-            resizeMode="contain"
-            //resizeMode= "center"
+            //resizeMode="contain"
+            resizeMode= "center"
             source={{
               uri: p.images_base_url + p.images,
             }}
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   bgImage: {
     flex: 1,
-    resizeMode: "cover",
+
     justifyContent: "flex-end",
     width: "100%",
     height: "100%",
@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
   },
 
   pTitle: {
-    fontSize: 26,
-    lineHeight: 28,
+    fontSize: 24,
+    lineHeight: 26,
   },
 
   font16: {

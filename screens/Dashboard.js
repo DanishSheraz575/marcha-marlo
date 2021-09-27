@@ -12,7 +12,7 @@ import Logo from "../components/Logo";
 export default function Dashboard({navigation}) {
   const image =  require('../assets/dashboardbg.png');
   return (
-    <View style={[StyleOf.fullContainer,{backgroundColor:"#662D91"}]}>
+    <View style={[StyleOf.fullContainer]}>
       <ImageBackground source={image} style={StyleOf.bgImage}>
         <ScreenHeader title="Dashboard" backbtn="0" bgColor='' />
 

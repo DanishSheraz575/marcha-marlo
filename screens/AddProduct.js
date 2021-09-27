@@ -275,9 +275,9 @@ export default function AddProduct({}) {
     })
       .then((response) => response.json())
       .then((json) => {
+        setShowLoader(false);
         var status = json.status.toLowerCase() ;
         if (status == "success") {
-          setShowLoader(false);
           alert(json.result);
           navigation.navigate('Dashboard');
         } else {
