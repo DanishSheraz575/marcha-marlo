@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
+
+import { useNavigation } from '@react-navigation/native';
 
 import StyleOf from "../assets/AppStyles";
 
@@ -12,8 +14,10 @@ import TimeAgo from "../components/TimeAgo";
 
 export default function Chats({}) {
 
+  const navigation = useNavigation(); 
+
   const [newMessage, setNewMessage] = useState(0);
-  
+
   const [messageState, setMessageState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
@@ -30,27 +34,49 @@ export default function Chats({}) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase();
-        if (status == "success") {
+        if (status == "success" && json.result.length>0) {
           var messagesData = json.result;
           let myProductList = [];
           var title = "Message";
           var img = "product_placeholder.png";
+
+          var requester_id=0;
+          var requester_name="User";          
+          var requester_email="";
+          var requester_image="";
+          
+
           messagesData.forEach((item) => {
+            var uinfo=item.added_by;
+            if(uinfo.image!=''){
+              var img=global.user_image_base_url+uinfo.image;
+            }else{
+              var img='';
+            }
             if (item.added_by.user_id == global.uid) {
+
               title = item.requested_product.title;
               var images = item.requested_product.images.split(",");
               var img = item.product_images_base_url + images[0];
-            } else {
+            } else {              
               title = item.requester_product.title;
               var images = item.requester_product.images.split(",");
               var img = item.product_images_base_url + images[0];
             }
             myProductList.push({
+              request_id: item.request_id,
               title: title,
               image: img,
               message: item.last_chat.msg,
               type: item.type,
               ago: item.added_on,
+              my_product_id:item.requested_product_id,
+              marcha_product_id:item.requester_product_id,
+
+              requester_id:uinfo.user_id,
+              requester_name:uinfo.full_name,
+              requester_email:uinfo.email,
+              requester_image:img,
             });
           });
           setDataList(myProductList);
@@ -66,36 +92,50 @@ export default function Chats({}) {
 
   function renderNotiSlot({ item }) {
     return (
-      <View style={StyleOf.rowStrip}>
-        <View style={StyleOf.colContainerRow}>
-          <View style={StyleOf.col2}>
-            <Image
-                 style={StyleOf.rowStripImage}
-                 resizeMode="contain"
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("Chat", {
+            request_id: item.request_id,
+            requester_id: item.requester_id,
+            requester_name:item.requester_name,
+            requester_email:item.requester_email,
+            requester_image:item.requester_image,
+            my_product_id:item.my_product_id,
+            marcha_product_id:item.marcha_product_id,
+          })
+        }
+      >
+        <View style={StyleOf.rowStrip}>
+          <View style={StyleOf.colContainerRow}>
+            <View style={StyleOf.col2}>
+              <Image
+                style={StyleOf.rowStripImage}
+                resizeMode="contain"
                 source={{ uri: item.image }}
               />
-          </View>
-          <View style={StyleOf.col8}>
-            <View style={{ marginLeft: 10 }}>
-              <View style={StyleOf.colContainerRow}>
-                <View style={StyleOf.col8}>
-                  <Text
-                    style={[StyleOf.textBlack, StyleOf.f14, StyleOf.fwBold]}
-                  >
-                    {item.title}
-                  </Text>
+            </View>
+            <View style={StyleOf.col8}>
+              <View style={{ marginLeft: 10 }}>
+                <View style={StyleOf.colContainerRow}>
+                  <View style={StyleOf.col8}>
+                    <Text
+                      style={[StyleOf.textBlack, StyleOf.f14, StyleOf.fwBold]}
+                    >
+                      {item.title}
+                    </Text>
+                  </View>
+                  <View style={StyleOf.col2}>
+                    <TimeAgo dated={item.ago} />
+                  </View>
                 </View>
-                <View style={StyleOf.col2}>
-                  <TimeAgo dated={item.ago} />
-                </View>
+                <Text style={[StyleOf.textGray, StyleOf.f12, StyleOf.fwNormal]}>
+                  {item.message}
+                </Text>
               </View>
-              <Text style={[StyleOf.textGray, StyleOf.f12, StyleOf.fwNormal]}>
-                {item.message}
-              </Text>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -130,11 +170,18 @@ export default function Chats({}) {
                 <View style={[StyleOf.textGray, { padding: 20 }]}>
                   <View style={StyleOf.colContainerRow}>
                     <View style={StyleOf.col8}>
-                      <Text>You have {newMessage} new message</Text>
+                      <Text>You have {newMessage} new message(s)</Text>
                     </View>
                     <View style={[StyleOf.col2]}>
-                      <Image style={{alignSelf:"center"}} source={require("../assets/message_bubble.png")} />
-                      <Text  style={{alignSelf:"center",position:"absolute"}}>{newMessage}</Text>
+                      <Image
+                        style={{ alignSelf: "center" }}
+                        source={require("../assets/message_bubble.png")}
+                      />
+                      <Text
+                        style={{ alignSelf: "center", position: "absolute" }}
+                      >
+                        {newMessage}
+                      </Text>
                     </View>
                   </View>
                 </View>

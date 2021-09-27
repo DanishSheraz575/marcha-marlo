@@ -481,7 +481,7 @@ export default StyleSheet.create({
     alignItems: "flex-start",
   },
   col1:{
-    padding:"10%"
+    width:"10%"
   },
   col2:{
     width: "20%"
@@ -500,6 +500,9 @@ export default StyleSheet.create({
   },
   col9:{
     width: "90%"
+  },
+  col10:{
+    width: "100%"
   },
   // GRID SYSTEM - ending
 

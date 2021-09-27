@@ -14,6 +14,8 @@ import StyleOf from "../assets/AppStyles";
 import SocialBtns from "../components/SocialBtns";
 
 export default function Login({ navigation }) {
+
+
   const [modalVisible, setModalVisible] = useState(false);
   const [password_recover_email, setPasswordRecoverEmail] = useState("");
   const [email, setEmail] = useState("mhaneef05@gmail.com");

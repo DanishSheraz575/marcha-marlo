@@ -1,6 +1,12 @@
 import * as React from "react";
+
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity, Image } from "react-native";
+
+import CancelMarchaBtn from "../components/CancelMarchaBtn";
+import AcceptMarchaBtn from "../components/AcceptMarchaBtn";
+import DeclineMarchaBtn from "../components/DeclineMarchaBtn";
+
 import StyleOf from "../assets/AppStyles";
 
 export default function MarchaRequestCard({
@@ -10,63 +16,6 @@ export default function MarchaRequestCard({
   marchaStatus = 0,
 }) {
   const navigation = useNavigation();
-
-  function cancelMarchaRequest(id) {
-    const data = {
-      api_token: global.token,
-      user_id: global.uid,
-      request_id: id,
-    };
-    fetch(global.api + "cancel_marcha", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const status = json.status.toLowerCase();
-        if (status == "success") {
-          alert(json.result);
-          navigation.navigate("Dashboard");
-        } else {
-          alert(json.result);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-  function acceptMarchaRequest(id) {
-    const data = {
-      api_token: global.token,
-      user_id: global.uid,
-      request_id: id,
-      status:1
-    };
-    fetch(global.api + "accept_marcha_request", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const status = json.status.toLowerCase();
-        if (status == "success") {
-          alert(json.result);
-          navigation.navigate("Dashboard");
-        } else {
-          alert(json.result);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
 
   return (
     <View style={StyleOf.requestBox}>
@@ -151,15 +100,7 @@ export default function MarchaRequestCard({
             {(() => {
               if (requestType == "sent") {
                 return (
-                  <TouchableOpacity
-                    onPress={() => cancelMarchaRequest(item.marcha_request_id)}
-                    style={StyleOf.rbBodyBtnLight}
-                  >
-                    <Text style={[StyleOf.selfCenter, StyleOf.textWhite]}>
-                      <Image source={require("../assets/cross-icon.png")} />
-                      CANCEL
-                    </Text>
-                  </TouchableOpacity>
+                  <CancelMarchaBtn request_id={item.marcha_request_id} />
                 );
               }
               return null;
@@ -169,29 +110,11 @@ export default function MarchaRequestCard({
               if (requestType == "reseived") {
                 return (
                   <View style={[StyleOf.colContainerRow, StyleOf.mb5]}>
-                    <View style={[StyleOf.col, StyleOf.col5]}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          acceptMarchaRequest(item.marcha_request_id)
-                        }
-                        style={StyleOf.rbBodyBtnRed}
-                      >
-                        <Text style={[StyleOf.selfCenter ,StyleOf.textWhite]}>
-                          ACCEPT
-                        </Text>
-                      </TouchableOpacity>
+                    <View style={[StyleOf.col5]}>
+                      <AcceptMarchaBtn request_id={item.marcha_request_id} />
                     </View>
-                    <View style={[StyleOf.col, StyleOf.col5]}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          cancelMarchaRequest(item.marcha_request_id)
-                        }
-                        style={StyleOf.rbBodyBtnLight}
-                      >
-                        <Text style={[StyleOf.selfCenter, StyleOf.textWhite]}>
-                          DECLINE
-                        </Text>
-                      </TouchableOpacity>
+                    <View style={[StyleOf.col5]}>
+                      <DeclineMarchaBtn request_id={item.marcha_request_id} />
                     </View>
                   </View>
                 );

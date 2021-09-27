@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  View,
-  FlatList,
-} from "react-native";
+import { View, FlatList } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -14,7 +11,6 @@ import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
 
 export default function MarchaPendingRequests({}) {
-  
   const [myProductsState, setMyProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
@@ -30,27 +26,28 @@ export default function MarchaPendingRequests({}) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase();
+        setMyProductsState(1);
         if (status == "success") {
           let myProductList = [];
-          json.result.forEach((item) => {
-            let images = item.requested_product.images.split(",");
-            let img = global.product_images_base_url + images[0];
-            myProductList.push({
-              requested_username: item.requested_username,
-              requested_product_title: item.requested_product.title,
-              requested_product_value: item.requested_product.value,
-              requested_product_location: item.requested_product.location,
-              requested_product_condition: item.requested_product.condition,
-              requested_product_image: img,
-              marcha_against_product_title: item.requester_product.title,
-              marcha_request_id: item.request_id,
-              marcha_date: item.dated,
+          if (json.result.length > 0) {
+            json.result.forEach((item) => {
+              let images = item.requested_product.images.split(",");
+              let img = global.product_images_base_url + images[0];
+              myProductList.push({
+                requested_username: item.requested_username,
+                requested_product_title: item.requested_product.title,
+                requested_product_value: item.requested_product.value,
+                requested_product_location: item.requested_product.location,
+                requested_product_condition: item.requested_product.condition,
+                requested_product_image: img,
+                marcha_against_product_title: item.requester_product.title,
+                marcha_request_id: item.request_id,
+                marcha_date: item.dated,
+              });
             });
-          });
-          setDataList(myProductList);
-          setMyProductsState(2);
-        } else {
-          setMyProductsState(1);
+            setDataList(myProductList);
+            setMyProductsState(2);
+          }
         }
       })
       .catch((error) => {
@@ -59,9 +56,7 @@ export default function MarchaPendingRequests({}) {
   }, []);
 
   function renderRequestCard({ item }) {
-    return (
-          <MarchaRequestCard item={item} requestType="sent" />
-    );
+    return <MarchaRequestCard item={item} requestType="sent" />;
   }
 
   return (
@@ -78,14 +73,25 @@ export default function MarchaPendingRequests({}) {
 
         {(() => {
           if (myProductsState == 1) {
-            return <RequestsNotFound btnType="BackToDashboardBtn" message="You have not have any pending Marcha requests." />;
+            return (
+              <RequestsNotFound
+                btnType="BackToDashboardBtn"
+                message="You have not have any pending Marcha requests."
+              />
+            );
           }
           return null;
         })()}
 
         {(() => {
           if (myProductsState == 2) {
-            return <FlatList data={dataList} renderItem={renderRequestCard} keyExtractor={(item, index) => index.toString()} />;
+            return (
+              <FlatList
+                data={dataList}
+                renderItem={renderRequestCard}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            );
           }
           return null;
         })()}
