@@ -68,7 +68,7 @@ export default function MyProducts({ navigation }) {
   return (
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="My Products" />
-      <View style={[StyleOf.containerInner, { paddingBottom: 80 }]}>
+      <View style={[StyleOf.containerInner]}>
         {(() => {
           if (myProductsState == 0) {
             return (

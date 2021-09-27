@@ -296,6 +296,7 @@ export default function Chat({ route }) {
               return (
                 <FlatList
                   data={dataList}
+                  inverted={true}
                   renderItem={renderChat}
                   keyExtractor={(item, index) => index.toString()}
                 />

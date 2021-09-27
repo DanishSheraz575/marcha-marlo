@@ -27,12 +27,15 @@ export default function MarchaDone({}) {
       .then((json) => {
         setMyProductsState(1);
         const status = json.status.toLowerCase();
-        if (status == "success") {
+        if (status == "success" && json.result.length > 0) {
           let myProductList = [];
-          if (json.result.length > 0) {
             json.result.forEach((item) => {
-              let images = item.requested_product.images.split(",");
-              let img = global.product_images_base_url + images[0];
+              if(item.requested_product.images != null){
+                let images = item.requested_product.images.split(",");
+                let img = global.product_images_base_url + images[0];
+              }else{
+                img='';
+              }
               myProductList.push({
                 requested_username: item.requested_username,
                 requested_product_title: item.requested_product.title,
@@ -47,7 +50,6 @@ export default function MarchaDone({}) {
             });
             setDataList(myProductList);
             setMyProductsState(2);
-          }
         }
       })
       .catch((error) => {

@@ -13,7 +13,6 @@ export default function ProductsNotFound({ btnType }) {
         style={{
           fontSize: 42,
           fontWeight: "bold",
-          marginBottom: 30,
           textAlign: "center",
         }}
       >
@@ -22,9 +21,8 @@ export default function ProductsNotFound({ btnType }) {
       <Image source={require("../assets/oh.png")} />
       <Text
         style={{
-          fontSize: 26,
+          fontSize: 20,
           fontWeight: "bold",
-          marginVertical: 20,
           textAlign: "center",
         }}
       >
@@ -39,7 +37,7 @@ export default function ProductsNotFound({ btnType }) {
                 StyleOf.btn,
                 StyleOf.dropShadow,
                 StyleOf.bgEminence,
-                { marginTop: 40 },
+                { marginTop: "5%" },
               ]}
               onPress={() => navigation.navigate("AddProduct")}
             >
@@ -57,7 +55,7 @@ export default function ProductsNotFound({ btnType }) {
                 StyleOf.btn,
                 StyleOf.dropShadow,
                 StyleOf.bgEminence,
-                { marginTop: 40 },
+                { marginTop: "5%" },
               ]}
               onPress={() => navigation.navigate("MyProducts")}
             >
@@ -75,7 +73,7 @@ export default function ProductsNotFound({ btnType }) {
                 StyleOf.btn,
                 StyleOf.dropShadow,
                 StyleOf.bgEminence,
-                { marginTop: 40 },
+                { marginTop: "5%" },
               ]}
               onPress={() => navigation.navigate("Dashboard")}
             >

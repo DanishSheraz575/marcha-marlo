@@ -35,8 +35,8 @@ export default function MyProfile({}) {
 
 
 
-  let [profileImage, setProfileImage] = useState(global.uimage);
-  let [newProfileImage, setNewProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(global.uimage);
+  const [newProfileImage, setNewProfileImage] = useState("");
 
   let openImagePickerAsync = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -62,6 +62,7 @@ export default function MyProfile({}) {
     let img = { localUri: pickerResult.uri };
     setNewProfileImage(img.localUri);
     setProfileImage(img.localUri);
+    global.uimage=img.localUri;
   };
 
 
@@ -118,6 +119,7 @@ export default function MyProfile({}) {
           global.ufull_name = name;
           global.ugender = gender;
           global.ucity = city;
+          
           alert(json.result);
         } else {
           alert(json.result);
@@ -127,8 +129,6 @@ export default function MyProfile({}) {
         console.error("Error:", error);
       });
   }
-
-
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -153,6 +153,7 @@ export default function MyProfile({}) {
                 <Image
                   source={require("../assets/user_profile.png")}
                   style={styles.profileImage}
+                  transition={false}
                 />
               ) : (
                 <Image
