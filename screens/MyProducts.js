@@ -10,6 +10,7 @@ import MarchaSpinner from "../components/MarchaSpinner";
 import MyProductsCard from "../components/MyProductsCard";
 import ProductsNotFound from "../components/ProductsNotFound";
 
+
 const numColumns = 2;
 
 const WIDTH = Dimensions.get("window").width;
@@ -32,7 +33,7 @@ export default function MyProducts({ navigation }) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase() ;
-        if (status == "success") {
+        if (status == "success" && json.result.length>0) {
           let myProductList = [];
 
           json.result.forEach((item) => {
@@ -46,7 +47,7 @@ export default function MyProducts({ navigation }) {
               location: item.location,
             });
           });
-          setDataList(myProductList);
+          setDataList(myProductList.reverse());
           setMyProductsState(2);
         } else {
           setMyProductsState(1);
@@ -68,7 +69,7 @@ export default function MyProducts({ navigation }) {
   return (
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="My Products" />
-      <View style={[StyleOf.containerInner]}>
+      <View style={[StyleOf.containerInner,{marginBottom:80}]}>
         {(() => {
           if (myProductsState == 0) {
             return (

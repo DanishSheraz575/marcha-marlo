@@ -5,16 +5,15 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
 } from "react-native";
 
-import SelectDropdown from 'react-native-select-dropdown';
+import SelectDropdown from "react-native-select-dropdown";
 import StyleOf from "../assets/AppStyles";
 
 // import SocialBtns from "../components/SocialBtns";
 
 export default function SignUp({ navigation }) {
-
   const genders = ["Male", "Female"];
 
   const [name, setName] = useState("");
@@ -35,14 +34,22 @@ export default function SignUp({ navigation }) {
   const [gender, setGender] = useState("");
   const [city, setCity] = useState("");
 
-
   function get_me_signup() {
-
-    if (name === "") { setNameError(true); }
-    if (email === "") { setEmailError(true); }
-    if (password === "") { setPasswordError(true); }
-    if (conpassword === "") { setConfirmPasswordError(true); }
-    if (contact === "") { setContactError(true); }
+    if (name === "") {
+      setNameError(true);
+    }
+    if (email === "") {
+      setEmailError(true);
+    }
+    if (password === "") {
+      setPasswordError(true);
+    }
+    if (conpassword === "") {
+      setConfirmPasswordError(true);
+    }
+    if (contact === "") {
+      setContactError(true);
+    }
 
     const data = {
       api_token: global.token,
@@ -79,78 +86,98 @@ export default function SignUp({ navigation }) {
     <ScrollView>
       <View style={[StyleOf.fullContainer]}>
         <View style={StyleOf.rowItemCenter}>
-
           <Text
-            style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textEminence, { marginTop: 30 }]}
+            style={[
+              StyleOf.f26,
+              StyleOf.fwBold,
+              StyleOf.textEminence,
+              { marginTop: 30 },
+            ]}
           >
             Sign up
           </Text>
           <Text
-            style={[StyleOf.f14, StyleOf.fwBold, StyleOf.textCodGray, { marginBottom: 30 }]}
+            style={[
+              StyleOf.f14,
+              StyleOf.fwBold,
+              StyleOf.textCodGray,
+              { marginBottom: 30 },
+            ]}
           >
             Please sign up to enter in a app.
           </Text>
 
           <TextInput
-            style={[StyleOf.input, nameError ? { borderColor: global.borderDanger} : '']}
+            style={[
+              StyleOf.input,
+              nameError ? { borderColor: global.borderDanger } : "",
+            ]}
             placeholder="Your Name"
             onChangeText={(name) => setName(name)}
             onFocus={() => setNameError(false)}
           />
 
           <TextInput
-            keyboardType ="email-address"
-            style={[StyleOf.input, emailError ? { borderColor: global.borderDanger} : '']}
+            keyboardType="email-address"
+            style={[
+              StyleOf.input,
+              emailError ? { borderColor: global.borderDanger } : "",
+            ]}
             placeholder="Your Email"
             autoCompleteType="email"
             onChangeText={(email) => setEmail(email)}
             onFocus={() => setEmailError(false)}
           />
           <TextInput
-            style={[StyleOf.input, passwordError ? { borderColor: global.borderDanger} : '']}
+            style={[
+              StyleOf.input,
+              passwordError ? { borderColor: global.borderDanger } : "",
+            ]}
             placeholder="Enter Password"
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
             onFocus={() => setPasswordError(false)}
           />
           <TextInput
-            style={[StyleOf.input, conpasswordError ? { borderColor: global.borderDanger} : '']}
+            style={[
+              StyleOf.input,
+              conpasswordError ? { borderColor: global.borderDanger } : "",
+            ]}
             placeholder="Confirm Password"
             secureTextEntry={true}
             onChangeText={(conpassword) => setConfirmPassword(conpassword)}
             onFocus={() => setConfirmPasswordError(false)}
           />
 
-
           <TextInput
-            style={[StyleOf.input, contactError ? { borderColor: global.borderDanger} : '']}
+            style={[
+              StyleOf.input,
+              contactError ? { borderColor: global.borderDanger } : "",
+            ]}
             placeholder="Contact"
             keyboardType="phone-pad"
             onChangeText={(contact) => setContact(contact)}
             onFocus={() => setContactError(false)}
           />
 
-
-
-<SelectDropdown 
-  buttonStyle={StyleOf.input}
-  buttonTextStyle={[{textAlign:'left'}]}
-  buttonTextStyleAfterSelection={[{color:'#000000'}]}
-  defaultButtonText={"Gender"}
-	data={genders}
-	onSelect={(gender) => setGender(gender)}
-	buttonTextAfterSelection={(selectedItem, index) => {
-		// text represented after item is selected ,color:"#afafaf",
-		// if data array is an array of objects then return selectedItem.property to render after item is selected
-		return selectedItem
-	}}
-	rowTextForSelection={(item, index) => {
-		// text represented for each item in dropdown
-		// if data array is an array of objects then return item.property to represent item in dropdown
-		return item
-	}}
-/>
-
+          <SelectDropdown
+            buttonStyle={StyleOf.input}
+            buttonTextStyle={[{ textAlign: "left" }]}
+            buttonTextStyleAfterSelection={[{ color: "#000000" }]}
+            defaultButtonText={"Gender"}
+            data={genders}
+            onSelect={(gender) => setGender(gender)}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              // text represented after item is selected ,color:"#afafaf",
+              // if data array is an array of objects then return selectedItem.property to render after item is selected
+              return selectedItem;
+            }}
+            rowTextForSelection={(item, index) => {
+              // text represented for each item in dropdown
+              // if data array is an array of objects then return item.property to represent item in dropdown
+              return item;
+            }}
+          />
 
           <TextInput
             style={StyleOf.input}

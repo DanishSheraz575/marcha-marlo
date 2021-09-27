@@ -12,13 +12,21 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from '@react-navigation/native';
 
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 
+import Loader from "../components/Loader";
+
 export default function AddProduct({}) {
+
+
+  const [showLoader, setShowLoader] = useState(false);
+
+  const navigation = useNavigation(); 
 
   let [productImage1, setProductImage1] = useState("");
   let [productImage2, setProductImage2] = useState("");
@@ -183,6 +191,7 @@ export default function AddProduct({}) {
 
   function upload_product() {
 
+    
     var data = new FormData();
 
     let category_id=0;
@@ -254,7 +263,7 @@ export default function AddProduct({}) {
       data.append('images[]', { uri: productImage4, name:'image4', type: 'image/jpg'});
     }
     
-  
+    setShowLoader(true);
     fetch(global.api + "add_product", {
       method: "POST", // or 'PUT'
       headers: {
@@ -268,7 +277,9 @@ export default function AddProduct({}) {
       .then((json) => {
         var status = json.status.toLowerCase() ;
         if (status == "success") {
+          setShowLoader(false);
           alert(json.result);
+          navigation.navigate('Dashboard');
         } else {
           alert(json.result);
         }
@@ -358,7 +369,7 @@ export default function AddProduct({}) {
                 </Text>
                 <TextInput 
                   style={[StyleOf.addProductInput]} 
-                  onChangeText={(productCustomCategory) => productCustomCategory(productCustomCategory)}
+                  onChangeText={(productCustomCategory) => setProductCustomCategory(productCustomCategory)}
                 />
               </View>
             ) : (
@@ -506,6 +517,7 @@ export default function AddProduct({}) {
       </View>
 
       <BottomLinks active="add" />
+      <Loader showit={showLoader} />
     </View>
   );
 }

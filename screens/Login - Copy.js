@@ -7,17 +7,14 @@ import {
   TextInput,
   Modal,
   Alert,
-  Pressable,
+  Pressable
 } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
-
-import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
 export default function Login({ navigation }) {
 
-  
 
   const [modalVisible, setModalVisible] = useState(false);
   const [password_recover_email, setPasswordRecoverEmail] = useState("");
@@ -119,7 +116,6 @@ export default function Login({ navigation }) {
 
   return (
     <View style={[StyleOf.fullContainer, StyleOf.bgWhite]}>
-      <Loader showit="true" />
       <View style={StyleOf.rowItemCenter}>
         <Text style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textRadicalRed]}>
           Welcome back,
@@ -206,9 +202,6 @@ export default function Login({ navigation }) {
           </View>
         </View>
       </Modal>
-    
-    
-    
     </View>
   );
 }
