@@ -12,11 +12,15 @@ import SelectDropdown from "react-native-select-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
 
+import Loader from "../components/Loader";
+
 import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
 
 export default function MyProfile({}) {
   const genders = ["Male", "Female"];
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const [name, setName] = useState(global.ufull_name);
   const [nameError, setNameError] = useState(false);
@@ -77,7 +81,7 @@ export default function MyProfile({}) {
       return false;
     }
 
-
+    setShowLoader(true);
     var data = new FormData();  
     data.append('image', {  
       uri: newProfileImage,
@@ -114,6 +118,7 @@ export default function MyProfile({}) {
     })
       .then((response) => response.json())
       .then((json) => {
+        setShowLoader(false);
         var status = json.status.toLowerCase();
         if (status == "success") {
           global.ufull_name = name;
@@ -250,6 +255,7 @@ export default function MyProfile({}) {
           </View>
         </ScrollView>
       </View>
+      <Loader showit={showLoader} />
     </View>
   );
 }

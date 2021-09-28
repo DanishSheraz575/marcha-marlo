@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from "react-native";
 
+import Loader from "../components/Loader";
+
 import SelectDropdown from "react-native-select-dropdown";
 import StyleOf from "../assets/AppStyles";
 
@@ -15,6 +17,8 @@ import StyleOf from "../assets/AppStyles";
 
 export default function SignUp({ navigation }) {
   const genders = ["Male", "Female"];
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState(false);
@@ -50,7 +54,7 @@ export default function SignUp({ navigation }) {
     if (contact === "") {
       setContactError(true);
     }
-
+    setShowLoader(true);
     const data = {
       api_token: global.token,
       full_name: name,
@@ -69,6 +73,7 @@ export default function SignUp({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
+        setShowLoader(false);
         alert(json.result);
         var status = json.status.toLowerCase();
         if (status == "success") {
@@ -198,6 +203,7 @@ export default function SignUp({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      <Loader showit={showLoader} />
     </ScrollView>
   );
 }

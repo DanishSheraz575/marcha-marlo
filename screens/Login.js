@@ -122,7 +122,6 @@ export default function Login({ navigation }) {
 
   return (
     <View style={[StyleOf.fullContainer, StyleOf.bgWhite]}>
-      <Loader showit="true" />
       <View style={StyleOf.rowItemCenter}>
         <Text style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textRadicalRed]}>
           Welcome back,
