@@ -14,6 +14,8 @@ import TimeAgo from "../components/TimeAgo";
 
 export default function Chats({}) {
 
+  
+
   const navigation = useNavigation(); 
 
   const [newMessage, setNewMessage] = useState(0);
@@ -36,7 +38,7 @@ export default function Chats({}) {
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length>0) {
           var messagesData = json.result;
-          let myProductList = [];
+          let dataList = [];
           var title = "Message";
           var img = "product_placeholder.png";
 
@@ -63,11 +65,17 @@ export default function Chats({}) {
               var images = item.requester_product.images.split(",");
               var img = item.product_images_base_url + images[0];
             }
-            myProductList.push({
+            var last_msg='';
+            if(item.last_chat && item.last_chat.length>0){
+              last_msg=item.last_chat.msg;
+            }
+
+            dataList.push({
+              
               request_id: item.request_id,
               title: title,
               image: img,
-              message: item.last_chat.msg,
+              message: last_msg,
               type: item.type,
               ago: item.added_on,
               my_product_id:item.requested_product_id,
@@ -79,7 +87,7 @@ export default function Chats({}) {
               requester_image:img,
             });
           });
-          setDataList(myProductList);
+          setDataList(dataList);
           setMessageState(2);
         } else {
           setMessageState(1);

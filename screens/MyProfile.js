@@ -8,6 +8,8 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
+
+import NetInfo from '@react-native-community/netinfo';
 import SelectDropdown from "react-native-select-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
@@ -37,8 +39,6 @@ export default function MyProfile({}) {
   const [gender, setGender] = useState(global.ugender);
   const [city, setCity] = useState(global.ucity);
 
-
-
   const [profileImage, setProfileImage] = useState(global.uimage);
   const [newProfileImage, setNewProfileImage] = useState("");
 
@@ -66,12 +66,11 @@ export default function MyProfile({}) {
     let img = { localUri: pickerResult.uri };
     setNewProfileImage(img.localUri);
     setProfileImage(img.localUri);
-    global.uimage=img.localUri;
+    global.uimage = img.localUri;
   };
 
-
   function update_profile() {
-    
+
     if (name === "") {
       setNameError(true);
       return false;
@@ -81,20 +80,20 @@ export default function MyProfile({}) {
       return false;
     }
 
-    setShowLoader(true);
-    var data = new FormData();  
-    data.append('image', {  
+    //setShowLoader(true);
+    var data = new FormData();
+    data.append("image", {
       uri: newProfileImage,
-      name: 'file',
-      type: 'image/jpg'
+      name: "file",
+      type: "image/jpg",
     });
-    data.append('api_token', global.token);
-    data.append('user_id', global.uid);
-    data.append('password', password);
-    data.append('full_name', name);
-    data.append('gender', gender);
-    data.append('contact_number', contact);
-    data.append('city', city);
+    data.append("api_token", global.token);
+    data.append("user_id", global.uid);
+    data.append("password", password);
+    data.append("full_name", name);
+    data.append("gender", gender);
+    data.append("contact_number", contact);
+    data.append("city", city);
     /*
     const asdata = {
       api_token: global.token,
@@ -107,32 +106,43 @@ export default function MyProfile({}) {
       city: city,
     };
     */
-    fetch(global.api + "update_profile", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        'Content-Type': 'multipart/form-data'
-      },
-      //body: JSON.stringify(data),
-      body: data,
-    })
-      .then((response) => response.json())
-      .then((json) => {
+/*
+    NetInfo.fetch().then((isConnected) => {
+      if (isConnected) {
+        */
+        fetch(global.api + "update_profile", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+          //body: JSON.stringify(data),
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            //setShowLoader(false);
+            var status = json.status.toLowerCase();
+            if (status == "success") {
+              global.ufull_name = name;
+              global.ugender = gender;
+              global.ucity = city;
+
+              alert(json.result);
+            } else {
+              alert(json.result);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+/*
+      } else {
         setShowLoader(false);
-        var status = json.status.toLowerCase();
-        if (status == "success") {
-          global.ufull_name = name;
-          global.ugender = gender;
-          global.ucity = city;
-          
-          alert(json.result);
-        } else {
-          alert(json.result);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        alert("not connected");
+      }
+    });
+    */
   }
 
   return (
@@ -169,13 +179,21 @@ export default function MyProfile({}) {
 
               <TouchableOpacity
                 onPress={openImagePickerAsync}
-                style={[{ elevation: 3,height:35,width:35,marginLeft:90,marginTop:-30 }]}
+                style={[
+                  {
+                    elevation: 3,
+                    height: 35,
+                    width: 35,
+                    marginLeft: 90,
+                    marginTop: -30,
+                  },
+                ]}
               >
                 {/* <Image style={[StyleOf.editIcon,{marginTop:-36,marginLeft:100,zIndex:2}]} source={require('../assets/camera_icon.png')} />*/}
                 <Image
-                  style={[{marginLeft:3,marginTop:3}]}
+                  style={[{ marginLeft: 3, marginTop: 3 }]}
                   source={require("../assets/camera_icon.png")}
-                /> 
+                />
               </TouchableOpacity>
             </View>
 
@@ -277,7 +295,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     zIndex: 1,
     */
-    position:"relative"
+    position: "relative",
   },
   profileImageContainer: {
     marginTop: 20,

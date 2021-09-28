@@ -8,16 +8,17 @@ import {
   Modal,
   Alert,
   Pressable,
+
 } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
+import NetInfo from '@react-native-community/netinfo';
+
 import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
-
 export default function Login({ navigation }) {
-
   const [showLoader, setShowLoader] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,8 +26,7 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("mhaneef05@gmail.com");
   const [password, setPassword] = useState("asd123");
 
-
-  const data = { api_token: global.token};
+  const data = { api_token: global.token };
 
   fetch(global.api + "get_config", {
     method: "POST", // or 'PUT'
@@ -38,13 +38,12 @@ export default function Login({ navigation }) {
     .then((response) => response.json())
     .then((json) => {
       var status = json.status.toLowerCase();
-        if (status == "success") {
-        const config=json.result;
+      if (status == "success") {
+        const config = json.result;
 
-        global.product_images_base_url=config.product_images_base_url;
-        global.chat_attachments_base_url=config.chat_attachments_base_url;
-        global.user_image_base_url=config.user_image_base_url;
-
+        global.product_images_base_url = config.product_images_base_url;
+        global.chat_attachments_base_url = config.chat_attachments_base_url;
+        global.user_image_base_url = config.user_image_base_url;
       } else {
         alert(json.result);
       }
@@ -53,47 +52,55 @@ export default function Login({ navigation }) {
       console.error("Error:", error);
     });
 
-
   function get_me_login() {
-    setShowLoader(true);
-    const data = { api_token: global.token, email: email, password: password };
+    NetInfo.fetch().then((isConnected) => {
+      if (isConnected) {
+        setShowLoader(true);
+        const data = {
+          api_token: global.token,
+          email: email,
+          password: password,
+        };
 
-    fetch(global.api + "login", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        setShowLoader(false);
-        var status = json.status.toLowerCase();
-        if (status == "success") {
-          
-          const uinfo=json.result;
-          global.uid=uinfo.user_id;
-          global.ufull_name=uinfo.full_name;
-          global.uemail=uinfo.email;
+        fetch(global.api + "login", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            setShowLoader(false);
+            var status = json.status.toLowerCase();
+            if (status == "success") {
+              const uinfo = json.result;
+              global.uid = uinfo.user_id;
+              global.ufull_name = uinfo.full_name;
+              global.uemail = uinfo.email;
 
-          if(uinfo.image!=''){
-            global.uimage=global.user_image_base_url+uinfo.image;
-          }
+              if (uinfo.image != "") {
+                global.uimage = global.user_image_base_url + uinfo.image;
+              }
 
-          global.ugender=uinfo.gender;
-          global.ucountry=uinfo.country;
-          global.ucity=uinfo.city;
-          global.ucontact_number=uinfo.contact_number;
-          global.ustatus=uinfo.status;
+              global.ugender = uinfo.gender;
+              global.ucountry = uinfo.country;
+              global.ucity = uinfo.city;
+              global.ucontact_number = uinfo.contact_number;
+              global.ustatus = uinfo.status;
 
-          navigation.navigate("Dashboard");
-        } else {
-          alert(json.result);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+              navigation.navigate("Dashboard");
+            } else {
+              alert(json.result);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        alert("not connected");
+      }
+    });
   }
 
   function reset_my_password() {
@@ -133,7 +140,7 @@ export default function Login({ navigation }) {
 
       <View style={StyleOf.rowItemCenter}>
         <TextInput
-          keyboardType ="email-address"
+          keyboardType="email-address"
           style={StyleOf.input}
           placeholder="Enter Email"
           value={email}
@@ -193,7 +200,7 @@ export default function Login({ navigation }) {
             </Text>
 
             <TextInput
-              style={[StyleOf.input,{width:"100%"}]}
+              style={[StyleOf.input, { width: "100%" }]}
               placeholder="Enter Email"
               onChangeText={(password_recover_email) =>
                 setPasswordRecoverEmail(password_recover_email)
@@ -208,8 +215,7 @@ export default function Login({ navigation }) {
           </View>
         </View>
       </Modal>
-    
-    
+
       <Loader showit={showLoader} />
     </View>
   );

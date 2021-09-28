@@ -122,7 +122,7 @@ export default function ProductPager({ data }) {
           {(() => {
             if (productsDetailState == p.product_id) {
               return (
-                <View style={styles.detailsContainer}>
+                <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
                   <TouchableOpacity
                     style={{ padding: 15 }}
                     onPress={() => showDetailOf(0)}

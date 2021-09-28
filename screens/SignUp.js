@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from "react-native";
 
+import NetInfo from "@react-native-community/netinfo";
+
 import Loader from "../components/Loader";
 
 import SelectDropdown from "react-native-select-dropdown";
@@ -64,27 +66,34 @@ export default function SignUp({ navigation }) {
       contact_number: contact,
       city: city,
     };
-    fetch(global.api + "register", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        setShowLoader(false);
-        alert(json.result);
-        var status = json.status.toLowerCase();
-        if (status == "success") {
-          alert(json.result);
-        } else {
-          alert(json.result);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+
+    NetInfo.fetch().then((isConnected) => {
+      if (isConnected) {
+        fetch(global.api + "register", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            setShowLoader(false);
+            alert(json.result);
+            var status = json.status.toLowerCase();
+            if (status == "success") {
+              alert(json.result);
+            } else {
+              alert(json.result);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }else{
+        alert("Not connected");
+      }
+    });
   }
 
   return (

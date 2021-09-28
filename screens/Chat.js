@@ -141,6 +141,7 @@ export default function Chat({ route }) {
   }
 
   function sendMessage() {
+  
     if (message != "") {
       setTextInput("");
       const data = {
@@ -338,8 +339,8 @@ export default function Chat({ route }) {
         >
           <TextInput
             onChangeText={(message) => setMessage(message)}
-            value={textInput}
-            onSubmitEditing={setMessage}
+            //value={textInput}
+            //onSubmitEditing={setMessage}
             style={{
               lineHeight: 0,
               paddingHorizontal: 8,

@@ -11,6 +11,7 @@ import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
 
 export default function MarchaRequestReceived({}) {
+
   const [currentScreen, setCurrentScreenState] = useState("received");
 
   const [receivedDataState, setReceivedDataState] = useState(0);
@@ -22,7 +23,7 @@ export default function MarchaRequestReceived({}) {
   const data = { api_token: global.token, user_id: global.uid };
 
   useEffect(() => {
-    fetch(global.api + "get_marcha_requests_received", {
+    fetch(global.api + "get_marcha_done_requests_received", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +35,6 @@ export default function MarchaRequestReceived({}) {
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length > 0) {
           let RDataList = [];
-
           json.result.forEach((item) => {
             var requester = item.added_by;
 
@@ -79,7 +79,7 @@ export default function MarchaRequestReceived({}) {
         console.error("Error:", error);
       });
 
-    fetch(global.api + "get_marcha_requests_sent", {
+    fetch(global.api + "get_marcha_done_requests_sent", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
