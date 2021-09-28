@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -21,7 +21,8 @@ import StyleOf from "../assets/AppStyles";
 export default function Chat({ route }) {
   const navigation = useNavigation();
 
-  //const flatListRef = React.useRef<FlatList>(null);
+  const flatList = useRef();
+  const [textInput, setTextInput] = useState() 
 
   const { request_id } = route.params;
   const { my_product_id } = route.params;
@@ -55,7 +56,7 @@ export default function Chat({ route }) {
 */
   }, []);
 
-  //setTimeout(function(){getChatHistory()}.bind(this), 5000)
+  setTimeout(function(){getChatHistory()}.bind(this), 5000)
 
 
   //setTimeout(()=>getChatHistory(), 3000); 
@@ -141,6 +142,7 @@ export default function Chat({ route }) {
 
   function sendMessage() {
     if (message != "") {
+      setTextInput("");
       const data = {
         api_token: global.token,
         user_id: global.uid,
@@ -196,6 +198,7 @@ export default function Chat({ route }) {
         console.error("Error:", error);
       });
   }
+
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -314,7 +317,8 @@ export default function Chat({ route }) {
               return (
                 <FlatList
                   data={dataList}
-                  //inverted={true}
+                  ref={flatList}
+                  onContentSizeChange= {()=> flatList.current.scrollToEnd()} 
                   renderItem={renderChat}
                   keyExtractor={(item, index) => index.toString()}
                 />
@@ -334,6 +338,8 @@ export default function Chat({ route }) {
         >
           <TextInput
             onChangeText={(message) => setMessage(message)}
+            value={textInput}
+            onSubmitEditing={setMessage}
             style={{
               lineHeight: 0,
               paddingHorizontal: 8,

@@ -98,20 +98,22 @@ export default function Dashboard({navigation}) {
               </TouchableOpacity>
             </View>
 
+
+
             <View style={StyleOf.dashboardRow}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Chats')}
+                onPress={() => navigation.navigate('MarchaDoneRequests')}
                 style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGray]}
               >
                 <Image
                   style={StyleOf.dashboardBoxImg}
                   resizeMethod="auto" 
                   resizeMode="center"
-                  source={require("../assets/live_chat.png")}
+                  source={require("../assets/marcha_requests.png")}
                 />
                 <Text style={StyleOf.dashboardBoxLabel}>
                   {/* Marcha Request sent */}
-                  LIVE CHAT
+                  MARCHA DONE REQUESTS
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -130,6 +132,8 @@ export default function Dashboard({navigation}) {
                 </Text>
               </TouchableOpacity>
             </View>
+
+
           </View>
         </View>
 
