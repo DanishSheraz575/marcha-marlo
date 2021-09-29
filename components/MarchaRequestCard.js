@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import CancelMarchaBtn from "../components/CancelMarchaBtn";
 import AcceptMarchaBtn from "../components/AcceptMarchaBtn";
+import AcceptMarchaDoneRequestBtn from "../components/AcceptMarchaDoneRequestBtn";
 import DeclineMarchaBtn from "../components/DeclineMarchaBtn";
 
 import StyleOf from "../assets/AppStyles";
@@ -106,9 +107,27 @@ export default function MarchaRequestCard({
             </View>
 
             {(() => {
-              if (requestType == "sent") {
+              if (requestType == "sent" || requestType == "doneRequestSent" ) {
                 return (
                   <CancelMarchaBtn request_id={item.marcha_request_id} />
+                );
+              }
+              return null;
+            })()}
+
+{(() => {
+              if (requestType == "doneRequestReseived") {
+                return (
+                  <View style={[StyleOf.colContainerRow, StyleOf.mb5]}>
+                    <View style={[StyleOf.col5]}>
+                      <AcceptMarchaDoneRequestBtn 
+                        request_id={item.marcha_request_id}
+                      />
+                    </View>
+                    <View style={[StyleOf.col5]}>
+                      <DeclineMarchaBtn request_id={item.marcha_request_id} />
+                    </View>
+                  </View>
                 );
               }
               return null;
