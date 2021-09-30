@@ -80,13 +80,20 @@ export default function MyProfile({}) {
       return false;
     }
 
-    //setShowLoader(true);
+    setShowLoader(true);
     var data = new FormData();
-    data.append("image", {
-      uri: newProfileImage,
-      name: "file",
-      type: "image/jpg",
-    });
+
+    if(newProfileImage!=''){
+      data.append("image", {
+        uri: newProfileImage,
+        name: "file",
+        type: "image/jpg",
+      });
+    }else{
+      data.append("file", '');
+    }
+
+
     data.append("api_token", global.token);
     data.append("user_id", global.uid);
     data.append("password", password);
@@ -106,10 +113,10 @@ export default function MyProfile({}) {
       city: city,
     };
     */
-/*
+
     NetInfo.fetch().then((isConnected) => {
       if (isConnected) {
-        */
+        
         fetch(global.api + "update_profile", {
           method: "POST", // or 'PUT'
           headers: {
@@ -121,7 +128,7 @@ export default function MyProfile({}) {
         })
           .then((response) => response.json())
           .then((json) => {
-            //setShowLoader(false);
+            setShowLoader(false);
             var status = json.status.toLowerCase();
             if (status == "success") {
               global.ufull_name = name;
@@ -136,13 +143,13 @@ export default function MyProfile({}) {
           .catch((error) => {
             console.error("Error:", error);
           });
-/*
+
       } else {
         setShowLoader(false);
         alert("not connected");
       }
     });
-    */
+  
   }
 
   return (

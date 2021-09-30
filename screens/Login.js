@@ -23,8 +23,12 @@ export default function Login({ navigation }) {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [password_recover_email, setPasswordRecoverEmail] = useState("");
-  const [email, setEmail] = useState("mhaneef05@gmail.com");
-  const [password, setPassword] = useState("asd123");
+  //const [email, setEmail] = useState("mhaneef05@gmail.com");
+  //const [password, setPassword] = useState("asd123");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
 
   const data = { api_token: global.token };
 
