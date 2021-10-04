@@ -357,8 +357,7 @@ export default function AddProduct({}) {
               onChangeText={(productDescription) => setProductDescription(productDescription)}
             />
             <Text style={[StyleOf.smallText]}>
-              Include condition, features and other information about the
-              product
+              Include condition, features and other information about the product
             </Text>
           </View>
 
