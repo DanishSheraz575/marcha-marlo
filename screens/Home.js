@@ -10,6 +10,7 @@ import SocialBtns from '../components/SocialBtns';
 const image =  require('../assets/homebg.png');
 
 export default function Home({ navigation }) {
+  
   return (
     <View style={StyleOf.fullContainer}>
 

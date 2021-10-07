@@ -26,17 +26,18 @@ export default function Notifications({}) {
     })
       .then((response) => response.json())
       .then((json) => {
+
         const status = json.status.toLowerCase();
         if (status == "success") {
-          let myProductList = [];
+          let dataList = [];
           json.result.forEach((item) => {
-            myProductList.push({
+            dataList.push({
               message: item.message,
               type: item.type,
               ago:item.added_on
             });
           });
-          setDataList(myProductList);
+          setDataList(dataList);
           setNotificationState(2);
         } else {
           setNotificationState(1);

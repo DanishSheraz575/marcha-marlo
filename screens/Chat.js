@@ -33,6 +33,7 @@ export default function Chat({ route }) {
   const { requester_email } = route.params;
   const { requester_image } = route.params;
 
+
   const [requestId, setRequestId] = useState(request_id);
   const [myProductId, setMyProductId] = useState(my_product_id);
   const [marchaProductId, setMarchaProductId] = useState(marcha_product_id);
@@ -42,18 +43,6 @@ export default function Chat({ route }) {
 
   useEffect(() => {
     getChatHistory();
-
-/*
-    const interval = setInterval(function() {
-      getChatHistory();
-    }, 100);
-   clearInterval(interval); // thanks @Luca D'Amico
-
-   setTimeout(
-    () => getChatHistory(),
-    3000
-  );
-*/
   }, []);
 
   setTimeout(function(){getChatHistory()}.bind(this), 5000)

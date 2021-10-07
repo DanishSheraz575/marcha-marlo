@@ -19,6 +19,9 @@ import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
 export default function Login({ navigation }) {
+
+
+
   const [showLoader, setShowLoader] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +35,7 @@ export default function Login({ navigation }) {
 
   const data = { api_token: global.token };
 
+  
   fetch(global.api + "get_config", {
     method: "POST", // or 'PUT'
     headers: {
@@ -57,6 +61,17 @@ export default function Login({ navigation }) {
     });
 
   function get_me_login() {
+
+    if(email==''){
+      alert("Email is required");
+      return false;
+    }
+
+    if(password==''){
+      alert("Password is required");
+      return false;
+    }
+
     NetInfo.fetch().then((isConnected) => {
       if (isConnected) {
         setShowLoader(true);
@@ -143,7 +158,7 @@ export default function Login({ navigation }) {
       </View>
 
       <View style={StyleOf.rowItemCenter}>
-        <TextInput
+        <TextInput style={{textTransform:'lowercase'}}
           keyboardType="email-address"
           style={StyleOf.input}
           placeholder="Enter Email"
