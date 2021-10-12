@@ -11,6 +11,7 @@ import Logo from "../components/Logo";
 
 export default function Dashboard({navigation}) {
   alert(global.uid);
+
   const image =  require('../assets/dashboardbg.png');
   return (
     <View style={[StyleOf.fullContainer]}>

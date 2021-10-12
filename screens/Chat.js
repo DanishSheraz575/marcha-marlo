@@ -18,11 +18,15 @@ import CancelMarchaBtn from "../components/CancelMarchaBtn";
 
 import StyleOf from "../assets/AppStyles";
 
+
+
+
 export default function Chat({ route }) {
   const navigation = useNavigation();
 
+  const textInputRef = useRef();
+
   const flatList = useRef();
-  const [textInput, setTextInput] = useState() 
 
   const { request_id } = route.params;
   const { my_product_id } = route.params;
@@ -41,14 +45,27 @@ export default function Chat({ route }) {
   const [messagesState, setMessagesState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
+  const [lastMessage, setLastMessage] = useState(false);
+
   useEffect(() => {
     getChatHistory();
-  }, []);
+    return () => {
+      // This is its cleanup.
+    };
+  });
 
   setTimeout(function(){getChatHistory()}.bind(this), 5000)
 
 
   //setTimeout(()=>getChatHistory(), 3000); 
+
+/*
+  function addItemInFlatList(added_by, msg, added_on){
+    var id=(dataList.length+1);
+    var newList = [dataList , {added_by :added_by, msg: msg, added_on:added_on}];
+    setDataList(newList);
+  }
+*/
 
 
   function getChatHistory() {
@@ -79,6 +96,11 @@ export default function Chat({ route }) {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+      return () => {
+        // This is its cleanup.
+      };
+
   }
 
   function renderChat({ item }) {
@@ -132,7 +154,15 @@ export default function Chat({ route }) {
   function sendMessage() {
   
     if (message != "") {
-      setTextInput("");
+  
+      //textInputRef.clear();
+      //alert(textInputRef);
+      //textInputRef.current.reset();
+      //console.log(textInputRef='');
+      //setDefaultTextInputValue("");
+      
+      setLastMessage(true);
+
       const data = {
         api_token: global.token,
         user_id: global.uid,
@@ -143,6 +173,12 @@ export default function Chat({ route }) {
         attachments: "",
       };
 
+      if(lastMessage){
+        footer(message);
+      }
+      
+
+      textInputRef.current.clear();
       fetch(global.api + "send_message", {
         method: "POST", // or 'PUT'
         headers: {
@@ -189,6 +225,27 @@ export default function Chat({ route }) {
       });
   }
 
+  //footer = (msg) => {
+  function footer (msg) {
+    return (
+      <View>
+      <View style={StyleOf.colContainerRow}>
+        <View style={[StyleOf.col10]}>
+          <View
+            style={[styles.speachBubble, styles.sentSpeachBubble]}
+          >
+            <Text style={StyleOf.textWhite}>{msg}</Text>
+          </View>
+        </View>
+        <View style={[StyleOf.col10]}>
+          <Text style={[styles.sentDate, StyleOf.f11]}>
+            just now
+          </Text>
+        </View>
+      </View>
+    </View>
+    );
+  }
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -311,6 +368,7 @@ export default function Chat({ route }) {
                   onContentSizeChange= {()=> flatList.current.scrollToEnd()} 
                   renderItem={renderChat}
                   keyExtractor={(item, index) => index.toString()}
+                  ListFooterComponent={footer()}
                 />
               );
             }
@@ -337,6 +395,8 @@ export default function Chat({ route }) {
               alignSelf: "flex-start",
               width: "90%",
             }}
+            //value={defaultTextInputValue}          
+            ref={textInputRef}
             placeholder="Type something ..."
           />
           <TouchableOpacity

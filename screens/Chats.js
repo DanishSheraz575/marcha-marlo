@@ -14,18 +14,17 @@ import TimeAgo from "../components/TimeAgo";
 
 export default function Chats({}) {
 
-  
-
   const navigation = useNavigation(); 
 
   const [newMessage, setNewMessage] = useState(0);
 
   const [messageState, setMessageState] = useState(0);
+
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
-
   useEffect(() => {
+
     fetch(global.api + "chat_list", {
       method: "POST", // or 'PUT'
       headers: {
@@ -56,7 +55,6 @@ export default function Chats({}) {
               var img='';
             }
             if (item.added_by.user_id == global.uid) {
-
               title = item.requested_product.title;
               var images = item.requested_product.images.split(",");
               var img = item.product_images_base_url + images[0];
@@ -69,9 +67,7 @@ export default function Chats({}) {
             if(item.last_chat && item.last_chat.length>0){
               last_msg=item.last_chat.msg;
             }
-
-            dataList.push({
-              
+            dataList.push({              
               request_id: item.request_id,
               title: title,
               image: img,
@@ -96,9 +92,13 @@ export default function Chats({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, []);
+      return () => {
+        // This is its cleanup.
+      };
+  });
 
   function renderNotiSlot({ item }) {
+    //alert(item.image);
     return (
       <TouchableOpacity
         onPress={() =>
@@ -113,15 +113,18 @@ export default function Chats({}) {
           })
         }
       >
-        <View style={StyleOf.rowStrip}>
-          <View style={StyleOf.colContainerRow}>
+        <View style={[StyleOf.rowStrip,StyleOf.rowStripBottomBorder]}>
+          
+          <View style={[StyleOf.colContainerRow]}>
+            
             <View style={StyleOf.col2}>
-              <Image
+            <Image
                 style={StyleOf.rowStripImage}
                 resizeMode="contain"
                 source={{ uri: item.image }}
               />
             </View>
+
             <View style={StyleOf.col8}>
               <View style={{ marginLeft: 10 }}>
                 <View style={StyleOf.colContainerRow}>
@@ -141,7 +144,9 @@ export default function Chats({}) {
                 </Text>
               </View>
             </View>
+            
           </View>
+
         </View>
       </TouchableOpacity>
     );

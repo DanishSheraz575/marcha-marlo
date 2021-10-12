@@ -166,7 +166,7 @@ export default function AddProduct({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, []);
+  });
 
   
   
@@ -188,7 +188,7 @@ export default function AddProduct({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, []);
+  });
 
 
   function upload_product() {

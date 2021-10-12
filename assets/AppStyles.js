@@ -645,11 +645,16 @@ rowStrip:{
 },
 rowStripBottomBorder:{
   borderBottomWidth:1,
-  borderBottomColor:"#979797"
+  borderBottomColor:"#eee"
 },
 rowStripImage:{
+ /* 
   width:"100%",
   height:"100%",
+  */
+  width:80,
+  height:80,
+  maxWidth:"100%",
   alignSelf:"flex-start"
 },
 // MESSAGES/NOTIFICATION STRIP STYLES - ending

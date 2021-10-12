@@ -108,6 +108,11 @@ export default function Login({ navigation }) {
               global.ucontact_number = uinfo.contact_number;
               global.ustatus = uinfo.status;
 
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Dashboard' }],
+              });
+
               navigation.navigate("Dashboard");
             } else {
               alert(json.result);
