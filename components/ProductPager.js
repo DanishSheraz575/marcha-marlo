@@ -28,12 +28,40 @@ export default function ProductPager({ data }) {
     setProductsDetailState(id);
   }
 
-  function marchaMarnaHy(id) {
+  function interestedInMarcha(id, value) {
+    if(global.comingFrom=='myProducts'){
+      global.product_ids=global.myProductSelectedId;
+      global.product_value=global.myProductSelectedValue;
+      global.marcha_product_id=id;
+      global.marcha_product_value=value;
+    }else{
+      global.product_ids=id;
+      global.product_value=value;
+      global.marcha_product_id=global.marcha_product_id;
+      global.marcha_product_value=global.marcha_product_value;
+    }
+    navigation.navigate("PayTheDifference");
+  }
+  function marchaMarnaHy(id,value) {
+
+    if(global.comingFrom=='myProducts'){
+      global.product_ids=global.myProductSelectedId;
+      global.product_value=global.myProductSelectedValue;
+      global.marcha_product_id=id;
+      global.marcha_product_value=value;
+    }else{
+      global.product_ids=id;
+      global.product_value=value;
+      global.marcha_product_id=global.marcha_product_id;
+      global.marcha_product_value=global.marcha_product_value;
+    }
+
+    global.marcha_product_id = id;
     const data = {
       api_token: global.token,
       user_id: global.uid,
-      product_ids: global.myProductSelectedId,
-      marcha_product_id: id,
+      product_ids: global.product_ids,
+      marcha_product_id: global.marcha_product_id,
     };
 
     fetch(global.api + "send_marcha_request", {
@@ -49,6 +77,15 @@ export default function ProductPager({ data }) {
         if (status == "success") {
           alert(json.result);
           navigation.navigate("MarchaPendingRequests");
+
+          /*
+          if(global.comingFrom=='myProducts'){
+            navigation.navigate("MarchaPendingRequests");
+          }else{
+            navigation.navigate("PayTheDifference");
+          }
+          */
+          
         } else {
           alert(json.result);
         }
@@ -153,17 +190,42 @@ export default function ProductPager({ data }) {
                     <Text>{p.description}</Text>
                   </ScrollView>
 
-                  <TouchableOpacity
-                      style={[
-                        StyleOf.btn,
-                        StyleOf.bgEminence,
-                        { alignSelf: "center" },
-                      ]}
-                      onPress={() => marchaMarnaHy(p.product_id)}
-                  >
-                      <Text style={StyleOf.btnLabel}>marcha marna hai?</Text>
-                  </TouchableOpacity>
-                  
+
+{(() => {
+  if (global.comingFrom=='myProducts') {
+    return (
+      <TouchableOpacity
+      style={[
+        StyleOf.btn,
+        StyleOf.bgEminence,
+        { alignSelf: "center" },
+      ]}
+      onPress={() => marchaMarnaHy(p.product_id, p.value)}
+  >
+      <Text style={StyleOf.btnLabel}>marcha marna hai?</Text>
+  </TouchableOpacity>
+    );
+  }else{
+    return (
+      <TouchableOpacity
+      style={[
+        StyleOf.btn,
+        StyleOf.bgEminence,
+        { alignSelf: "center" },
+      ]}
+      onPress={() => interestedInMarcha(p.product_id, p.value)}
+  >
+      <Text style={StyleOf.btnLabel}>Interested</Text>
+  </TouchableOpacity>
+    );
+  }
+})()}
+
+
+
+
+
+
                 </View>
               );
             }

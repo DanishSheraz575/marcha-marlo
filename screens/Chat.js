@@ -18,9 +18,6 @@ import CancelMarchaBtn from "../components/CancelMarchaBtn";
 
 import StyleOf from "../assets/AppStyles";
 
-
-
-
 export default function Chat({ route }) {
   const navigation = useNavigation();
 
@@ -37,29 +34,45 @@ export default function Chat({ route }) {
   const { requester_email } = route.params;
   const { requester_image } = route.params;
 
-
   const [requestId, setRequestId] = useState(request_id);
   const [myProductId, setMyProductId] = useState(my_product_id);
   const [marchaProductId, setMarchaProductId] = useState(marcha_product_id);
   const [message, setMessage] = useState(false);
   const [messagesState, setMessagesState] = useState(0);
   const [dataList, setDataList] = useState(false);
+  const [newItem, setNewItem] = useState(false);
 
   const [lastMessage, setLastMessage] = useState(false);
 
+
+  /*
   useEffect(() => {
     getChatHistory();
     return () => {
       // This is its cleanup.
     };
-  });
+  }, []);
+  
 
-  setTimeout(function(){getChatHistory()}.bind(this), 5000)
+  useEffect(() => {
+    return () => {
+      getChatHistory();
+    };
+  }, [dataList]);
+*/
 
 
-  //setTimeout(()=>getChatHistory(), 3000); 
+  setTimeout(
+    function () {      
+      getChatHistory();
+    }.bind(this),
+    15000
+  );
+  //setTimeout(function(){getChatHistory()}.bind(this), 5000)
 
-/*
+  //setTimeout(()=>getChatHistory(), 3000);
+
+  /*
   function addItemInFlatList(added_by, msg, added_on){
     var id=(dataList.length+1);
     var newList = [dataList , {added_by :added_by, msg: msg, added_on:added_on}];
@@ -67,8 +80,8 @@ export default function Chat({ route }) {
   }
 */
 
-
-  function getChatHistory() {
+  const getChatHistory = () => {
+    //function getChatHistory() {
     const data = {
       api_token: global.token,
       user_id: global.uid,
@@ -86,7 +99,16 @@ export default function Chat({ route }) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success") {
-          var messagesData = json.result;
+          let messagesData = [];
+          json.result.forEach((item) => {
+            messagesData.push({
+              msg: item.msg,
+              added_by: item.added_by,
+              added_on: item.added_on,
+            });
+          });
+
+          //console.log(messagesData);
           setDataList(messagesData);
           setMessagesState(2);
         } else {
@@ -96,12 +118,7 @@ export default function Chat({ route }) {
       .catch((error) => {
         console.error("Error:", error);
       });
-
-      return () => {
-        // This is its cleanup.
-      };
-
-  }
+  };
 
   function renderChat({ item }) {
     return (
@@ -152,16 +169,29 @@ export default function Chat({ route }) {
   }
 
   function sendMessage() {
-  
     if (message != "") {
-  
+
+
+
+      //var date = new Date().getDate();
+      dataList.push({ added_by: global.uid, msg: message, added_on: '' });
+      setDataList(dataList);
+      setNewItem(true);
+      /*
+      var newList = [
+        dataList,
+        { added_by: global.uid, msg: message, added_on: date },
+      ];
+      setDataList(newList);
+      */
+
       //textInputRef.clear();
       //alert(textInputRef);
       //textInputRef.current.reset();
       //console.log(textInputRef='');
       //setDefaultTextInputValue("");
-      
-      setLastMessage(true);
+
+//      setLastMessage(true);
 
       const data = {
         api_token: global.token,
@@ -173,10 +203,13 @@ export default function Chat({ route }) {
         attachments: "",
       };
 
+      /*
       if(lastMessage){
         footer(message);
       }
-      
+*/
+
+      //console.log('new list '+dataList);
 
       textInputRef.current.clear();
       fetch(global.api + "send_message", {
@@ -195,7 +228,6 @@ export default function Chat({ route }) {
         });
     }
   }
-
 
   function sendMarchaDoneRequest() {
     const data = {
@@ -225,6 +257,7 @@ export default function Chat({ route }) {
       });
   }
 
+  /*  
   //footer = (msg) => {
   function footer (msg) {
     return (
@@ -246,7 +279,7 @@ export default function Chat({ route }) {
     </View>
     );
   }
-
+*/
   return (
     <View style={StyleOf.fullContainer}>
       <View style={[StyleOf.containerInner]}>
@@ -317,20 +350,34 @@ export default function Chat({ route }) {
           </View>
         </View>
 
-        <View style={[StyleOf.dropShadow, { padding: 5,backgroundColor:"#ffffff" }]}>
+        <View
+          style={[
+            StyleOf.dropShadow,
+            { padding: 5, backgroundColor: "#ffffff" },
+          ]}
+        >
           <View style={[StyleOf.colContainerRow]}>
             <View style={[StyleOf.col5]}>
-                <TouchableOpacity
-                  onPress={() => sendMarchaDoneRequest(request_id)}
-                  style={[StyleOf.rbBodyBtnRed,{margin:5}]}
+              <TouchableOpacity
+                onPress={() => sendMarchaDoneRequest(request_id)}
+                style={[StyleOf.rbBodyBtnRed, { margin: 5 }]}
+              >
+                <Text
+                  style={[
+                    StyleOf.selfCenter,
+                    StyleOf.textWhite,
+                    { textAlign: "center" },
+                  ]}
                 >
-                  <Text style={[StyleOf.selfCenter, StyleOf.textWhite,{textAlign:"center"}]}>
-                    <Text>Send Marcha Done Request</Text>
-                  </Text>
-                </TouchableOpacity>
+                  <Text>Send Marcha Done Request</Text>
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={[StyleOf.col5]}>
-              <CancelMarchaBtn request_id={request_id} title="Send Marcha Cancel Request" />
+              <CancelMarchaBtn
+                request_id={request_id}
+                title="Send Marcha Cancel Request"
+              />
             </View>
           </View>
         </View>
@@ -365,10 +412,10 @@ export default function Chat({ route }) {
                 <FlatList
                   data={dataList}
                   ref={flatList}
-                  onContentSizeChange= {()=> flatList.current.scrollToEnd()} 
+                  onContentSizeChange={() => flatList.current.scrollToEnd()}
                   renderItem={renderChat}
-                  keyExtractor={(item, index) => index.toString()}
-                  ListFooterComponent={footer()}
+                  keyExtractor={(item, index) => index.toString()}                  
+                  extraData={newItem}
                 />
               );
             }
@@ -395,7 +442,7 @@ export default function Chat({ route }) {
               alignSelf: "flex-start",
               width: "90%",
             }}
-            //value={defaultTextInputValue}          
+            //value={defaultTextInputValue}
             ref={textInputRef}
             placeholder="Type something ..."
           />
@@ -409,8 +456,6 @@ export default function Chat({ route }) {
             />
           </TouchableOpacity>
         </View>
-
-        
       </View>
     </View>
   );

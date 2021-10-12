@@ -11,6 +11,16 @@ import ProductPager from "../components/ProductPager";
 import StyleOf from "../assets/AppStyles";
 
 export default function GoForMarcha({ navigation }) {
+
+
+  if (global.myProductSelectedId > 0) {
+    var getProductsOf = "go_for_marcha";
+    var backBtnType="GoBackToMyProducts";
+  } else {
+    var getProductsOf = "my_products";
+    var backBtnType="GoBackToExploreProducts";
+  }
+
   const [productsState, setProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
@@ -22,7 +32,10 @@ export default function GoForMarcha({ navigation }) {
   };
 
   useEffect(() => {
-    fetch(global.api + "go_for_marcha", {
+
+
+    //fetch(global.api + "go_for_marcha", {
+    fetch(global.api + getProductsOf, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -64,27 +77,21 @@ export default function GoForMarcha({ navigation }) {
       <View style={[StyleOf.containerInner]}>
         {(() => {
           if (productsState == 0) {
-            return (
-              <MarchaSpinner size={70} />
-            );
+            return <MarchaSpinner size={70} />;
           }
           return null;
         })()}
 
         {(() => {
           if (productsState == 1) {
-            return (
-              <ProductsNotFound btnType="GoBackToMyProducts" />            
-            );
+            return <ProductsNotFound btnType={backBtnType} />;
           }
           return null;
         })()}
 
         {(() => {
           if (productsState == 2) {
-            return (
-              <ProductPager data={dataList} />
-            );
+            return <ProductPager data={dataList} />;
           }
           return null;
         })()}

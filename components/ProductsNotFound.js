@@ -59,13 +59,31 @@ export default function ProductsNotFound({ btnType }) {
               ]}
               onPress={() => navigation.navigate("MyProducts")}
             >
-              <Text style={StyleOf.btnLabel}>Go Back To My Product List</Text>
+              <Text style={StyleOf.btnLabel}>Go Back To My Products List</Text>
             </TouchableOpacity>
           );
         }
       })()}
 
-{(() => {
+      {(() => {
+        if (btnType == "GoBackToExploreProducts") {
+          return (
+            <TouchableOpacity
+              style={[
+                StyleOf.btn,
+                StyleOf.dropShadow,
+                StyleOf.bgEminence,
+                { marginTop: "5%" },
+              ]}
+              onPress={() => navigation.navigate("ExploreProducts")}
+            >
+              <Text style={StyleOf.btnLabel}>Go Back To Products List</Text>
+            </TouchableOpacity>
+          );
+        }
+      })()}
+
+      {(() => {
         if (btnType == "BackToDashboard") {
           return (
             <TouchableOpacity
@@ -82,8 +100,6 @@ export default function ProductsNotFound({ btnType }) {
           );
         }
       })()}
-
-
     </View>
   );
 }

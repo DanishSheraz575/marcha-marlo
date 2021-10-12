@@ -5,6 +5,7 @@ import {
   Image,
   FlatList,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
@@ -17,6 +18,14 @@ const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
 export default function ExploreProductsCard({ data }) {
+  const [isChecked, setChecked] = useState(0);
+
+  function selectProductToMarcha(id = 0, value) {
+    global.comingFrom = "exploreProducts";
+    global.marcha_product_id = id;
+    global.marcha_product_value = value;
+    setChecked(id);
+  }
 
   function formatData(dataList, numColumns) {
     const totalRows = Math.floor(dataList.length / numColumns);
@@ -34,7 +43,11 @@ export default function ExploreProductsCard({ data }) {
     }
     return (
       <View style={StyleOf.productCard}>
-        <View style={[StyleOf.productImageContainer]}>
+        <TouchableOpacity onPress={() => selectProductToMarcha(item.id, item.value)}>
+          {global.marcha_product_id == item.id ? (
+            <View
+              style={[StyleOf.productImageContainer, StyleOf.selectedProduct]}
+            >
               <Image
                 resizeMode="contain"
                 resizeMethod="auto"
@@ -42,15 +55,27 @@ export default function ExploreProductsCard({ data }) {
                 source={{ uri: item.image }}
               />
             </View>
-        <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
-        <Text style={StyleOf.productTitle}>{item.title}</Text>
-        <Text style={StyleOf.productLocation}>
-          <Image
-            style={StyleOf.productLocationMarker}
-            source={require("../assets/location-icon.png")}
-          />
-          {item.location}
-        </Text>
+          ) : (
+            <View style={[StyleOf.productImageContainer]}>
+              <Image
+                resizeMode="contain"
+                resizeMethod="auto"
+                style={StyleOf.productImage}
+                source={{ uri: item.image }}
+              />
+            </View>
+          )}
+
+          <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
+          <Text style={StyleOf.productTitle}>{item.title}</Text>
+          <Text style={StyleOf.productLocation}>
+            <Image
+              style={StyleOf.productLocationMarker}
+              source={require("../assets/location-icon.png")}
+            />
+            {item.location}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }

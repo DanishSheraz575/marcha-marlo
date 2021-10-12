@@ -22,8 +22,10 @@ export default function MyProductsCard({ data }) {
 
   //const [dataList, setDataList] = useState([]);
 
-  function selectProductToMarcha(id = 0) {
+  function selectProductToMarcha(id = 0, value) {
+    global.comingFrom='myProducts';
     global.myProductSelectedId = id;
+    global.myProductSelectedValue = value;
     setChecked(id);
   }
 
@@ -43,7 +45,7 @@ export default function MyProductsCard({ data }) {
     }
     return (
       <View style={StyleOf.productCard}>
-        <TouchableOpacity onPress={() => selectProductToMarcha(item.id)}>
+        <TouchableOpacity onPress={() => selectProductToMarcha(item.id, item.value)}>
           {global.myProductSelectedId == item.id ? (
             <View style={[StyleOf.productImageContainer,StyleOf.selectedProduct]}>
               <Image

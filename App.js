@@ -25,6 +25,7 @@ import MarchaRequestReceived from "./screens/MarchaRequestReceived";
 ///import MarchaRequestSent from './screens/MarchaRequestSent';
 import MarchaDoneRequests from "./screens/MarchaDoneRequests";
 import MarchaPendingRequests from "./screens/MarchaPendingRequests";
+import PayTheDifference from "./screens/PayTheDifference";
 
 //let noImage = '../assets/user_profile.png';
 
@@ -150,6 +151,11 @@ function App() {
         <Stack.Screen
           name="MarchaPendingRequests"
           component={MarchaPendingRequests}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PayTheDifference"
+          component={PayTheDifference}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

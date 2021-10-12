@@ -25,76 +25,79 @@ export default function Chats({}) {
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
 
-    fetch(global.api + "chat_list", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const status = json.status.toLowerCase();
-        if (status == "success" && json.result.length>0) {
-          var messagesData = json.result;
-          let dataList = [];
-          var title = "Message";
-          var img = "product_placeholder.png";
-
-          var requester_id=0;
-          var requester_name="User";          
-          var requester_email="";
-          var requester_image="";
-          
-
-          messagesData.forEach((item) => {
-            var uinfo=item.added_by;
-            if(uinfo.image!=''){
-              var img=global.user_image_base_url+uinfo.image;
-            }else{
-              var img='';
-            }
-            if (item.added_by.user_id == global.uid) {
-              title = item.requested_product.title;
-              var images = item.requested_product.images.split(",");
-              var img = item.product_images_base_url + images[0];
-            } else {              
-              title = item.requester_product.title;
-              var images = item.requester_product.images.split(",");
-              var img = item.product_images_base_url + images[0];
-            }
-            var last_msg='';
-            if(item.last_chat && item.last_chat.length>0){
-              last_msg=item.last_chat.msg;
-            }
-            dataList.push({              
-              request_id: item.request_id,
-              title: title,
-              image: img,
-              message: last_msg,
-              type: item.type,
-              ago: item.added_on,
-              my_product_id:item.requested_product_id,
-              marcha_product_id:item.requester_product_id,
-
-              requester_id:uinfo.user_id,
-              requester_name:uinfo.full_name,
-              requester_email:uinfo.email,
-              requester_image:img,
-            });
-          });
-          setDataList(dataList);
-          setMessageState(2);
-        } else {
-          setMessageState(1);
-        }
+    return () => {
+      fetch(global.api + "chat_list", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-      return () => {
-        // This is its cleanup.
-      };
+        .then((response) => response.json())
+        .then((json) => {
+          const status = json.status.toLowerCase();
+          if (status == "success" && json.result.length>0) {
+            var messagesData = json.result;
+            let dataList = [];
+            var title = "Message";
+            var img = "product_placeholder.png";
+  
+            var requester_id=0;
+            var requester_name="User";          
+            var requester_email="";
+            var requester_image="";
+            
+  
+            messagesData.forEach((item) => {
+              var uinfo=item.added_by;
+              if(uinfo.image!=''){
+                var img=global.user_image_base_url+uinfo.image;
+              }else{
+                var img='';
+              }
+              if (item.added_by.user_id == global.uid) {
+                title = item.requested_product.title;
+                var images = item.requested_product.images.split(",");
+                var img = item.product_images_base_url + images[0];
+              } else {              
+                title = item.requester_product.title;
+                var images = item.requester_product.images.split(",");
+                var img = item.product_images_base_url + images[0];
+              }
+              var last_msg='';
+              if(item.last_chat && item.last_chat.length>0){
+                last_msg=item.last_chat.msg;
+              }
+              dataList.push({              
+                request_id: item.request_id,
+                title: title,
+                image: img,
+                message: last_msg,
+                type: item.type,
+                ago: item.added_on,
+                my_product_id:item.requested_product_id,
+                marcha_product_id:item.requester_product_id,
+  
+                requester_id:uinfo.user_id,
+                requester_name:uinfo.full_name,
+                requester_email:uinfo.email,
+                requester_image:img,
+              });
+            });
+            setDataList(dataList);
+            setMessageState(2);
+          } else {
+            setMessageState(1);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+        return () => {
+          // This is its cleanup.
+        };
+    };
+
   });
 
   function renderNotiSlot({ item }) {

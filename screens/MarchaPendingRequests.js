@@ -11,6 +11,12 @@ import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
 
 export default function MarchaPendingRequests({}) {
+
+  global.product_ids=0;;
+  global.product_value=0;;
+  global.marcha_product_id=0;
+  global.marcha_product_value=0;
+
   const [myProductsState, setMyProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
