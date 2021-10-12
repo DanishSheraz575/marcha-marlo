@@ -46,6 +46,9 @@ export default function Notifications({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
   }, []);
 
   function renderNotiSlot({ item }) {
@@ -53,7 +56,7 @@ export default function Notifications({}) {
       <View style={[StyleOf.rowStrip,StyleOf.rowStripBottomBorder]}>
         <View style={StyleOf.colContainerRow}>
           <View style={StyleOf.col2}>
-            <Image source={require("../assets/marcha_icon.png")} />
+            <Image source={require("../assets/notificationIcon.png")} />
           </View>
           <View style={StyleOf.col8}>
             <View style={{marginLeft:10}}>

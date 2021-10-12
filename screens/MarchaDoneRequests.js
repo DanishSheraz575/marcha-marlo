@@ -133,6 +133,9 @@ export default function MarchaRequestReceived({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
   }, []);
 
   function renderRequestReceivedCard({ item }) {
@@ -256,7 +259,7 @@ export default function MarchaRequestReceived({}) {
                   return (
                     <RequestsNotFound
                       btnType="BackToDashboard"
-                      message="You have not received any Marcha Done Requests yet."
+                      message="No Marcha Done Requests received yet."
                     />
                   );
                 }
@@ -292,7 +295,7 @@ export default function MarchaRequestReceived({}) {
                   return (
                     <RequestsNotFound
                       btnType="BackToDashboard"
-                      message="You have not sent any Marcha Done Requests yet."
+                      message="Not Marcha Done Request send yet."
                     />
                   );
                 }

@@ -11,10 +11,8 @@ import {
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 
-
-
 import * as ImagePicker from "expo-image-picker";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 import StyleOf from "../assets/AppStyles";
 
@@ -24,11 +22,9 @@ import BottomLinks from "../components/BottomLinks";
 import Loader from "../components/Loader";
 
 export default function AddProduct({}) {
-
-
   const [showLoader, setShowLoader] = useState(false);
 
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   let [productImage1, setProductImage1] = useState("");
   let [productImage2, setProductImage2] = useState("");
@@ -135,7 +131,6 @@ export default function AddProduct({}) {
     setProductImage4(img.localUri);
   };
 
-
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
 
@@ -158,7 +153,7 @@ export default function AddProduct({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        var status = json.status.toLowerCase() ;
+        var status = json.status.toLowerCase();
         if (status == "success") {
           setLocations(json.result);
         }
@@ -166,10 +161,11 @@ export default function AddProduct({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
   });
 
-  
-  
   useEffect(() => {
     fetch(global.api + "categories", {
       method: "POST", // or 'PUT'
@@ -180,7 +176,7 @@ export default function AddProduct({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        var status = json.status.toLowerCase() ;
+        var status = json.status.toLowerCase();
         if (status == "success") {
           setCategories(json.result);
         }
@@ -188,55 +184,55 @@ export default function AddProduct({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
+    return () => {
+      // Anything in here is fired on component unmount.
+    }
   });
 
-
   function upload_product() {
-
-    
     var data = new FormData();
 
-    let category_id=0;
-    if(productCategory){
-      category_id=productCategory.category_id;
+    let category_id = 0;
+    if (productCategory) {
+      category_id = productCategory.category_id;
     }
 
-    if(!productTitle){
+    if (!productTitle) {
       alert("Please enter product title.");
       return false;
     }
 
-    if(!productCondition){
+    if (!productCondition) {
       alert("Please select your product condition.");
       return false;
     }
 
-    if(!productCondition){
+    if (!productCondition) {
       alert("Please select your product condition.");
       return false;
     }
 
-    if(!productDescription){
+    if (!productDescription) {
       alert("Please enter detail about product.");
       return false;
     }
 
-    if(!productCustomCategory && category_id<1){
+    if (!productCustomCategory && category_id < 1) {
       alert("Please select product category.");
       return false;
     }
 
-    if(!productLocation){
+    if (!productLocation) {
       alert("Please select product location.");
       return false;
     }
 
-    if(!productValue){
+    if (!productValue) {
       alert("Please enter product price.");
       return false;
     }
 
-    if(!productImage1 && !productImage2 && !productImage3 && !productImage4 ){
+    if (!productImage1 && !productImage2 && !productImage3 && !productImage4) {
       alert("Please select product image.");
       return false;
     }
@@ -250,21 +246,37 @@ export default function AddProduct({}) {
     data.append("value", productValue);
     data.append("category_id", category_id);
     data.append("category", productCustomCategory);
-    data.append("images",'');
+    data.append("images", "");
 
-    if(productImage1){
-      data.append('images[]', { uri: productImage1, name:'image1', type: 'image/jpg'});
+    if (productImage1) {
+      data.append("images[]", {
+        uri: productImage1,
+        name: "image1",
+        type: "image/jpg",
+      });
     }
-    if(productImage2){
-      data.append('images[]', { uri: productImage2, name:'image2', type: 'image/jpg'});
+    if (productImage2) {
+      data.append("images[]", {
+        uri: productImage2,
+        name: "image2",
+        type: "image/jpg",
+      });
     }
-    if(productImage3){
-      data.append('images[]', { uri: productImage3, name:'image3', type: 'image/jpg'});  
+    if (productImage3) {
+      data.append("images[]", {
+        uri: productImage3,
+        name: "image3",
+        type: "image/jpg",
+      });
     }
-    if(productImage4){
-      data.append('images[]', { uri: productImage4, name:'image4', type: 'image/jpg'});
+    if (productImage4) {
+      data.append("images[]", {
+        uri: productImage4,
+        name: "image4",
+        type: "image/jpg",
+      });
     }
-    
+
     setShowLoader(true);
     fetch(global.api + "add_product", {
       method: "POST", // or 'PUT'
@@ -278,10 +290,10 @@ export default function AddProduct({}) {
       .then((response) => response.json())
       .then((json) => {
         setShowLoader(false);
-        var status = json.status.toLowerCase() ;
+        var status = json.status.toLowerCase();
         if (status == "success") {
           alert(json.result);
-          navigation.navigate('Dashboard');
+          navigation.navigate("Dashboard");
         } else {
           alert(json.result);
         }
@@ -300,8 +312,8 @@ export default function AddProduct({}) {
           <View style={[StyleOf.mb30]}>
             <Text style={[StyleOf.labelLight]}>Add Product Title</Text>
             <Text style={[StyleOf.labelDark]}>Add Title</Text>
-            <TextInput 
-              style={[StyleOf.addProductInput]} 
+            <TextInput
+              style={[StyleOf.addProductInput]}
               onChangeText={(productTitle) => setProductTitle(productTitle)}
             />
             <Text style={[StyleOf.smallText]}>
@@ -354,10 +366,13 @@ export default function AddProduct({}) {
               placeholderTextColor="grey"
               numberOfLines={10}
               multiline={true}
-              onChangeText={(productDescription) => setProductDescription(productDescription)}
+              onChangeText={(productDescription) =>
+                setProductDescription(productDescription)
+              }
             />
             <Text style={[StyleOf.smallText]}>
-              Include condition, features and other information about the product
+              Include condition, features and other information about the
+              product
             </Text>
           </View>
 
@@ -368,9 +383,11 @@ export default function AddProduct({}) {
                 <Text style={[StyleOf.labelDark]}>
                   Add Your Custom Category
                 </Text>
-                <TextInput 
-                  style={[StyleOf.addProductInput]} 
-                  onChangeText={(productCustomCategory) => setProductCustomCategory(productCustomCategory)}
+                <TextInput
+                  style={[StyleOf.addProductInput]}
+                  onChangeText={(productCustomCategory) =>
+                    setProductCustomCategory(productCustomCategory)
+                  }
                 />
               </View>
             ) : (
@@ -382,7 +399,9 @@ export default function AddProduct({}) {
                   buttonTextStyle={[{ textAlign: "left" }]}
                   buttonTextStyleAfterSelection={[{ color: "#000000" }]}
                   data={categories}
-                  onSelect={(productCategory) => setProductCategory(productCategory)}
+                  onSelect={(productCategory) =>
+                    setProductCategory(productCategory)
+                  }
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem.title;
                   }}
@@ -410,7 +429,9 @@ export default function AddProduct({}) {
               buttonTextStyle={[{ textAlign: "left" }]}
               buttonTextStyleAfterSelection={[{ color: "#000000" }]}
               data={locations}
-              onSelect={(productLocation) => setProductLocation(productLocation)}
+              onSelect={(productLocation) =>
+                setProductLocation(productLocation)
+              }
               buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem;
               }}
@@ -425,8 +446,9 @@ export default function AddProduct({}) {
               Select The Best Price of Your Product
             </Text>
             <Text style={[StyleOf.labelDark]}>Product Price in PKR</Text>
-            <TextInput 
-              style={[StyleOf.addProductInput]} placeholder="Rs." 
+            <TextInput
+              style={[StyleOf.addProductInput]}
+              placeholder="Rs."
               keyboardType="numeric"
               onChangeText={(productValue) => setProductValue(productValue)}
             />

@@ -77,6 +77,9 @@ export default function MarchaRequestReceived({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
   }, []);
 
   function renderRequestCard({ item }) {
@@ -99,7 +102,7 @@ export default function MarchaRequestReceived({}) {
 
         {(() => {
           if (myProductsState == 1) {
-            return <RequestsNotFound btnType="BackToDashboard" message="You have not received any Marcha requests yet." />;
+            return <RequestsNotFound btnType="BackToDashboard" message="No request received yet." />;
           }
           return null;
         })()}

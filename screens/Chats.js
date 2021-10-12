@@ -25,7 +25,6 @@ export default function Chats({}) {
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
 
-    return () => {
       fetch(global.api + "chat_list", {
         method: "POST", // or 'PUT'
         headers: {
@@ -93,9 +92,9 @@ export default function Chats({}) {
         .catch((error) => {
           console.error("Error:", error);
         });
-        return () => {
-          // This is its cleanup.
-        };
+
+    return () => {
+      // This is its cleanup.
     };
 
   });

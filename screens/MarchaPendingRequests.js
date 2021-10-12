@@ -59,6 +59,9 @@ export default function MarchaPendingRequests({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
   }, []);
 
   function renderRequestCard({ item }) {

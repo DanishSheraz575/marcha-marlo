@@ -66,7 +66,7 @@ export default function Chat({ route }) {
     function () {      
       getChatHistory();
     }.bind(this),
-    15000
+    5000
   );
   //setTimeout(function(){getChatHistory()}.bind(this), 5000)
 

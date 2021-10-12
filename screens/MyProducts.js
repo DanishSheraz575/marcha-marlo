@@ -56,6 +56,9 @@ export default function MyProducts({ navigation }) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
   }, []);
 
   function nowGoForMarcha() {
