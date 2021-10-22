@@ -11,6 +11,8 @@ import {
 
 } from "react-native";
 
+import * as SecureStore from 'expo-secure-store';
+
 import StyleOf from "../assets/AppStyles";
 
 import NetInfo from '@react-native-community/netinfo';
@@ -60,6 +62,11 @@ export default function Login({ navigation }) {
       console.error("Error:", error);
     });
 
+    async function saveToLocal(key, value) {
+      await SecureStore.setItemAsync(key, value);
+    }
+    
+
   function get_me_login() {
 
     if(email==''){
@@ -94,6 +101,9 @@ export default function Login({ navigation }) {
             var status = json.status.toLowerCase();
             if (status == "success") {
               const uinfo = json.result;
+
+              saveToLocal('uid', "'"+uinfo.user_id+"'");
+
               global.uid = uinfo.user_id;
               global.ufull_name = uinfo.full_name;
               global.uemail = uinfo.email;

@@ -17,6 +17,7 @@ export default function Dashboard({navigation}) {
         <ScreenHeader title="Dashboard" backbtn="0" bgColor='' />
 
         <View style={[StyleOf.containerInner]}>
+          
           <View style={[StyleOf.px20, StyleOf.pb10]}>
             <Text style={[StyleOf.f12, StyleOf.textWelcome]}>welcome,</Text>
             <Text style={[StyleOf.textLgMd, StyleOf.textWhite]}>

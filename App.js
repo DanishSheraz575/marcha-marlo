@@ -2,6 +2,8 @@ import "react-native-gesture-handler";
 
 import * as React from "react";
 
+import * as SecureStore from 'expo-secure-store';
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -31,7 +33,7 @@ import PayTheDifference from "./screens/PayTheDifference";
 
 global.token = "3154f2a10b4aecaa9ae8c10468cd8227";
 global.api = "https://www.marchamarlo.com/api/";
-global.uid = 0;
+
 global.ufull_name = "Marcha Marlo User";
 global.uemail = "";
 //global.uimage=noImage;
@@ -50,10 +52,37 @@ global.user_image_base_url = "";
 
 const Stack = createStackNavigator();
 
+
+async function saveToLocal(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
+
+
+
+if (typeof global.uid !== 'undefined' && global.uid>0) {
+  alert('in if');
+  var mainPage='Dashboard';
+  global.uid = global.uid;
+  var marchaUid=global.uid;
+}else{
+  alert('in else');
+  var mainPage='Home';
+  global.uid = 0;
+  var marchaUid='0';
+}
+alert(marchaUid);
+saveToLocal('uid', marchaUid);
+
+
 function App() {
+
+  
+
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      {/* <Stack.Navigator initialRouteName="Home"> */}
+      <Stack.Navigator initialRouteName={mainPage}>
         <Stack.Screen
           name="Home"
           component={Home}

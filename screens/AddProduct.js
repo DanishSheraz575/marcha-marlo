@@ -417,7 +417,7 @@ export default function AddProduct({}) {
                 onValueChange={setProductCustomCategory}
                 style={StyleOf.selfCenter}
               />
-              <Text style={StyleOf.m5}>Do you like React Native?</Text>
+              <Text style={StyleOf.m5}>I want to add custom category</Text>
             </View>
           </View>
 

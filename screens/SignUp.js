@@ -40,7 +40,7 @@ export default function SignUp({ navigation }) {
   const [gender, setGender] = useState("");
   const [city, setCity] = useState("");
 
-  function get_me_signup() {
+  function getMeSignup() {
     if (name === "") {
       setNameError(true);
     }
@@ -56,7 +56,7 @@ export default function SignUp({ navigation }) {
     if (contact === "") {
       setContactError(true);
     }
-    setShowLoader(true);
+   
     const data = {
       api_token: global.token,
       full_name: name,
@@ -69,6 +69,7 @@ export default function SignUp({ navigation }) {
 
     NetInfo.fetch().then((isConnected) => {
       if (isConnected) {
+        setShowLoader(true);
         fetch(global.api + "register", {
           method: "POST", // or 'PUT'
           headers: {
@@ -83,14 +84,17 @@ export default function SignUp({ navigation }) {
             var status = json.status.toLowerCase();
             if (status == "success") {
               alert(json.result);
+              navigation.navigate('Login');
             } else {
               alert(json.result);
             }
           })
           .catch((error) => {
-            console.error("Error:", error);
+            setShowLoader(false);
+            alert(error);
           });
       }else{
+        setShowLoader(false);
         alert("Not connected");
       }
     });
@@ -200,7 +204,7 @@ export default function SignUp({ navigation }) {
           />
 
           <TouchableOpacity
-            onPress={get_me_signup}
+            onPress={()=>getMeSignup()}
             style={[
               StyleOf.btn,
               StyleOf.dropShadow,

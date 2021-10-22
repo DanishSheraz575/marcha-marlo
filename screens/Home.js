@@ -2,6 +2,9 @@
 import React from 'react';
 import { View, ImageBackground, Text, TouchableOpacity } from 'react-native';
 
+
+import * as SecureStore from 'expo-secure-store';
+
 import StyleOf from '../assets/AppStyles';
 
 import Logo from '../components/Logo';
@@ -9,8 +12,31 @@ import SocialBtns from '../components/SocialBtns';
 
 const image =  require('../assets/homebg.png');
 
+
+
+
 export default function Home({ navigation }) {
-  
+
+
+  async function getFromLocal(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      alert(result);
+    } else {
+      alert('No values stored under that key.');
+    }
+  }
+
+  getFromLocal('uid');
+
+  /*  
+  if (typeof global.uid !== 'undefined' && global.uid>0) {
+    navigation.navigate('Dashboard');
+  }else{
+    navigation.navigate('Login');
+  }
+*/
+
   return (
     <View style={StyleOf.fullContainer}>
 

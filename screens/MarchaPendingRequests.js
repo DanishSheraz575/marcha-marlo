@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { View, FlatList } from "react-native";
 
+import * as SecureStore from 'expo-secure-store';
+
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
@@ -68,9 +70,20 @@ export default function MarchaPendingRequests({}) {
     return <MarchaRequestCard item={item} requestType="sent" />;
   }
 
+  async function getFromLocal(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      alert(result);
+    } else {
+      alert('No values stored under that key.');
+    }
+  }
+
+  getFromLocal('uid');
+
   return (
     <View style={StyleOf.fullContainer}>
-      <ScreenHeader title="Marcha Pending Requests" backbtn="0" />
+      <ScreenHeader title="Marcha Pending Requests" />
 
       <View style={[StyleOf.containerInner]}>
         {(() => {

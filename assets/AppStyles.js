@@ -354,7 +354,8 @@ export default StyleSheet.create({
   dashboardContainer: {
     flex: 1,
     alignItems: "center",
-    padding: 30,
+    paddingHorizontal: 25,
+    paddingVertical:30,
     paddingTop: 35,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
@@ -369,7 +370,7 @@ export default StyleSheet.create({
   dashboardBox: {
     flex: 0.5,
     margin: 5,
-    padding: 10,
+    padding:5,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 6,
