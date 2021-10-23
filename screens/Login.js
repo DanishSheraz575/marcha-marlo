@@ -11,7 +11,6 @@ import {
 
 } from "react-native";
 
-import * as SecureStore from 'expo-secure-store';
 
 import StyleOf from "../assets/AppStyles";
 
@@ -21,8 +20,6 @@ import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
 export default function Login({ navigation }) {
-
-
 
   const [showLoader, setShowLoader] = useState(false);
 
@@ -36,8 +33,6 @@ export default function Login({ navigation }) {
 
 
   const data = { api_token: global.token };
-
-  
   fetch(global.api + "get_config", {
     method: "POST", // or 'PUT'
     headers: {
@@ -62,10 +57,6 @@ export default function Login({ navigation }) {
       console.error("Error:", error);
     });
 
-    async function saveToLocal(key, value) {
-      await SecureStore.setItemAsync(key, value);
-    }
-    
 
   function get_me_login() {
 
@@ -102,7 +93,7 @@ export default function Login({ navigation }) {
             if (status == "success") {
               const uinfo = json.result;
 
-              saveToLocal('uid', "'"+uinfo.user_id+"'");
+              setLocal('uinfo', JSON.stringify(uinfo));
 
               global.uid = uinfo.user_id;
               global.ufull_name = uinfo.full_name;
