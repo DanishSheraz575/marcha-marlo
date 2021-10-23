@@ -93,14 +93,15 @@ export default function Login({ navigation }) {
             if (status == "success") {
               const uinfo = json.result;
 
-              setLocal('uinfo', JSON.stringify(uinfo));
+              
 
               global.uid = uinfo.user_id;
               global.ufull_name = uinfo.full_name;
               global.uemail = uinfo.email;
 
               if (uinfo.image != "") {
-                global.uimage = global.user_image_base_url + uinfo.image;
+                uinfo.image = global.user_image_base_url + uinfo.image;
+                global.uimage = uinfo.image;
               }
 
               global.ugender = uinfo.gender;
@@ -108,6 +109,9 @@ export default function Login({ navigation }) {
               global.ucity = uinfo.city;
               global.ucontact_number = uinfo.contact_number;
               global.ustatus = uinfo.status;
+
+
+              setLocal('marchaUserInfo', JSON.stringify(uinfo));
 
               navigation.reset({
                 index: 0,

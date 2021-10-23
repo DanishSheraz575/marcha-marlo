@@ -29,41 +29,37 @@ import MarchaDoneRequests from "./screens/MarchaDoneRequests";
 import MarchaPendingRequests from "./screens/MarchaPendingRequests";
 import PayTheDifference from "./screens/PayTheDifference";
 
-import AppLoading from 'expo-app-loading';
-
-
+import AppLoading from "expo-app-loading";
 
 global.setLocal = async function saveToLocal(key, value) {
   await SecureStore.setItemAsync(key, value);
 };
 global.getLocal = async function getFromLocal(key) {
+  /*
   const result = await SecureStore.getItemAsync(key);
   if (result) {
     return result;
   } else {
     return 0;
   }
-};
-/*
-async function setHomeScreen() {
-  let uid = await SecureStore.getItemAsync("uid");
-  if (uid > 0) {
-    global.mainScreen = "Dashboard";
-    global.uid = uid;
-  } else {
-    global.uid = 0;
-    global.mainScreen = "Home";
-  }
-}
-setHomeScreen();
 */
 
+  await SecureStore.getItemAsync(key)
+    .then((result) => {
+      if (result !== null) {
+        return result;
+      } else {
+        return 0;
+      }
+    })
+    .catch((error) => console.log(error));
+};
 
+global.getOut = async function getLOgOut() {
+  SecureStore.deleteItemAsync("marchaUserInfo");
+};
 
-
-
-
-
+//getOut();
 
 global.token = "3154f2a10b4aecaa9ae8c10468cd8227";
 global.api = "https://www.marchamarlo.com/api/";
@@ -86,10 +82,12 @@ global.user_image_base_url = "";
 
 const Stack = createStackNavigator();
 
+/*
+//SecureStore.deleteItemAsync("uinfo");
+
 //const uid = getLocal('uid').then(result).then(data));
 //console.log('line 75 ');
 
-/*
 if (typeof global.uid !== 'undefined' && global.uid>0) {
   alert('in if');
   var mainPage='Dashboard';
@@ -101,90 +99,8 @@ if (typeof global.uid !== 'undefined' && global.uid>0) {
   global.uid = 0;
   var marchaUid='0';
 }
-*/
-
-function App() {
 
 
-
-
-
-
-
-  const [appReady, setAppReady]=useState(false);
-
-
-  async function checkLoginCredentials() {
-      await SecureStore.getItemAsync("uinfo")
-
-/*
-      .then((response) => response.json())
-          .then((json) => {
-
-          })
-          */
-
-
-      .then((result)=>{
-        //console.log(result);
-        //console.log(JSON.parse(result));
-        result=JSON.parse(result);
-
-        //const {user_id,full_name,email, image, gender, country, city, contact_number, added_on, modified_on, status}=result.json();
-        
-
-        //const {user_id,full_name,email,image,gender,city}=result;
-        //[user_id]=result;
-
-        //console.log('122 '+user_id);
-        //console.log('i m hee');
-        if(result!==null){
-          
-          const {user_id,full_name,email, image, gender, country, city, contact_number, added_on, modified_on, status}=result;
-
-          global.uid = user_id;
-          global.ufull_name = full_name;
-          global.uemail = email;
-
-          if (image != "") {
-            global.uimage = global.user_image_base_url + image;
-          }
-
-          global.ugender = gender;
-          global.ucountry = country;
-          global.ucity = city;
-          global.ucontact_number = contact_number;
-          global.ustatus = status;
-/*
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Dashboard' }],
-          });
-          */
-          global.mainScreen = "Dashboard";
-        }else{
-          global.uid = 0;
-          global.mainScreen = "Home";
-        }
-      }
-      )
-      .catch(
-        error=>console.log(error)
-      );
-    }
-
-  if(!appReady){
-    return(
-      <AppLoading 
-        startAsync={checkLoginCredentials}
-        onFinish={()=>setAppReady(true)}
-        onError={console.warn}
-      />
-    )
-  }
-
-
-/*
   async function setHomeScreen() {
     await SecureStore.getItemAsync("uid")
     .then((result)=>{
@@ -203,10 +119,7 @@ function App() {
     );
   }
   setHomeScreen();
-  */
-
-
-/*
+  
 getRememberedUser = async () => {
     try {
       const uid = await SecureStore.getItemAsync('uid');
@@ -224,11 +137,63 @@ getRememberedUser = async () => {
     };
 */
 
+function App() {
+  const [appReady, setAppReady] = useState(false);
 
+  async function checkLoginCredentials() {
+    await SecureStore.getItemAsync("marchaUserInfo")
+
+      .then((result) => {
+        if (result !== null) {
+          result = JSON.parse(result);
+          const {
+            user_id,
+            full_name,
+            email,
+            image,
+            gender,
+            country,
+            city,
+            contact_number,
+            added_on,
+            modified_on,
+            status,
+          } = result;
+          global.uid = user_id;
+          global.ufull_name = full_name;
+          global.uemail = email;
+          global.uimage = image;
+          global.ugender = gender;
+          global.ucountry = country;
+          global.ucity = city;
+          global.ucontact_number = contact_number;
+          global.ustatus = status;
+          global.mainScreen = "Dashboard";
+        } else {
+          global.uid = 0;
+          global.mainScreen = "Home";
+        }
+      })
+      .catch((error) => console.log(error));
+  }
+
+  if (!appReady) {
+    return (
+      <AppLoading
+        startAsync={checkLoginCredentials}
+        onFinish={() => setAppReady(true)}
+        onError={console.warn}
+      />
+    );
+  }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={global.mainScreen=="Dashboard" ? "Dashboard" : "Home"}>
+      <Stack.Navigator
+        initialRouteName={
+          global.mainScreen == "Dashboard" ? "Dashboard" : "Home"
+        }
+      >
         <Stack.Screen
           name="Home"
           component={Home}

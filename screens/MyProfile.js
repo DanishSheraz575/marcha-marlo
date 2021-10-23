@@ -20,6 +20,7 @@ import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
 
 export default function MyProfile({}) {
+
   const genders = ["Male", "Female"];
 
   const [showLoader, setShowLoader] = useState(false);
