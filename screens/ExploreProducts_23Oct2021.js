@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
-import ScreenSubTitleHeader from '../components/ScreenSubTitleHeader';
+import ScreenSubTitleHeader from "../components/ScreenSubTitleHeader";
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
-import MyProductsCard from "../components/MyProductsCard";
 import ProductsNotFound from "../components/ProductsNotFound";
-
+import ExploreProductsCard from "../components/ExploreProductsCard";
 
 const numColumns = 2;
-
 const WIDTH = Dimensions.get("window").width;
 
-export default function MyProducts({ navigation }) {
+export default function ExploreProducts({ navigation }) {
 
-  const [myProductsState, setMyProductsState] = useState(0);
+  const [productsState, setProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
-    global.myProductSelectedId =0;
-    fetch(global.api + "my_products", {
+    fetch(global.api + "explore_products", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -32,96 +35,95 @@ export default function MyProducts({ navigation }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        const status = json.status.toLowerCase() ;
+        var status = json.status.toLowerCase();
+        if (status == "success") {
+          let productList = [];
 
-        //console.log(json.result);
-
-        if (status == "success" && json.result.length>0) {
-          
-          /*
-          let myProductList = [];
           json.result.forEach((item) => {
             let images = item.images.split(",");
             let img = item.product_images_base_url + images[0];
-            myProductList.push({
+            productList.push({
               id: item.product_id,
               image: img,
-              condition: item.condition,
               value: item.value,
+              condition: item.condition,
               title: item.title,
               location: item.location,
             });
           });
-          setDataList(myProductList.reverse());
-          */
-          setDataList(json.result.reverse());
-          setMyProductsState(2);
+          setDataList(productList);
+          setProductsState(2);
         } else {
-          setMyProductsState(1);
+          setProductsState(1);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+
       return () => {
         // Anything in here is fired on component unmount.
       }
+
   }, []);
 
+
   function nowGoForMarcha() {
-    if(global.myProductSelectedId<1){
+    if(global.marcha_product_id<1){
       alert("Please select product first by touch on prduct image.");
     }else{
       navigation.navigate('GoForMarcha');
     }
   }
-
-
+  
 
   return (
     <View style={StyleOf.fullContainer}>
-      <ScreenHeader title="My Products" />
-      <View style={[StyleOf.containerInner,{marginBottom:80}]}>
+      <ScreenHeader title="Explore Products" />
+      <View style={[StyleOf.containerInner]}>
         {(() => {
-          if (myProductsState == 0) {
+          if (productsState == 0) {
             return (
+              <View style={StyleOf.rowItemCenter}>
                 <MarchaSpinner size={70} />
+              </View>
             );
           }
           return null;
         })()}
 
         {(() => {
-          if (myProductsState == 1) {
+          if (productsState == 1) {
             return (
-              <ProductsNotFound btnType= "MyProductBtn" />
-            );            
+              <ProductsNotFound btnType= "BackToDashboard" />
+            );
           }
           return null;
         })()}
 
         {(() => {
-          if (myProductsState == 2) {
+          if (productsState == 2) {
             return (
-              <View style={[{ marginBottom: 60 }]}>
-
+              <View  style={[{marginBottom:140}]}>
                 <ScreenSubTitleHeader title="Select product to start Marcha" />
-
-                <MyProductsCard data={dataList} />
+                <ExploreProductsCard data={dataList} />
+                
 
                 <TouchableOpacity
                   onPress={nowGoForMarcha}
-                  style={[{ alignSelf: "center",padding:10 }]}
+                  style={[{ alignSelf: "center" }]}
                 >
                   <Image source={require("../assets/go_for_marcha_btn.png")} />
                 </TouchableOpacity>
+
+
               </View>
             );
           }
           return null;
         })()}
       </View>
-      <BottomLinks active="BottomLinks" />
+      <BottomLinks active="explore" />
     </View>
   );
 }

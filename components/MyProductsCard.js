@@ -9,24 +9,24 @@ import {
 } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
-
-//import ScreenHeader from "./ScreenHeader";
-//import BottomLinks from "./BottomLinks";
-//import MarchaSpinner from "./MarchaSpinner";
-
 const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
+import { useNavigation } from "@react-navigation/native";
+
+
 export default function MyProductsCard({ data }) {
+
+
+  const navigation = useNavigation();
+
   const [isChecked, setChecked] = useState(global.myProductSelectedId);
-
-  //const [dataList, setDataList] = useState([]);
-
-  function selectProductToMarcha(id = 0, value) {
-    global.comingFrom='myProducts';
-    global.myProductSelectedId = id;
+  
+  function selectProductToMarcha(product_id = 0, value) {
+    global.comingFrom = "myProducts";
+    global.myProductSelectedId = product_id;
     global.myProductSelectedValue = value;
-    setChecked(id);
+    setChecked(product_id);
   }
 
   function formatData(dataList, numColumns) {
@@ -40,52 +40,112 @@ export default function MyProductsCard({ data }) {
   }
 
   function renderProductCard({ item, index }) {
-    if (item.empty) {
-      return <View style={[StyleOf.productCard, StyleOf.itemInvisible]} />;
+    const {
+      product_id,
+      value,
+      images,
+      condition,
+      title,
+      location,
+      empty,
+      product_images_base_url,
+    } = item;
+
+    const {
+      productCard,
+      itemInvisible,
+      selectedProductImageContainer,
+      productImageContainer,
+      productImage,
+      colContainerRow,
+      col5,
+      productTitle,
+      productPrice,
+      productLocation,
+      f12,
+      productLocationMarker,
+    } = StyleOf;
+
+    if (empty) {
+      return <View style={[productCard, itemInvisible]} />;
+    } else {
+      let pimages = images.split(",");
+      let img = product_images_base_url + pimages[0];
+
+      if (condition == "New") {
+        var conditionRibbon = require("../assets/new.png");
+      } else {
+        var conditionRibbon = require("../assets/old.png");
+      }
+
+      return (
+        <View style={productCard}>
+          <TouchableOpacity
+            onPress={() => selectProductToMarcha(product_id, value)}
+          >
+            <View
+              style={[
+                global.myProductSelectedId == product_id
+                  ? selectedProductImageContainer
+                  : productImageContainer,
+              ]}
+            >
+              <Image
+                style={{
+                  alignSelf: "flex-start",
+                  marginTop: -18,
+                  marginLeft: -18,
+                }}
+                source={conditionRibbon}
+              />
+              <Image
+                resizeMode="contain"
+                resizeMethod="auto"
+                style={productImage}
+                source={{ uri: img }}
+              />
+            </View>
+          </TouchableOpacity>
+
+          <View style={colContainerRow}>
+            <View style={col5}>
+              <Text style={productPrice}>Rs. {value}</Text>
+            </View>
+            <View style={[col5]}>
+              <TouchableOpacity
+                onPress={() => gotForEditProduct(product_id)}
+              >
+                <Image
+                  style={{ alignSelf: "flex-end" }}
+                  source={require("../assets/edit_icon.png")}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={productTitle}>{title}</Text>
+          <Text style={[productLocation, f12]}>
+            <Image
+              style={productLocationMarker}
+              source={require("../assets/location-icon.png")}
+            />
+            {location}
+          </Text>
+        </View>
+      );
     }
-    return (
-      <View style={StyleOf.productCard}>
-        <TouchableOpacity onPress={() => selectProductToMarcha(item.id, item.value)}>
-          {global.myProductSelectedId == item.id ? (
-            <View style={[StyleOf.productImageContainer,StyleOf.selectedProduct]}>
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={StyleOf.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          ) : (
-            <View style={[StyleOf.productImageContainer]}>
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={StyleOf.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          )}
-        </TouchableOpacity>
-        <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
-        <Text style={StyleOf.productTitle}>{item.title}</Text>
-        <Text style={[StyleOf.productLocation,StyleOf.f12]}>
-          <Image
-            style={StyleOf.productLocationMarker}
-            source={require("../assets/location-icon.png")}
-          />
-          {item.location}
-        </Text>
-      </View>
-    );
+  }
+
+  function gotForEditProduct(product_id){
+    
+    navigation.navigate("EditProduct",{'product_id':product_id});
+
   }
 
   return (
     <FlatList
-      //data={formatData(dataList, numColumns)}
       data={formatData(data, numColumns)}
       renderItem={renderProductCard}
-      // keyExtractor={(item, index) => index.toString()}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item, index) => index.toString()}
       numColumns={numColumns}
     />
   );

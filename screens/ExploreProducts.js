@@ -46,6 +46,7 @@ export default function ExploreProducts({ navigation }) {
               id: item.product_id,
               image: img,
               value: item.value,
+              condition: item.condition,
               title: item.title,
               location: item.location,
             });
@@ -66,7 +67,7 @@ export default function ExploreProducts({ navigation }) {
 
   }, []);
 
-
+/*
   function nowGoForMarcha() {
     if(global.marcha_product_id<1){
       alert("Please select product first by touch on prduct image.");
@@ -74,6 +75,7 @@ export default function ExploreProducts({ navigation }) {
       navigation.navigate('GoForMarcha');
     }
   }
+*/  
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -102,20 +104,9 @@ export default function ExploreProducts({ navigation }) {
         {(() => {
           if (productsState == 2) {
             return (
-              <View  style={[{marginBottom:140}]}>
-                <ScreenSubTitleHeader title="Select product to start Marcha" />
-                <ExploreProductsCard data={dataList} />
-                
-
-                <TouchableOpacity
-                  onPress={nowGoForMarcha}
-                  style={[{ alignSelf: "center" }]}
-                >
-                  <Image source={require("../assets/go_for_marcha_btn.png")} />
-                </TouchableOpacity>
-
-
-              </View>
+              <View >
+                <ExploreProductsCard data={dataList} />              
+             </View>
             );
           }
           return null;

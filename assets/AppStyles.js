@@ -546,6 +546,7 @@ export default StyleSheet.create({
     fontSize: 9,
     backgroundColor: "#EBEBEB",
     alignSelf: "center",
+    
   },
   rbBodyProductTitle: {
     fontSize: 14,
@@ -602,6 +603,17 @@ productImageContainer: {
 },
 selectedProduct: {
   borderColor: "red",
+},
+selectedProductImageContainer: {
+  backgroundColor: "#ffffff",
+  borderWidth: 2,
+  borderColor: "#ff0000",
+  justifyContent: "center",
+  padding: 20,
+  borderRadius: 10,
+  marginBottom: 6,
+  alignItems: "center",
+  justifyContent: "center",
 },
 checkbox: {
   alignSelf: "flex-start",
@@ -660,8 +672,24 @@ rowStripImage:{
 },
 // MESSAGES/NOTIFICATION STRIP STYLES - ending
 
-
-
+new:{
+  alignSelf:"flex-end",
+  //backgroundColor:"#662D91",
+  paddingHorizontal:8,
+  //borderRadius:4,
+  color:"#662D91",
+  fontSize:12,
+  height:18
+},
+old:{
+  alignSelf:"flex-end",
+  //backgroundColor:"red",
+  paddingHorizontal:8,
+  //borderRadius:4,
+  color:"red",
+  fontSize:12,
+  height:18
+}
 
 
 

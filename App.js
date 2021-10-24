@@ -20,6 +20,7 @@ import GoForMarcha from "./screens/GoForMarcha";
 import Chats from "./screens/Chats";
 import Chat from "./screens/Chat";
 import AddProduct from "./screens/AddProduct";
+import EditProduct from "./screens/EditProduct";
 import Notifications from "./screens/Notifications";
 
 import MarchaDone from "./screens/MarchaDone";
@@ -79,6 +80,8 @@ global.borderDanger = "#ffb2b2";
 global.product_images_base_url = "";
 global.chat_attachments_base_url = "";
 global.user_image_base_url = "";
+global.myProductList = [];
+global.exploreProductList = [];
 
 const Stack = createStackNavigator();
 
@@ -251,6 +254,12 @@ function App() {
         <Stack.Screen
           name="AddProduct"
           component={AddProduct}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="EditProduct"
+          component={EditProduct}
           options={{ headerShown: false }}
         />
 

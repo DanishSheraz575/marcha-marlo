@@ -66,7 +66,15 @@ export default function ExploreProductsCard({ data }) {
             </View>
           )}
 
-          <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
+          <View style={StyleOf.colContainerRow}>
+          <View style={StyleOf.col5}>
+            <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
+          </View>
+          <View style={[StyleOf.col5]}>
+            <Text style={item.condition=='New'?StyleOf.new:StyleOf.old}>{item.condition}</Text>
+          </View>
+        </View>
+
           <Text style={StyleOf.productTitle}>{item.title}</Text>
           <Text style={StyleOf.productLocation}>
             <Image

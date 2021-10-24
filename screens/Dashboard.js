@@ -1,4 +1,5 @@
-import React from "react";
+//import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity,ImageBackground } from "react-native";
 
 import StyleOf from "../assets/AppStyles";
@@ -7,10 +8,61 @@ import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 
 
-import Logo from "../components/Logo";
+//import Logo from "../components/Logo";
 
 export default function Dashboard({navigation}) {
   const image =  require('../assets/dashboardbg.png');
+
+
+
+
+/*
+  const data = { api_token: global.token, user_id: global.uid };
+  useEffect(() => {
+    global.myProductSelectedId =0;
+    fetch(global.api + "my_products", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        const status = json.status.toLowerCase() ;
+        if (status == "success" && json.result.length>0) {
+          let myProductList = [];
+
+          json.result.forEach((item) => {
+            let images = item.images.split(",");
+            let img = item.product_images_base_url + images[0];
+            myProductList.push({
+              id: item.product_id,
+              image: img,
+              condition: item.condition,
+              value: item.value,
+              title: item.title,
+              location: item.location,
+            });
+          });
+
+          //console.log(myProductList);
+
+          global.myProductList =myProductList.reverse();
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
+  }, []);
+*/
+
+
+
+
   return (
     <View style={[StyleOf.fullContainer]}>
       <ImageBackground source={image} style={StyleOf.bgImage}>
