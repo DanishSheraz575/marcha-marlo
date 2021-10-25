@@ -21,13 +21,13 @@ import BottomLinks from "../components/BottomLinks";
 
 import Loader from "../components/Loader";
 
-export default function EditProduct(props) {
+export default function EditProduct({route}) {
+
   const navigation = useNavigation();
+  const {title,condition,description,category_id,location,value}=route.params.productDetails;
+  //console.log(title);
+  //console.log(productDetails);
 
-
-    //const id = props.match.params.product_id;
-
-  console.log(props);
 
   const [showLoader, setShowLoader] = useState(false);
 
@@ -136,17 +136,16 @@ export default function EditProduct(props) {
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
 
-  const [productTitle, setProductTitle] = useState();
-  const [productCondition, setProductCondition] = useState();
-  const [productDescription, setProductDescription] = useState();
-  const [productCategory, setProductCategory] = useState();
+  const [productTitle, setProductTitle] = useState(title);
+  const [productCondition, setProductCondition] = useState(condition);
+  const [productDescription, setProductDescription] = useState(description);
+  const [productCategory, setProductCategory] = useState(category_id);
   const [productCustomCategory, setProductCustomCategory] = useState();
-  const [productLocation, setProductLocation] = useState();
-  const [productValue, setProductValue] = useState();
+  const [productLocation, setProductLocation] = useState(location);
+  const [productValue, setProductValue] = useState(value);
 
   const data = { api_token: global.token };
   useEffect(() => {
-    console.log("156");
     fetch(global.api + "locations", {
       method: "POST", // or 'PUT'
       headers: {
@@ -170,8 +169,6 @@ export default function EditProduct(props) {
   }, []);
 
   useEffect(() => {
-    console.log("180");
-
     fetch(global.api + "categories", {
       method: "POST", // or 'PUT'
       headers: {
@@ -189,6 +186,14 @@ export default function EditProduct(props) {
       .catch((error) => {
         console.error("Error:", error);
       });
+    return () => {
+      // Anything in here is fired on component unmount.
+    };
+  }, []);
+
+
+  useEffect(() => {
+    setProductTitle(title);
     return () => {
       // Anything in here is fired on component unmount.
     };
@@ -344,11 +349,11 @@ export default function EditProduct(props) {
             <Text style={[labelDark]}>Add Title</Text>
             <TextInput
               style={[addProductInput]}
+              value={productTitle}
               onChangeText={(productTitle) => setProductTitle(productTitle)}
             />
             <Text style={[smallText]}>
-              Mention the key features of your item (e.g. brand, model, make,
-              type)
+              Mention the key features of your item (e.g. brand, model, make, type)
             </Text>
           </View>
 
@@ -396,6 +401,7 @@ export default function EditProduct(props) {
               placeholderTextColor="grey"
               numberOfLines={10}
               multiline={true}
+              value={productDescription}
               onChangeText={(productDescription) =>
                 setProductDescription(productDescription)
               }
@@ -429,6 +435,7 @@ export default function EditProduct(props) {
                   buttonTextStyle={[{ textAlign: "left" }]}
                   buttonTextStyleAfterSelection={[{ color: "#000000" }]}
                   data={categories}
+                  defaultValueByIndex={productCategory}
                   onSelect={(productCategory) =>
                     setProductCategory(productCategory)
                   }
@@ -438,6 +445,7 @@ export default function EditProduct(props) {
                   rowTextForSelection={(item, index) => {
                     return item.title;
                   }}
+                  
                 />
               </View>
             )}
@@ -456,6 +464,7 @@ export default function EditProduct(props) {
             <Text style={[labelDark]}>Select Location</Text>
             <SelectDropdown
               buttonStyle={addProductInput}
+              defaultValue={productLocation}
               buttonTextStyle={[{ textAlign: "left" }]}
               buttonTextStyleAfterSelection={[{ color: "#000000" }]}
               data={locations}
@@ -478,6 +487,7 @@ export default function EditProduct(props) {
             <Text style={[labelDark]}>Product Price in PKR</Text>
             <TextInput
               style={[addProductInput]}
+              value={productValue}
               placeholder="Rs."
               keyboardType="numeric"
               onChangeText={(productValue) => setProductValue(productValue)}

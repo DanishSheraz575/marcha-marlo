@@ -135,10 +135,20 @@ export default function MyProductsCard({ data }) {
     }
   }
 
-  function gotForEditProduct(product_id){
-    
-    navigation.navigate("EditProduct",{'product_id':product_id});
 
+
+  const filterItem=(productId)=>{
+    const newdata = data.filter(function(item){
+      return item.product_id == productId;
+    });
+    return newdata[0];
+  };
+
+
+  function gotForEditProduct(product_id){
+    const productDetails=filterItem(product_id);
+//console.log(productDetails);
+    navigation.navigate("EditProduct",{productDetails:productDetails});
   }
 
   return (
