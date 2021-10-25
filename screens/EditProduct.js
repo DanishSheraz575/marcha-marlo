@@ -24,34 +24,56 @@ import Loader from "../components/Loader";
 export default function EditProduct({route}) {
 
   const navigation = useNavigation();
-  const {title,condition,description,category_id,location,value}=route.params.productDetails;
+  const {title,condition,description,category_id,location,value,images,product_images_base_url}=route.params.productDetails;
   //console.log(title);
-  //console.log(productDetails);
+  //console.log(images);
 
+  var img1= require("../assets/product_image_placeholder.png");
+  var img2= img1; 
+  var img3= img1; 
+  var img4= img1; 
+
+  
+  if(images!==null){
+    let product_images = images.split(",");
+    img1=product_images_base_url+product_images[0];
+    if(product_images[1]!== undefined){
+      img2=product_images_base_url+product_images[1];
+    }
+    if(product_images[2]!== undefined){
+      img3=product_images_base_url+product_images[2];
+    }
+    if(product_images[3]!== undefined){
+      img4=product_images_base_url+product_images[3];
+    }
+  }
+  
 
   const [showLoader, setShowLoader] = useState(false);
 
-  let [productImage1, setProductImage1] = useState("");
-  let [productImage2, setProductImage2] = useState("");
-  let [productImage3, setProductImage3] = useState("");
-  let [productImage4, setProductImage4] = useState("");
+  let [productImage1, setProductImage1] = useState(img1);
+  let [productImage2, setProductImage2] = useState(img2);
+  let [productImage3, setProductImage3] = useState(img3);
+  let [productImage4, setProductImage4] = useState(img4);
 
   let openImagePickerAsync1 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
     let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      //await ImagePicker.requestMediaLibraryPermissionsAsync();
+      await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    let pickerResult = await ImagePicker.launchCameraAsync({
       //mediaTypes: ImagePicker.MediaTypeOptions.All,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0,
       //base64: true,
     });
     if (pickerResult.cancelled === true) {
@@ -63,14 +85,16 @@ export default function EditProduct({route}) {
   let openImagePickerAsync2 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
     let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      //await ImagePicker.requestMediaLibraryPermissionsAsync();
+      await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      let pickerResult = await ImagePicker.launchCameraAsync({
       //mediaTypes: ImagePicker.MediaTypeOptions.All,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -87,14 +111,16 @@ export default function EditProduct({route}) {
   let openImagePickerAsync3 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
     let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      //await ImagePicker.requestMediaLibraryPermissionsAsync();
+      await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      let pickerResult = await ImagePicker.launchCameraAsync({
       //mediaTypes: ImagePicker.MediaTypeOptions.All,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -111,14 +137,16 @@ export default function EditProduct({route}) {
   let openImagePickerAsync4 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
     let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      //await ImagePicker.requestMediaLibraryPermissionsAsync();
+      await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      let pickerResult = await ImagePicker.launchCameraAsync({
       //mediaTypes: ImagePicker.MediaTypeOptions.All,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -191,13 +219,6 @@ export default function EditProduct({route}) {
     };
   }, []);
 
-
-  useEffect(() => {
-    setProductTitle(title);
-    return () => {
-      // Anything in here is fired on component unmount.
-    };
-  }, []);
 
   function upload_product() {
     var data = new FormData();
@@ -502,7 +523,8 @@ export default function EditProduct({route}) {
 
             <View style={styles.galleryImagesContainer}>
               <TouchableOpacity onPress={openImagePickerAsync1}>
-                {productImage1 == "" ? (
+
+              {productImage1 == "" ? (
                   <Image
                     style={styles.imageBox}
                     source={require("../assets/product_image_placeholder.png")}
@@ -513,6 +535,7 @@ export default function EditProduct({route}) {
                     source={{ uri: productImage1 }}
                   />
                 )}
+                
               </TouchableOpacity>
 
               <TouchableOpacity onPress={openImagePickerAsync2}>
@@ -573,7 +596,7 @@ export default function EditProduct({route}) {
                 hCenter,
               ]}
             >
-              <Text style={btnLabel}>Upload NOW!</Text>
+              <Text style={btnLabel}>Update NOW!</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
