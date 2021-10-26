@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import * as SecureStore from "expo-secure-store";
 
@@ -59,8 +59,38 @@ global.getLocal = async function getFromLocal(key) {
 global.getOut = async function getLOgOut() {
   SecureStore.deleteItemAsync("marchaUserInfo");
 };
-
 //getOut();
+
+
+/*
+global.getMyProducts = async function getMyProducts(key, value) {
+  const data = { api_token: global.token, user_id: global.uid };
+  useEffect(() => {
+    global.myProductSelectedId =0;
+    fetch(global.api + "my_products", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        const status = json.status.toLowerCase() ;
+        if (status == "success" && json.result.length>0) {
+          setLocal('myProductsList',json.result.reverse());
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+      return () => {
+        // Anything in here is fired on component unmount.
+      }
+  }, []);
+};
+*/
+
 
 global.token = "3154f2a10b4aecaa9ae8c10468cd8227";
 global.api = "https://www.marchamarlo.com/api/";
@@ -143,9 +173,40 @@ getRememberedUser = async () => {
 function App() {
   const [appReady, setAppReady] = useState(false);
 
-  async function checkLoginCredentials() {
-    await SecureStore.getItemAsync("marchaUserInfo")
+/*
+  async function getMyProducts(){
+    const data = { api_token: global.token, user_id: global.uid };
+          useEffect(() => {
+            global.myProductSelectedId =0;
+         
+           fetch(global.api + "my_products", {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => response.json())
+              .then((json) => {
+                const status = json.status.toLowerCase() ;    
+                if (status == "success" && json.result.length>0) {
+                  setLocal('myProductsList',JSON.stringify(json.result.reverse()));
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+              return () => {
+                // Anything in here is fired on component unmount.
+              }
+          },[]);
+  }
+  */
 
+
+  async function checkLoginCredentials() {
+
+    await SecureStore.getItemAsync("marchaUserInfo")
       .then((result) => {
         if (result !== null) {
           result = JSON.parse(result);
@@ -172,6 +233,7 @@ function App() {
           global.ucontact_number = contact_number;
           global.ustatus = status;
           global.mainScreen = "Dashboard";
+
         } else {
           global.uid = 0;
           global.mainScreen = "Home";

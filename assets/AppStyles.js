@@ -90,6 +90,9 @@ export default StyleSheet.create({
     fontWeight:"normal"
   },
   // PADDING STYLE
+  p5: {
+    padding: 5,
+  },
   p10: {
     padding: 10,
   },
@@ -689,6 +692,12 @@ old:{
   color:"red",
   fontSize:12,
   height:18
+},
+loadingContentImg:{
+  padding:5,
+  width:"95%",
+  alignContent:"flex-start",
+  margin:5,
 }
 
 

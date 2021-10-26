@@ -70,8 +70,7 @@ export default function MyProductsCard({ data }) {
       return <View style={[productCard, itemInvisible]} />;
     } else {
       let pimages = images.split(",");
-      let img = product_images_base_url + pimages[0];
-
+      let img = product_images_base_url + pimages[0];      
       if (condition == "New") {
         var conditionRibbon = require("../assets/new.png");
       } else {

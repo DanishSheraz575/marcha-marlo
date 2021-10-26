@@ -7,6 +7,7 @@ import ScreenHeader from "../components/ScreenHeader";
 import ScreenSubTitleHeader from '../components/ScreenSubTitleHeader';
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
+import CardContentLoader from "../components/CardContentLoader";
 import MyProductsCard from "../components/MyProductsCard";
 import ProductsNotFound from "../components/ProductsNotFound";
 
@@ -19,6 +20,9 @@ export default function MyProducts({ navigation }) {
 
   const [myProductsState, setMyProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
+
+
+
 
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
@@ -33,27 +37,7 @@ export default function MyProducts({ navigation }) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase() ;
-
-        //console.log(json.result);
-
         if (status == "success" && json.result.length>0) {
-          
-          /*
-          let myProductList = [];
-          json.result.forEach((item) => {
-            let images = item.images.split(",");
-            let img = item.product_images_base_url + images[0];
-            myProductList.push({
-              id: item.product_id,
-              image: img,
-              condition: item.condition,
-              value: item.value,
-              title: item.title,
-              location: item.location,
-            });
-          });
-          setDataList(myProductList.reverse());
-          */
           setDataList(json.result.reverse());
           setMyProductsState(2);
         } else {
@@ -67,7 +51,10 @@ export default function MyProducts({ navigation }) {
         // Anything in here is fired on component unmount.
       }
   }, []);
+  
 
+
+  
   function nowGoForMarcha() {
     if(global.myProductSelectedId<1){
       alert("Please select product first by touch on prduct image.");
@@ -85,7 +72,7 @@ export default function MyProducts({ navigation }) {
         {(() => {
           if (myProductsState == 0) {
             return (
-                <MarchaSpinner size={70} />
+              <CardContentLoader />
             );
           }
           return null;

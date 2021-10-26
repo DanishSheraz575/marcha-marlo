@@ -12,6 +12,8 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
+
 import { useNavigation } from "@react-navigation/native";
 
 import StyleOf from "../assets/AppStyles";
@@ -21,22 +23,28 @@ import BottomLinks from "../components/BottomLinks";
 
 import Loader from "../components/Loader";
 
+
 export default function EditProduct({route}) {
 
   const navigation = useNavigation();
-  const {title,condition,description,category_id,location,value,images,product_images_base_url}=route.params.productDetails;
+
+  const [deletedImages, setDeletedImages] = useState([]);
+
+  const {product_id, title,condition,description,category_id,location,value,images,product_images_base_url}=route.params.productDetails;
   //console.log(title);
   //console.log(images);
 
-  var img1= require("../assets/product_image_placeholder.png");
-  var img2= img1; 
-  var img3= img1; 
-  var img4= img1; 
+  var img1= "";
+  var img2= "";
+  var img3= "";
+  var img4= "";
 
+  
   
   if(images!==null){
     let product_images = images.split(",");
     img1=product_images_base_url+product_images[0];
+
     if(product_images[1]!== undefined){
       img2=product_images_base_url+product_images[1];
     }
@@ -47,7 +55,6 @@ export default function EditProduct({route}) {
       img4=product_images_base_url+product_images[3];
     }
   }
-  
 
   const [showLoader, setShowLoader] = useState(false);
 
@@ -55,6 +62,15 @@ export default function EditProduct({route}) {
   let [productImage2, setProductImage2] = useState(img2);
   let [productImage3, setProductImage3] = useState(img3);
   let [productImage4, setProductImage4] = useState(img4);
+
+  const compressImage = async (image) => {
+    const manipResult = await ImageManipulator.manipulateAsync(
+      image,
+      [{ resize: { width: 300, height: 300 } }],
+      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+    );
+    return manipResult.uri;
+  };
 
   let openImagePickerAsync1 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -73,14 +89,24 @@ export default function EditProduct({route}) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0,
+      quality: 1,
+      width:10,
+      height:10,
       //base64: true,
     });
     if (pickerResult.cancelled === true) {
       return;
     }
-    let img = { localUri: pickerResult.uri };
-    setProductImage1(img.localUri);
+
+    setDeletedImages((deletedImages) => [
+      ...deletedImages,
+      0,
+    ]);
+    const imgURL = await compressImage(pickerResult.uri);
+    setProductImage1(imgURL);
+
+    //let img = { localUri: pickerResult.uri };  
+    //setProductImage1(img.localUri);
   };
   let openImagePickerAsync2 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -100,13 +126,21 @@ export default function EditProduct({route}) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
+      width:20,
+      height:20,
       //base64: true,
     });
     if (pickerResult.cancelled === true) {
       return;
     }
-    let img = { localUri: pickerResult.uri };
-    setProductImage2(img.localUri);
+    //let img = { localUri: pickerResult.uri };
+    setDeletedImages((deletedImages) => [
+      ...deletedImages,
+      1,
+    ]);
+    //setProductImage2(img.localUri);
+    const imgURL = await compressImage(pickerResult.uri);
+    setProductImage2(imgURL);
   };
   let openImagePickerAsync3 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -126,13 +160,23 @@ export default function EditProduct({route}) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
+      width:100,
+      height:100,
       //base64: true,
     });
     if (pickerResult.cancelled === true) {
       return;
     }
-    let img = { localUri: pickerResult.uri };
-    setProductImage3(img.localUri);
+    //let img = { localUri: pickerResult.uri };
+    setDeletedImages((deletedImages) => [
+      ...deletedImages,
+      2,
+    ]);
+    //setProductImage3(img.localUri);
+
+    const imgURL = await compressImage(pickerResult.uri);
+    setProductImage3(imgURL);
+
   };
   let openImagePickerAsync4 = async () => {
     //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -152,13 +196,21 @@ export default function EditProduct({route}) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
+      width:100,
+      height:100,
       //base64: true,
     });
     if (pickerResult.cancelled === true) {
       return;
     }
-    let img = { localUri: pickerResult.uri };
-    setProductImage4(img.localUri);
+    //let img = { localUri: pickerResult.uri };
+    setDeletedImages((deletedImages) => [
+      ...deletedImages,
+      3,
+    ]);
+    //setProductImage4(img.localUri);
+    const imgURL = await compressImage(pickerResult.uri);
+    setProductImage4(imgURL);
   };
 
   const [categories, setCategories] = useState([]);
@@ -220,7 +272,8 @@ export default function EditProduct({route}) {
   }, []);
 
 
-  function upload_product() {
+  function update_product() {
+
     var data = new FormData();
 
     let category_id = 0;
@@ -267,17 +320,23 @@ export default function EditProduct({route}) {
       alert("Please select product image.");
       return false;
     }
-
+    
     data.append("api_token", global.token);
     data.append("user_id", global.uid);
+    data.append("product_id", product_id);
     data.append("title", productTitle);
     data.append("condition", productCondition);
     data.append("description", productDescription);
     data.append("location", productLocation);
     data.append("value", productValue);
+
     data.append("category_id", category_id);
     data.append("category", productCustomCategory);
-    data.append("images", "");
+
+    //data.append("category", category_id);
+
+    data.append("removed_images", deletedImages);
+    
 
     if (productImage1) {
       data.append("images[]", {
@@ -308,8 +367,14 @@ export default function EditProduct({route}) {
       });
     }
 
-    setShowLoader(true);
-    fetch(global.api + "add_product", {
+    if(productImage1=='' && productImage2=='' && productImage3=='' && productImage4==''){
+      data.append("images[]", "");
+    }
+
+  
+
+    //setShowLoader(true);
+    fetch(global.api + "update_product", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -320,11 +385,14 @@ export default function EditProduct({route}) {
     })
       .then((response) => response.json())
       .then((json) => {
-        setShowLoader(false);
+
+        console.log(json);
+
+        //setShowLoader(false);
         var status = json.status.toLowerCase();
         if (status == "success") {
           alert(json.result);
-          navigation.navigate("Dashboard");
+          navigation.navigate("MyProducts");
         } else {
           alert(json.result);
         }
@@ -588,7 +656,7 @@ export default function EditProduct({route}) {
 
           <View style={[mb40, hCenter]}>
             <TouchableOpacity
-              onPress={upload_product}
+              onPress={()=>update_product()}
               style={[
                 btn,
                 dropShadow,
