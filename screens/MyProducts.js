@@ -23,7 +23,7 @@ export default function MyProducts({ navigation }) {
 
 
 
-
+  
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
     global.myProductSelectedId =0;

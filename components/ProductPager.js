@@ -12,6 +12,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import GestureRecognizer, {
+  swipeDirections,
+} from "react-native-swipe-gestures";
+
 import { LinearGradient } from "expo-linear-gradient";
 
 import PagerView from "react-native-pager-view";
@@ -20,40 +24,43 @@ import StyleOf from "../assets/AppStyles";
 
 export default function ProductPager({ data }) {
   const navigation = useNavigation();
-  //const [detailsOf, setDetailsOf] = useState(0);
+  const [detailsOf, setDetailsOf] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [swipeLeftRightState, setSwipeLeftRightState] = useState(true);
 
   const [productsDetailState, setProductsDetailState] = useState(0);
+
+alert(currentPage);
 
   function showDetailOf(id = 0) {
     setProductsDetailState(id);
   }
 
   function interestedInMarcha(id, value) {
-    if(global.comingFrom=='myProducts'){
-      global.product_ids=global.myProductSelectedId;
-      global.product_value=global.myProductSelectedValue;
-      global.marcha_product_id=id;
-      global.marcha_product_value=value;
-    }else{
-      global.product_ids=id;
-      global.product_value=value;
-      global.marcha_product_id=global.marcha_product_id;
-      global.marcha_product_value=global.marcha_product_value;
+    if (global.comingFrom == "myProducts") {
+      global.product_ids = global.myProductSelectedId;
+      global.product_value = global.myProductSelectedValue;
+      global.marcha_product_id = id;
+      global.marcha_product_value = value;
+    } else {
+      global.product_ids = id;
+      global.product_value = value;
+      global.marcha_product_id = global.marcha_product_id;
+      global.marcha_product_value = global.marcha_product_value;
     }
     navigation.navigate("PayTheDifference");
   }
-  function marchaMarnaHy(id,value) {
-
-    if(global.comingFrom=='myProducts'){
-      global.product_ids=global.myProductSelectedId;
-      global.product_value=global.myProductSelectedValue;
-      global.marcha_product_id=id;
-      global.marcha_product_value=value;
-    }else{
-      global.product_ids=id;
-      global.product_value=value;
-      global.marcha_product_id=global.marcha_product_id;
-      global.marcha_product_value=global.marcha_product_value;
+  function marchaMarnaHy(id, value) {
+    if (global.comingFrom == "myProducts") {
+      global.product_ids = global.myProductSelectedId;
+      global.product_value = global.myProductSelectedValue;
+      global.marcha_product_id = id;
+      global.marcha_product_value = value;
+    } else {
+      global.product_ids = id;
+      global.product_value = value;
+      global.marcha_product_id = global.marcha_product_id;
+      global.marcha_product_value = global.marcha_product_value;
     }
 
     global.marcha_product_id = id;
@@ -85,7 +92,6 @@ export default function ProductPager({ data }) {
             navigation.navigate("PayTheDifference");
           }
           */
-          
         } else {
           alert(json.result);
         }
@@ -94,146 +100,166 @@ export default function ProductPager({ data }) {
         console.error("Error:", error);
       });
   }
-
-  return (
-    <PagerView style={styles.viewPager} initialPage={0}>
-      {data.map((p, index) => (
-        <View style={styles.page} key={index}>
-          <ImageBackground
-            //resizeMode= "cover"
-            //resizeMode="contain"
-            resizeMode= "center"
-            source={{
-              uri: p.images_base_url + p.images,
-            }}
-            style={[styles.bgImage]}
-          >
-            <View>
-              <LinearGradient
-                // Background Linear Gradient
-                colors={["transparent", "rgba(0,0,0,1)"]}
-                //colors={["rgba(0,0,0,0.002)", "rgba(0,0,0,1)"]}
-                style={styles.gradientBackground}
-              >
-                <View style={{ flex: 1, bottom: 0, width: "100%" }}>
-                  <Text
-                    style={[StyleOf.textWhite, styles.pTitle]}
-                  >
-                    {p.title}
-                  </Text>
-                  <Text
-                    style={[StyleOf.textWhite, styles.font16]}
-                  >
-                    Condition: {p.condition}
-                    <Image
-                      source={require("../assets/location-icon2-white.png")}
-                    />
-                    {p.location}
-                  </Text>
-                  <Text
-                    style={[StyleOf.textWhite, styles.pPrice ]}
-                  >
-                    Marcha Price: Rs. {p.value}
-                  </Text>
-
-                  <TouchableOpacity
-                    style={[
-                      StyleOf.btn,
-                      StyleOf.bgRadicalRed,
-                      {
-                        position: "absolute",
-                        bottom: 0,
-                        paddingTop: 10,
-                        alignSelf: "center",
-                      },
-                    ]}
-                    onPress={() => showDetailOf(p.product_id)}
-                  >
-                    <Text style={StyleOf.btnLabel}> VIEW DETAILS</Text>
-                  </TouchableOpacity>
-                </View>
-              </LinearGradient>
-            </View>
-          </ImageBackground>
-
-          {(() => {
-            if (productsDetailState == p.product_id) {
-              return (
-                <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
-                  <TouchableOpacity
-                    style={{ padding: 15 }}
-                    onPress={() => showDetailOf(0)}
-                  >
-                    <Image
-                      style={{ alignSelf: "center" }}
-                      source={require("../assets/close_bars.png")}
-                    />
-                  </TouchableOpacity>
-
-                  <Text style={[styles.detailsText, styles.pTitle]}>
-                    {p.title}
-                  </Text>
-                  <Text style={[styles.detailsText, styles.font16]}>
-                    Condition: {p.condition}
-                    <Image
-                      source={require("../assets/location-icon2-back.png")}
-                    />
-                    {p.location}
-                  </Text>
-                  <Text style={[styles.detailsText, styles.pPrice]}>
-                    Marcha Price: Rs. {p.value}
-                  </Text>
-                  <Text style={[styles.detailsText, styles.pPrice]}>
-                    Description
-                  </Text>
-                  <ScrollView>
-                    <Text>{p.description}</Text>
-                  </ScrollView>
-
-
-{(() => {
-  if (global.comingFrom=='myProducts') {
-    return (
-      <TouchableOpacity
-      style={[
-        StyleOf.btn,
-        StyleOf.bgEminence,
-        { alignSelf: "center" },
-      ]}
-      onPress={() => marchaMarnaHy(p.product_id, p.value)}
-  >
-      <Text style={StyleOf.btnLabel}>marcha marna hai?</Text>
-  </TouchableOpacity>
-    );
-  }else{
-    return (
-      <TouchableOpacity
-      style={[
-        StyleOf.btn,
-        StyleOf.bgEminence,
-        { alignSelf: "center" },
-      ]}
-      onPress={() => interestedInMarcha(p.product_id, p.value)}
-  >
-      <Text style={StyleOf.btnLabel}>Interested</Text>
-  </TouchableOpacity>
-    );
+  function swipeAtion(ref) {
+    if (ref == "u") {
+      setSwipeLeftRightState(false);
+    } else {
+      setSwipeLeftRightState(true);
+    }
   }
-})()}
+  const config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+  };
+  return (
+    <>
+      <GestureRecognizer
+        //onSwipe={(direction, state) => this.onSwipe(direction, state)}
+        onSwipeUp={() => swipeAtion("u")}
+        onSwipeDown={() => swipeAtion("d")}
+        //onSwipeLeft={() => swipeAtion("l")}
+        //onSwipeRight={() => swipeAtion("r")}
+        config={config}
+        style={[styles.viewPager]}
+      >
+        <PagerView
+          style={styles.viewPager}
+          initialPage={0}
+          onPageSelected={setCurrentPage(p.product_id)}
+          scrollEnabled={swipeLeftRightState}
+        >
+          {data.map((p, index) => (
+            <View style={styles.page} key={index}>
+              <ImageBackground
+                //resizeMode= "cover"
+                //resizeMode="contain"
+                resizeMode="center"
+                source={{
+                  uri: p.images_base_url + p.images,
+                }}
+                style={[styles.bgImage]}
+              >
+                <View>
+                  <LinearGradient
+                    // Background Linear Gradient
+                    colors={["transparent", "rgba(0,0,0,1)"]}
+                    //colors={["rgba(0,0,0,0.002)", "rgba(0,0,0,1)"]}
+                    style={styles.gradientBackground}
+                  >
+                    <View style={{ flex: 1, bottom: 0, width: "100%" }}>
+                      <Text style={[StyleOf.textWhite, styles.pTitle]}>
+                        {p.title}
+                      </Text>
+                      <Text style={[StyleOf.textWhite, styles.font16]}>
+                        Condition: {p.condition}
+                        <Image
+                          source={require("../assets/location-icon2-white.png")}
+                        />
+                        {p.location}
+                      </Text>
+                      <Text style={[StyleOf.textWhite, styles.pPrice]}>
+                        Marcha Price: Rs. {p.value}
+                      </Text>
 
-
-
-
-
-
+                      <Text
+                        style={[
+                          StyleOf.btn,
+                          StyleOf.bgRadicalRed,
+                          {
+                            position: "absolute",
+                            bottom: 0,
+                            paddingTop: 10,
+                            alignSelf: "center",
+                            textAlign: "center",
+                          },
+                        ]}
+                      >
+                        SWIPE UP FOR DETAILS
+                      </Text>
+                    </View>
+                  </LinearGradient>
                 </View>
-              );
-            }
-            return null;
-          })()}
-        </View>
-      ))}
-    </PagerView>
+              </ImageBackground>
+
+              {(() => {
+                if (productsDetailState == p.product_id) {
+                  return (
+                    <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
+                      <TouchableOpacity
+                        style={{ padding: 15 }}
+                        onPress={() => showDetailOf(0)}
+                      >
+                        <Image
+                          style={{ alignSelf: "center" }}
+                          source={require("../assets/close_bars.png")}
+                        />
+                      </TouchableOpacity>
+
+                      <Text style={[styles.detailsText, styles.pTitle]}>
+                        {p.title}
+                      </Text>
+                      <Text style={[styles.detailsText, styles.font16]}>
+                        Condition: {p.condition}
+                        <Image
+                          source={require("../assets/location-icon2-back.png")}
+                        />
+                        {p.location}
+                      </Text>
+                      <Text style={[styles.detailsText, styles.pPrice]}>
+                        Marcha Price: Rs. {p.value}
+                      </Text>
+                      <Text style={[styles.detailsText, styles.pPrice]}>
+                        Description
+                      </Text>
+                      <ScrollView>
+                        <Text>{p.description}</Text>
+                      </ScrollView>
+
+                      {(() => {
+                        if (global.comingFrom == "myProducts") {
+                          return (
+                            <TouchableOpacity
+                              style={[
+                                StyleOf.btn,
+                                StyleOf.bgEminence,
+                                { alignSelf: "center" },
+                              ]}
+                              onPress={() =>
+                                marchaMarnaHy(p.product_id, p.value)
+                              }
+                            >
+                              <Text style={StyleOf.btnLabel}>
+                                marcha marna hai?
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        } else {
+                          return (
+                            <TouchableOpacity
+                              style={[
+                                StyleOf.btn,
+                                StyleOf.bgEminence,
+                                { alignSelf: "center" },
+                              ]}
+                              onPress={() =>
+                                interestedInMarcha(p.product_id, p.value)
+                              }
+                            >
+                              <Text style={StyleOf.btnLabel}>Interested</Text>
+                            </TouchableOpacity>
+                          );
+                        }
+                      })()}
+                    </View>
+                  );
+                }
+                return null;
+              })()}
+            </View>
+          ))}
+        </PagerView>
+      </GestureRecognizer>
+    </>
   );
 }
 
@@ -274,8 +300,8 @@ const styles = StyleSheet.create({
   },
 
   pPrice: {
-    fontSize: 20, 
-    fontWeight: "bold"
+    fontSize: 20,
+    fontWeight: "bold",
   },
   detailsContainer: {
     flex: 1,

@@ -220,7 +220,7 @@ export default function EditProduct({route}) {
   const [productCondition, setProductCondition] = useState(condition);
   const [productDescription, setProductDescription] = useState(description);
   const [productCategory, setProductCategory] = useState(category_id);
-  const [productCustomCategory, setProductCustomCategory] = useState();
+  const [productCustomCategory, setProductCustomCategory] = useState(null);
   const [productLocation, setProductLocation] = useState(location);
   const [productValue, setProductValue] = useState(value);
 
@@ -276,11 +276,12 @@ export default function EditProduct({route}) {
 
     var data = new FormData();
 
-    let category_id = 0;
+    var category_id = 0;
+    
     if (productCategory) {
       category_id = productCategory.category_id;
     }
-
+    
     if (!productTitle) {
       alert("Please enter product title.");
       return false;
@@ -337,7 +338,6 @@ export default function EditProduct({route}) {
 
     data.append("removed_images", deletedImages);
     
-
     if (productImage1) {
       data.append("images[]", {
         uri: productImage1,
@@ -370,8 +370,10 @@ export default function EditProduct({route}) {
     if(productImage1=='' && productImage2=='' && productImage3=='' && productImage4==''){
       data.append("images[]", "");
     }
+    
+    data.append("images[]", "");
 
-  
+  //console.log(data); return false;
 
     //setShowLoader(true);
     fetch(global.api + "update_product", {
