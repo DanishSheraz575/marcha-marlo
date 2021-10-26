@@ -24,18 +24,16 @@ import StyleOf from "../assets/AppStyles";
 
 export default function ProductPager({ data }) {
   const navigation = useNavigation();
-  const [detailsOf, setDetailsOf] = useState(0);
+  //const [detailsOf, setDetailsOf] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [swipeLeftRightState, setSwipeLeftRightState] = useState(true);
+  const [productsDetailState, setProductsDetailState] = useState(null);
 
-  const [productsDetailState, setProductsDetailState] = useState(0);
-
-alert(currentPage);
-
+  /*
   function showDetailOf(id = 0) {
     setProductsDetailState(id);
   }
-
+*/
   function interestedInMarcha(id, value) {
     if (global.comingFrom == "myProducts") {
       global.product_ids = global.myProductSelectedId;
@@ -103,8 +101,10 @@ alert(currentPage);
   function swipeAtion(ref) {
     if (ref == "u") {
       setSwipeLeftRightState(false);
+      setProductsDetailState(currentPage);
     } else {
       setSwipeLeftRightState(true);
+      setProductsDetailState(null);
     }
   }
   const config = {
@@ -125,8 +125,10 @@ alert(currentPage);
         <PagerView
           style={styles.viewPager}
           initialPage={0}
-          onPageSelected={setCurrentPage(p.product_id)}
           scrollEnabled={swipeLeftRightState}
+          onPageSelected={(e) => {
+            setCurrentPage(e.nativeEvent.position);
+          }}
         >
           {data.map((p, index) => (
             <View style={styles.page} key={index}>
@@ -182,18 +184,33 @@ alert(currentPage);
               </ImageBackground>
 
               {(() => {
-                if (productsDetailState == p.product_id) {
+                if (productsDetailState == index) {
                   return (
                     <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
-                      <TouchableOpacity
-                        style={{ padding: 15 }}
-                        onPress={() => showDetailOf(0)}
+                      <PagerView
+                        initialPage={0}
+                        scrollEnabled={true}
+                        style={{ height: 200, width: "100%" }}
                       >
-                        <Image
-                          style={{ alignSelf: "center" }}
-                          source={require("../assets/close_bars.png")}
-                        />
-                      </TouchableOpacity>
+                        {() => {
+                          if (p.images) {
+                            let pimages = p.images.split(",");
+                            for (let i = 0; i < pimages; i++) {
+                              return (
+                                <View
+                                  key={i}
+                                  style={{ height: 200, width: "100%" }}
+                                >
+                                  <Image
+                                    style={styles.logo}
+                                    source={require("../assets/logo.png")}
+                                  />
+                                </View>
+                              );
+                            }
+                          }
+                        }}
+                      </PagerView>
 
                       <Text style={[styles.detailsText, styles.pTitle]}>
                         {p.title}
@@ -215,41 +232,16 @@ alert(currentPage);
                         <Text>{p.description}</Text>
                       </ScrollView>
 
-                      {(() => {
-                        if (global.comingFrom == "myProducts") {
-                          return (
-                            <TouchableOpacity
-                              style={[
-                                StyleOf.btn,
-                                StyleOf.bgEminence,
-                                { alignSelf: "center" },
-                              ]}
-                              onPress={() =>
-                                marchaMarnaHy(p.product_id, p.value)
-                              }
-                            >
-                              <Text style={StyleOf.btnLabel}>
-                                marcha marna hai?
-                              </Text>
-                            </TouchableOpacity>
-                          );
-                        } else {
-                          return (
-                            <TouchableOpacity
-                              style={[
-                                StyleOf.btn,
-                                StyleOf.bgEminence,
-                                { alignSelf: "center" },
-                              ]}
-                              onPress={() =>
-                                interestedInMarcha(p.product_id, p.value)
-                              }
-                            >
-                              <Text style={StyleOf.btnLabel}>Interested</Text>
-                            </TouchableOpacity>
-                          );
-                        }
-                      })()}
+                      <TouchableOpacity
+                        style={[
+                          StyleOf.btn,
+                          StyleOf.bgEminence,
+                          { alignSelf: "center" },
+                        ]}
+                        onPress={() => marchaMarnaHy(p.product_id, p.value)}
+                      >
+                        <Text style={StyleOf.btnLabel}>marcha marna hai?</Text>
+                      </TouchableOpacity>
                     </View>
                   );
                 }
@@ -264,6 +256,10 @@ alert(currentPage);
 }
 
 const styles = StyleSheet.create({
+  logo: {
+    resizeMode: "stretch",
+    width: 277,
+  },
   viewPager: {
     flex: 1,
   },
@@ -306,17 +302,18 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     //    alignItems: "center",
-    paddingHorizontal: 30,
-    paddingBottom: 0,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    padding: 30,
+    //paddingHorizontal: 30,
+    //paddingBottom: 0,
+    //borderTopLeftRadius: 50,
+    //borderTopRightRadius: 50,
     //backgroundColor: "#f9f1ff",
-    backgroundColor: "#F1F1F1",
+    backgroundColor: "#DEDEDE",
     //marginTop: 10,
     flexDirection: "column",
     position: "absolute",
     bottom: 0,
-    height: "70%",
+    height: "100%",
     width: "100%",
   },
   detailsText: {

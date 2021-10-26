@@ -371,8 +371,6 @@ export default function EditProduct({route}) {
       data.append("images[]", "");
     }
     
-    data.append("images[]", "");
-
   //console.log(data); return false;
 
     //setShowLoader(true);
