@@ -13,6 +13,8 @@ import BottomLinks from "../components/BottomLinks";
 export default function Dashboard({navigation}) {
   const image =  require('../assets/dashboardbg.png');
 
+  
+
   return (
     <View style={[StyleOf.fullContainer]}>
       <ImageBackground source={image} style={StyleOf.bgImage}>

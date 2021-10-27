@@ -97,7 +97,7 @@ export default function MyProducts({ navigation }) {
                 <MyProductsCard data={dataList} />
 
                 <TouchableOpacity
-                  onPress={nowGoForMarcha}
+                  onPress={()=>nowGoForMarcha()}
                   style={[{ alignSelf: "center",padding:10 }]}
                 >
                   <Image source={require("../assets/go_for_marcha_btn.png")} />

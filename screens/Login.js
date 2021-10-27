@@ -8,19 +8,16 @@ import {
   Modal,
   Alert,
   Pressable,
-
 } from "react-native";
-
 
 import StyleOf from "../assets/AppStyles";
 
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 
 import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
 export default function Login({ navigation }) {
-
   const [showLoader, setShowLoader] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,40 +29,14 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
 
-  const data = { api_token: global.token };
-  fetch(global.api + "get_config", {
-    method: "POST", // or 'PUT'
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      var status = json.status.toLowerCase();
-      if (status == "success") {
-        const config = json.result;
-
-        global.product_images_base_url = config.product_images_base_url;
-        global.chat_attachments_base_url = config.chat_attachments_base_url;
-        global.user_image_base_url = config.user_image_base_url;
-      } else {
-        alert(json.result);
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-
 
   function get_me_login() {
-
-    if(email==''){
+    if (email == "") {
       alert("Email is required");
       return false;
     }
 
-    if(password==''){
+    if (password == "") {
       alert("Password is required");
       return false;
     }
@@ -93,8 +64,6 @@ export default function Login({ navigation }) {
             if (status == "success") {
               const uinfo = json.result;
 
-              
-
               global.uid = uinfo.user_id;
               global.ufull_name = uinfo.full_name;
               global.uemail = uinfo.email;
@@ -110,12 +79,11 @@ export default function Login({ navigation }) {
               global.ucontact_number = uinfo.contact_number;
               global.ustatus = uinfo.status;
 
-
-              setLocal('marchaUserInfo', JSON.stringify(uinfo));
+              setLocal("marchaUserInfo", JSON.stringify(uinfo));
 
               navigation.reset({
                 index: 0,
-                routes: [{ name: 'Dashboard' }],
+                routes: [{ name: "Dashboard" }],
               });
 
               navigation.navigate("Dashboard");
@@ -168,7 +136,8 @@ export default function Login({ navigation }) {
       </View>
 
       <View style={StyleOf.rowItemCenter}>
-        <TextInput style={{textTransform:'lowercase'}}
+        <TextInput
+          style={{ textTransform: "lowercase" }}
           keyboardType="email-address"
           style={StyleOf.input}
           placeholder="Enter Email"

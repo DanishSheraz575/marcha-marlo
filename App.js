@@ -36,14 +36,6 @@ global.setLocal = async function saveToLocal(key, value) {
   await SecureStore.setItemAsync(key, value);
 };
 global.getLocal = async function getFromLocal(key) {
-  /*
-  const result = await SecureStore.getItemAsync(key);
-  if (result) {
-    return result;
-  } else {
-    return 0;
-  }
-*/
 
   await SecureStore.getItemAsync(key)
     .then((result) => {
@@ -56,41 +48,46 @@ global.getLocal = async function getFromLocal(key) {
     .catch((error) => console.log(error));
 };
 
+global.getConfig = async function getFromLocal(key) {
+  const data = { api_token: global.token };
+  await fetch(global.api + "get_config", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      var status = json.status.toLowerCase();
+      if (status == "success") {
+        const config = json.result;
+
+        setLocal("product_images_base_url", config.product_images_base_url);
+        setLocal("chat_attachments_base_url", config.chat_attachments_base_url);
+        setLocal("user_image_base_url", config.user_image_base_url);
+
+        global.product_images_base_url=config.product_images_base_url;
+        global.chat_attachments_base_url=config.chat_attachments_base_url;
+        global.user_image_base_url=config.user_image_base_url;
+
+      } else {
+        alert(json.result);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    }, []);
+};
+
+
 global.getOut = async function getLOgOut() {
   SecureStore.deleteItemAsync("marchaUserInfo");
 };
 //getOut();
 
-
-/*
-global.getMyProducts = async function getMyProducts(key, value) {
-  const data = { api_token: global.token, user_id: global.uid };
-  useEffect(() => {
-    global.myProductSelectedId =0;
-    fetch(global.api + "my_products", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const status = json.status.toLowerCase() ;
-        if (status == "success" && json.result.length>0) {
-          setLocal('myProductsList',json.result.reverse());
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-      return () => {
-        // Anything in here is fired on component unmount.
-      }
-  }, []);
-};
-*/
-
+setLocal('token', "3154f2a10b4aecaa9ae8c10468cd8227");
+setLocal('api', "https://www.marchamarlo.com/api/");
 
 global.token = "3154f2a10b4aecaa9ae8c10468cd8227";
 global.api = "https://www.marchamarlo.com/api/";
@@ -115,96 +112,14 @@ global.exploreProductList = [];
 
 const Stack = createStackNavigator();
 
-/*
-//SecureStore.deleteItemAsync("uinfo");
-
-//const uid = getLocal('uid').then(result).then(data));
-//console.log('line 75 ');
-
-if (typeof global.uid !== 'undefined' && global.uid>0) {
-  alert('in if');
-  var mainPage='Dashboard';
-  global.uid = global.uid;
-  var marchaUid=global.uid;
-}else{
-  alert('in else');
-  var mainPage='Home';
-  global.uid = 0;
-  var marchaUid='0';
-}
-
-
-  async function setHomeScreen() {
-    await SecureStore.getItemAsync("uid")
-    .then((result)=>{
-      console.log(result);
-      if(result!==null && result>0){
-        global.mainScreen = "Dashboard";
-        global.uid = result;
-      }else{
-        global.uid = 0;
-        global.mainScreen = "Home";
-      }
-    }
-    )
-    .catch(
-      error=>console.log(error)
-    );
-  }
-  setHomeScreen();
-  
-getRememberedUser = async () => {
-    try {
-      const uid = await SecureStore.getItemAsync('uid');
-      if (uid !== null && uid>0) {
-        // We have username!!
-        global.uid=uid;
-        global.mainScreen="Dashboard";
-      }else{
-        global.uid=0;
-        global.mainScreen="Home";
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-    };
-*/
 
 function App() {
   const [appReady, setAppReady] = useState(false);
 
-/*
-  async function getMyProducts(){
-    const data = { api_token: global.token, user_id: global.uid };
-          useEffect(() => {
-            global.myProductSelectedId =0;
-         
-           fetch(global.api + "my_products", {
-              method: "POST", // or 'PUT'
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            })
-              .then((response) => response.json())
-              .then((json) => {
-                const status = json.status.toLowerCase() ;    
-                if (status == "success" && json.result.length>0) {
-                  setLocal('myProductsList',JSON.stringify(json.result.reverse()));
-                }
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
-              return () => {
-                // Anything in here is fired on component unmount.
-              }
-          },[]);
-  }
-  */
-
-
   async function checkLoginCredentials() {
+
+
+    await getConfig();
 
     await SecureStore.getItemAsync("marchaUserInfo")
       .then((result) => {
@@ -245,7 +160,7 @@ function App() {
   if (!appReady) {
     return (
       <AppLoading
-        startAsync={checkLoginCredentials}
+        startAsync={() => checkLoginCredentials()}
         onFinish={() => setAppReady(true)}
         onError={console.warn}
       />

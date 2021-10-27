@@ -16,6 +16,8 @@ import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 
+import { SliderBox } from "react-native-image-slider-box";
+
 import { LinearGradient } from "expo-linear-gradient";
 
 import PagerView from "react-native-pager-view";
@@ -33,7 +35,7 @@ export default function ProductPager({ data }) {
   function showDetailOf(id = 0) {
     setProductsDetailState(id);
   }
-*/
+
   function interestedInMarcha(id, value) {
     if (global.comingFrom == "myProducts") {
       global.product_ids = global.myProductSelectedId;
@@ -48,20 +50,13 @@ export default function ProductPager({ data }) {
     }
     navigation.navigate("PayTheDifference");
   }
+  */
   function marchaMarnaHy(id, value) {
-    if (global.comingFrom == "myProducts") {
-      global.product_ids = global.myProductSelectedId;
-      global.product_value = global.myProductSelectedValue;
-      global.marcha_product_id = id;
-      global.marcha_product_value = value;
-    } else {
-      global.product_ids = id;
-      global.product_value = value;
-      global.marcha_product_id = global.marcha_product_id;
-      global.marcha_product_value = global.marcha_product_value;
-    }
-
+    global.product_ids = global.myProductSelectedId;
+    global.product_value = global.myProductSelectedValue;
     global.marcha_product_id = id;
+    global.marcha_product_value = value;
+
     const data = {
       api_token: global.token,
       user_id: global.uid,
@@ -82,14 +77,6 @@ export default function ProductPager({ data }) {
         if (status == "success") {
           alert(json.result);
           navigation.navigate("MarchaPendingRequests");
-
-          /*
-          if(global.comingFrom=='myProducts'){
-            navigation.navigate("MarchaPendingRequests");
-          }else{
-            navigation.navigate("PayTheDifference");
-          }
-          */
         } else {
           alert(json.result);
         }
@@ -185,63 +172,62 @@ export default function ProductPager({ data }) {
 
               {(() => {
                 if (productsDetailState == index) {
+                  var productImages = [];
+                  if (p.images) {
+                    let pimages = p.images.split(",");
+                    for (let i = 0; i < pimages.length; i++) {
+                      productImages.push(
+                        global.product_images_base_url + pimages[i]
+                      );
+                    }
+                  }
                   return (
                     <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
-                      <PagerView
-                        initialPage={0}
-                        scrollEnabled={true}
-                        style={{ height: 200, width: "100%" }}
-                      >
-                        {() => {
-                          if (p.images) {
-                            let pimages = p.images.split(",");
-                            for (let i = 0; i < pimages; i++) {
-                              return (
-                                <View
-                                  key={i}
-                                  style={{ height: 200, width: "100%" }}
-                                >
-                                  <Image
-                                    style={styles.logo}
-                                    source={require("../assets/logo.png")}
-                                  />
-                                </View>
-                              );
-                            }
-                          }
-                        }}
-                      </PagerView>
+                      <SliderBox
+                        dotColor="#FF3D57"
+                        inactiveDotColor="#efefef"
+                        resizeMethod={"resize"}
+                        resizeMode={"cover"}
+                        autoplay
+                        circleLoop
+                        ImageComponentStyle={{borderRadius: 5, width: '100%'}}
+                        imageLoadingColor="#2196F3"
+                        images={productImages}
+                      />
+                      <View style={{flex:1,padding:15}}>
+                        <Text style={[styles.detailsText, styles.pTitle,{marginTop:20}]}>
+                          {p.title}
+                        </Text>
+                        <Text style={[styles.detailsText, styles.font16]}>
+                          Condition: {p.condition}
+                          <Image
+                            source={require("../assets/location-icon2-back.png")}
+                          />
+                          {p.location}
+                        </Text>
+                        <Text style={[styles.detailsText, styles.pPrice]}>
+                          Marcha Price: Rs. {p.value}
+                        </Text>
+                        <Text style={[styles.detailsText, styles.pPrice]}>
+                          Description
+                        </Text>
+                        <ScrollView>
+                          <Text>{p.description}</Text>
+                        </ScrollView>
 
-                      <Text style={[styles.detailsText, styles.pTitle]}>
-                        {p.title}
-                      </Text>
-                      <Text style={[styles.detailsText, styles.font16]}>
-                        Condition: {p.condition}
-                        <Image
-                          source={require("../assets/location-icon2-back.png")}
-                        />
-                        {p.location}
-                      </Text>
-                      <Text style={[styles.detailsText, styles.pPrice]}>
-                        Marcha Price: Rs. {p.value}
-                      </Text>
-                      <Text style={[styles.detailsText, styles.pPrice]}>
-                        Description
-                      </Text>
-                      <ScrollView>
-                        <Text>{p.description}</Text>
-                      </ScrollView>
-
-                      <TouchableOpacity
-                        style={[
-                          StyleOf.btn,
-                          StyleOf.bgEminence,
-                          { alignSelf: "center" },
-                        ]}
-                        onPress={() => marchaMarnaHy(p.product_id, p.value)}
-                      >
-                        <Text style={StyleOf.btnLabel}>marcha marna hai?</Text>
-                      </TouchableOpacity>
+                        <TouchableOpacity
+                          style={[
+                            StyleOf.btn,
+                            StyleOf.bgEminence,
+                            { alignSelf: "center" },
+                          ]}
+                          onPress={() => marchaMarnaHy(p.product_id, p.value)}
+                        >
+                          <Text style={StyleOf.btnLabel}>
+                            marcha marna hai?
+                          </Text>
+                        </TouchableOpacity>
+                        </View>
                     </View>
                   );
                 }
@@ -302,7 +288,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     //    alignItems: "center",
-    padding: 30,
+    //padding: 20,
     //paddingHorizontal: 30,
     //paddingBottom: 0,
     //borderTopLeftRadius: 50,

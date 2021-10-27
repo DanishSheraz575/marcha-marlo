@@ -69,18 +69,17 @@ export default function MarchaPendingRequests({}) {
   function renderRequestCard({ item }) {
     return <MarchaRequestCard item={item} requestType="sent" />;
   }
-
+/*
   async function getFromLocal(key) {
     let result = await SecureStore.getItemAsync(key);
     if (result) {
-      alert(result);
+      alert('called'+result);
     } else {
       alert('No values stored under that key.');
     }
   }
-
   getFromLocal('uid');
-
+*/
   return (
     <View style={StyleOf.fullContainer}>
       <ScreenHeader title="Marcha Pending Requests" />
