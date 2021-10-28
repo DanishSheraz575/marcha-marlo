@@ -38,21 +38,6 @@ export default function PayTheDifference({}) {
       });
   }
 
-  product_value = global.product_value;
-  marcha_product_value = global.marcha_product_value;
-  var sen1 = "";
-  var sen2 = "Do you want to make a Marcha?";
-  if (product_value == marcha_product_value) {
-    sen1 = "The value of your product is equal to this product value";
-  }
-  if (product_value < marcha_product_value) {
-    sen1 = "The value of this product is more than your product value";
-    sen2 = "Do you want to pay the difference to make a Marcha?";
-  }
-  if (product_value > marcha_product_value) {
-    sen1 = "The value of this product is less than your product value";
-  }
-
   return (
     <View style={StyleOf.rowItemCenter}>
       <Image source={require("../assets/questionQ.png")} />
@@ -63,7 +48,7 @@ export default function PayTheDifference({}) {
           textAlign: "center",
         }}
       >
-        {sen1}
+        The value of selected product is more than your product value
       </Text>
       <Text
         style={{
@@ -72,7 +57,7 @@ export default function PayTheDifference({}) {
           textAlign: "center",
         }}
       >
-        {sen2}
+        Do you want to pay the difference to make a Marcha?
       </Text>
 
       <TouchableOpacity

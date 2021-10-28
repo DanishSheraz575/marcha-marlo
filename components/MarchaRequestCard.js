@@ -18,6 +18,17 @@ export default function MarchaRequestCard({
 }) {
   const navigation = useNavigation();
 
+  const {requested_username, request_id, dated}=item;
+  const {requested_product}=item;
+  const {requester_product}=item;
+
+
+  console.log(requested_username);
+  console.log(request_id);
+  console.log(dated);
+  console.log(requested_product);
+  console.log(requester_product);
+
   return (
     <View style={StyleOf.requestBox}>
       {(() => {

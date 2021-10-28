@@ -13,6 +13,7 @@ import ScreenHeader from "../components/ScreenHeader";
 import ScreenSubTitleHeader from "../components/ScreenSubTitleHeader";
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
+import CardContentLoader from "../components/CardContentLoader";
 import ProductsNotFound from "../components/ProductsNotFound";
 import ExploreProductsCard from "../components/ExploreProductsCard";
 
@@ -36,22 +37,8 @@ export default function ExploreProducts({ navigation }) {
       .then((response) => response.json())
       .then((json) => {
         var status = json.status.toLowerCase();
-        if (status == "success") {
-          let productList = [];
-
-          json.result.forEach((item) => {
-            let images = item.images.split(",");
-            let img = item.product_images_base_url + images[0];
-            productList.push({
-              id: item.product_id,
-              image: img,
-              value: item.value,
-              condition: item.condition,
-              title: item.title,
-              location: item.location,
-            });
-          });
-          setDataList(productList);
+        if (status == "success" && json.result.length>0) {
+          setDataList(json.result.reverse());
           setProductsState(2);
         } else {
           setProductsState(1);
@@ -84,9 +71,7 @@ export default function ExploreProducts({ navigation }) {
         {(() => {
           if (productsState == 0) {
             return (
-              <View style={StyleOf.rowItemCenter}>
-                <MarchaSpinner size={70} />
-              </View>
+              <CardContentLoader />
             );
           }
           return null;

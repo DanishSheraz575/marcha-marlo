@@ -15,6 +15,8 @@ import SignUp from "./screens/SignUp";
 import MyProfile from "./screens/MyProfile";
 import Dashboard from "./screens/Dashboard";
 import ExploreProducts from "./screens/ExploreProducts";
+import MyProductsForMarchaFromExpolore from "./screens/MyProductsForMarchaFromExpolore";
+import ViewProduct from "./screens/ViewProduct";
 import MyProducts from "./screens/MyProducts";
 import GoForMarcha from "./screens/GoForMarcha";
 import Chats from "./screens/Chats";
@@ -91,6 +93,8 @@ setLocal('api', "https://www.marchamarlo.com/api/");
 
 global.token = "3154f2a10b4aecaa9ae8c10468cd8227";
 global.api = "https://www.marchamarlo.com/api/";
+
+global.comingFrom = "myProducts";
 
 global.ufull_name = "Marcha Marlo User";
 global.uemail = "";
@@ -211,8 +215,20 @@ function App() {
         />
 
         <Stack.Screen
+          name="ViewProduct"
+          component={ViewProduct}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name="MyProducts"
           component={MyProducts}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MyProductsForMarchaFromExpolore"
+          component={MyProductsForMarchaFromExpolore}
           options={{ headerShown: false }}
         />
 

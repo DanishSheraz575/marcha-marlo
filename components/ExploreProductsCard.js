@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+
 import StyleOf from "../assets/AppStyles";
 
 //import ScreenHeader from "./ScreenHeader";
@@ -18,13 +20,26 @@ const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
 export default function ExploreProductsCard({ data }) {
-  const [isChecked, setChecked] = useState(0);
+  
+  const navigation = useNavigation();
 
-  function selectProductToMarcha(id = 0, value) {
+  //const [isChecked, setChecked] = useState(0);
+
+  const filterItem=(productId)=>{
+    const newdata = data.filter(function(item){
+      return item.product_id == productId;
+    });
+    return newdata[0];
+  };
+
+  function viewThisProduct(product_id = 0, value) {
     global.comingFrom = "exploreProducts";
-    global.marcha_product_id = id;
+    global.marcha_product_id = product_id;
     global.marcha_product_value = value;
-    setChecked(id);
+    const productDetails=filterItem(product_id);
+//console.log(productDetails);
+    navigation.navigate("ViewProduct",{productDetails:productDetails});
+    //setChecked(id);
   }
 
   function formatData(dataList, numColumns) {
@@ -38,54 +53,74 @@ export default function ExploreProductsCard({ data }) {
   }
 
   function renderProductCard({ item, index }) {
+    const { product_id, value, images, condition, title, location } = item;
+    const {
+      productCard,
+      itemInvisible,
+      selectedProductImageContainer,
+      productImageContainer,
+      productImage,
+      productPrice,
+      productTitle,
+      productLocation,
+      productLocationMarker,
+    } = StyleOf;
+
     if (item.empty) {
-      return <View style={[StyleOf.productCard, StyleOf.itemInvisible]} />;
-    }
-    return (
-      <View style={StyleOf.productCard}>
-        <TouchableOpacity onPress={() => selectProductToMarcha(item.id, item.value)}>
-          {global.marcha_product_id == item.id ? (
-            <View
-              style={[StyleOf.productImageContainer, StyleOf.selectedProduct]}
-            >
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={StyleOf.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          ) : (
-            <View style={[StyleOf.productImageContainer]}>
-              <Image
-                resizeMode="contain"
-                resizeMethod="auto"
-                style={StyleOf.productImage}
-                source={{ uri: item.image }}
-              />
-            </View>
-          )}
+      return <View style={[productCard, itemInvisible]} />;
+    }else{
 
-          <View style={StyleOf.colContainerRow}>
-          <View style={StyleOf.col5}>
-            <Text style={StyleOf.productPrice}>Rs. {item.value}</Text>
-          </View>
-          <View style={[StyleOf.col5]}>
-            <Text style={item.condition=='New'?StyleOf.new:StyleOf.old}>{item.condition}</Text>
-          </View>
-        </View>
+      let pimages = images.split(",");
+      let img = product_images_base_url + pimages[0];      
+      if (condition == "New") {
+        var conditionRibbon = require("../assets/new.png");
+      } else {
+        var conditionRibbon = require("../assets/old.png");
+      }
 
-          <Text style={StyleOf.productTitle}>{item.title}</Text>
-          <Text style={StyleOf.productLocation}>
+      return (
+        <View style={productCard}>
+         
+          <TouchableOpacity onPress={() => viewThisProduct(product_id, value)}>
+              {/* <View
+                style={[
+                  global.marcha_product_id == product_id
+                    ? selectedProductImageContainer
+                    : productImageContainer,
+                ]}
+              > */}
+              <View style={[productImageContainer]} >
+                <Image
+                  style={{
+                    alignSelf: "flex-start",
+                    marginTop: -18,
+                    marginLeft: -18,
+                  }}
+                  source={conditionRibbon}
+                />
+                <Image
+                  resizeMode="contain"
+                  resizeMethod="auto"
+                  style={productImage}
+                  source={{ uri: img }}
+                />
+              </View>
+            </TouchableOpacity>
+  
+          <Text style={productPrice}>Rs. {value}</Text>
+  
+          <Text style={productTitle}>{title}</Text>
+          <Text style={productLocation}>
             <Image
-              style={StyleOf.productLocationMarker}
+              style={productLocationMarker}
               source={require("../assets/location-icon.png")}
             />
-            {item.location}
+            {location}
           </Text>
-        </TouchableOpacity>
-      </View>
-    );
+        </View>
+      );
+    }
+
   }
 
   return (
@@ -93,8 +128,8 @@ export default function ExploreProductsCard({ data }) {
       //data={formatData(dataList, numColumns)}
       data={formatData(data, numColumns)}
       renderItem={renderProductCard}
-      // keyExtractor={(item, index) => index.toString()}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item, index) => index.toString()}
+      //keyExtractor={(item) => product_id}
       numColumns={numColumns}
     />
   );

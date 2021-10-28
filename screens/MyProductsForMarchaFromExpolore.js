@@ -8,7 +8,7 @@ import ScreenSubTitleHeader from '../components/ScreenSubTitleHeader';
 import BottomLinks from "../components/BottomLinks";
 import MarchaSpinner from "../components/MarchaSpinner";
 import CardContentLoader from "../components/CardContentLoader";
-import MyProductsCard from "../components/MyProductsCard";
+import MyProductsCardFromExplore from "../components/MyProductsCardFromExplore";
 import ProductsNotFound from "../components/ProductsNotFound";
 
 
@@ -16,14 +16,13 @@ const numColumns = 2;
 
 const WIDTH = Dimensions.get("window").width;
 
-export default function MyProducts({ navigation }) {
+export default function MyProductsForMarchaFromExpolore({ navigation }) {
 
   const [myProductsState, setMyProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
-    global.myProductSelectedId =0;
     fetch(global.api + "my_products", {
       method: "POST", // or 'PUT'
       headers: {
@@ -56,10 +55,48 @@ export default function MyProducts({ navigation }) {
     if(global.myProductSelectedId<1){
       alert("Please select product first by touch on prduct image.");
     }else{
-      navigation.navigate('GoForMarcha');
+
+      //alert('my Product ID '+global.myProductSelectedId);
+      //alert('my Product value '+global.myProductSelectedValue);
+
+      //alert('marcha ID '+global.marcha_product_id);
+      //alert('marcha value '+global.marcha_product_value);
+
+
+      if(global.marcha_product_value>global.myProductSelectedValue){
+        navigation.navigate("PayTheDifference");
+      }else{
+        const data = {
+          api_token: global.token,
+          user_id: global.uid,
+          product_ids: global.myProductSelectedId,
+          marcha_product_id: global.marcha_product_id,
+        };
+        fetch(global.api + "send_marcha_request", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            const status = json.status.toLowerCase();
+            if (status == "success") {
+              alert(json.result);
+              navigation.navigate("MarchaPendingRequests");
+            } else {
+              alert(json.result);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      //navigation.navigate('GoForMarcha');
     }
   }
-
 
 
   return (
@@ -78,7 +115,7 @@ export default function MyProducts({ navigation }) {
         {(() => {
           if (myProductsState == 1) {
             return (
-              <ProductsNotFound btnType= "MyProductBtn" />
+              <ProductsNotFound btnType= "Back" />
             );            
           }
           return null;
@@ -87,11 +124,9 @@ export default function MyProducts({ navigation }) {
         {(() => {
           if (myProductsState == 2) {
             return (
-              <View style={[{ marginBottom: 60 }]}>
+              <View style={[{ marginBottom: 5 }]}>
 
-                <ScreenSubTitleHeader title="Select product to start Marcha" />
-
-                <MyProductsCard data={dataList} />
+                <MyProductsCardFromExplore data={dataList} />
 
                 <TouchableOpacity
                   onPress={()=>nowGoForMarcha()}

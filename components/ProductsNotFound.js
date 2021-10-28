@@ -7,6 +7,34 @@ import StyleOf from "../assets/AppStyles";
 
 export default function ProductsNotFound({ btnType }) {
   const navigation = useNavigation();
+  var btnLabel = "Back To Dashbaord";
+  var gotoScreen = "Dashboard";
+
+  if (btnType == "MyProductBtn") {
+    var btnLabel = "add product now!";
+    var gotoScreen = "AddProduct";
+  }
+
+  if (btnType == "GoBackToMyProducts") {
+    var btnLabel = "Go Back To My Products List";
+    var gotoScreen = "MyProducts";
+  }
+
+  if (btnType == "GoBackToExploreProducts") {
+    var btnLabel = "Go Back To Products List";
+    var gotoScreen = "ExploreProducts";
+  }
+
+  if (btnType == "BackToDashboard") {
+    var btnLabel = "Back To Dashbaord";
+    var gotoScreen = "Dashboard";
+  }
+
+  if (btnType == "Back") {
+    var btnLabel = "Go Back";
+    var gotoScreen = "";
+  }
+
   return (
     <View style={StyleOf.rowItemCenter}>
       <Text
@@ -28,78 +56,17 @@ export default function ProductsNotFound({ btnType }) {
       >
         No products found
       </Text>
-
-      {(() => {
-        if (btnType == "MyProductBtn") {
-          return (
-            <TouchableOpacity
-              style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgEminence,
-                { marginTop: "5%" },
-              ]}
-              onPress={() => navigation.navigate("AddProduct")}
-            >
-              <Text style={StyleOf.btnLabel}>add product now!</Text>
-            </TouchableOpacity>
-          );
-        }
-      })()}
-
-      {(() => {
-        if (btnType == "GoBackToMyProducts") {
-          return (
-            <TouchableOpacity
-              style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgEminence,
-                { marginTop: "5%" },
-              ]}
-              onPress={() => navigation.navigate("MyProducts")}
-            >
-              <Text style={StyleOf.btnLabel}>Go Back To My Products List</Text>
-            </TouchableOpacity>
-          );
-        }
-      })()}
-
-      {(() => {
-        if (btnType == "GoBackToExploreProducts") {
-          return (
-            <TouchableOpacity
-              style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgEminence,
-                { marginTop: "5%" },
-              ]}
-              onPress={() => navigation.navigate("ExploreProducts")}
-            >
-              <Text style={StyleOf.btnLabel}>Go Back To Products List</Text>
-            </TouchableOpacity>
-          );
-        }
-      })()}
-
-      {(() => {
-        if (btnType == "BackToDashboard") {
-          return (
-            <TouchableOpacity
-              style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgEminence,
-                { marginTop: "5%" },
-              ]}
-              onPress={() => navigation.navigate("Dashboard")}
-            >
-              <Text style={StyleOf.btnLabel}>Back To Dashbaord</Text>
-            </TouchableOpacity>
-          );
-        }
-      })()}
+      <TouchableOpacity
+        style={[
+          StyleOf.btn,
+          StyleOf.dropShadow,
+          StyleOf.bgEminence,
+          { marginTop: "5%" },
+        ]}
+        onPress={ gotoScreen=='' ? () => navigation.goBack() : () => navigation.navigate(gotoScreen)}
+      >
+        <Text style={StyleOf.btnLabel}>{btnLabel}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
