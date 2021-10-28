@@ -107,8 +107,6 @@ export default function Chat({ route }) {
               added_on: item.added_on,
             });
           });
-
-          //console.log(messagesData);
           setDataList(messagesData);
           setMessagesState(2);
         } else {
@@ -171,28 +169,9 @@ export default function Chat({ route }) {
   function sendMessage() {
     if (message != "") {
 
-
-
-      //var date = new Date().getDate();
       dataList.push({ added_by: global.uid, msg: message, added_on: '' });
       setDataList(dataList);
       setNewItem(true);
-      /*
-      var newList = [
-        dataList,
-        { added_by: global.uid, msg: message, added_on: date },
-      ];
-      setDataList(newList);
-      */
-
-      //textInputRef.clear();
-      //alert(textInputRef);
-      //textInputRef.current.reset();
-      //console.log(textInputRef='');
-      //setDefaultTextInputValue("");
-
-//      setLastMessage(true);
-
       const data = {
         api_token: global.token,
         user_id: global.uid,
@@ -202,14 +181,6 @@ export default function Chat({ route }) {
         message: message,
         attachments: "",
       };
-
-      /*
-      if(lastMessage){
-        footer(message);
-      }
-*/
-
-      //console.log('new list '+dataList);
 
       textInputRef.current.clear();
       fetch(global.api + "send_message", {
@@ -257,29 +228,6 @@ export default function Chat({ route }) {
       });
   }
 
-  /*  
-  //footer = (msg) => {
-  function footer (msg) {
-    return (
-      <View>
-      <View style={StyleOf.colContainerRow}>
-        <View style={[StyleOf.col10]}>
-          <View
-            style={[styles.speachBubble, styles.sentSpeachBubble]}
-          >
-            <Text style={StyleOf.textWhite}>{msg}</Text>
-          </View>
-        </View>
-        <View style={[StyleOf.col10]}>
-          <Text style={[styles.sentDate, StyleOf.f11]}>
-            just now
-          </Text>
-        </View>
-      </View>
-    </View>
-    );
-  }
-*/
   return (
     <View style={StyleOf.fullContainer}>
       <View style={[StyleOf.containerInner]}>
@@ -369,14 +317,15 @@ export default function Chat({ route }) {
                     { textAlign: "center" },
                   ]}
                 >
-                  <Text>Send Marcha Done Request</Text>
+                  {/* <Text>Send Marcha Done Request</Text> */}
+                  <Text>Done Marcha</Text>
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={[StyleOf.col5]}>
               <CancelMarchaBtn
                 request_id={request_id}
-                title="Send Marcha Cancel Request"
+                title="Cancel Marcha"
               />
             </View>
           </View>

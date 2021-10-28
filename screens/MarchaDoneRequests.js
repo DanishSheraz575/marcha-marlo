@@ -5,7 +5,7 @@ import { View, FlatList, TouchableOpacity, Text } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
-import MarchaSpinner from "../components/MarchaSpinner";
+import CardLoader from "../components/CardLoader";
 import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
@@ -67,8 +67,6 @@ export default function MarchaRequestReceived({}) {
               marcha_date: item.dated,
             });
           });
-
-          console.log(RDataList);
           setReceivedDataList(RDataList);
           setReceivedDataState(2);
         } else {
@@ -249,7 +247,7 @@ export default function MarchaRequestReceived({}) {
             <View style={[StyleOf.containerInner]}>
               {(() => {
                 if (receivedDataState == 0) {
-                  return <MarchaSpinner size={70} />;
+                  return <CardLoader />;
                 }
                 return null;
               })()}
@@ -285,7 +283,7 @@ export default function MarchaRequestReceived({}) {
             <View style={[StyleOf.containerInner]}>
               {(() => {
                 if (sentDataState == 0) {
-                  return <MarchaSpinner size={70} />;
+                  return <CardLoader />;
                 }
                 return null;
               })()}

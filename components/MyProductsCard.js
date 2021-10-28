@@ -146,7 +146,6 @@ export default function MyProductsCard({ data }) {
 
   function gotForEditProduct(product_id){
     const productDetails=filterItem(product_id);
-//console.log(productDetails);
     navigation.navigate("EditProduct",{productDetails:productDetails});
   }
 

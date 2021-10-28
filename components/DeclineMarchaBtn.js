@@ -1,21 +1,50 @@
-import * as React from "react";
-import { Image, TouchableOpacity, Text } from "react-native";
+//import * as React from "react";
+import React, { useState } from "react";
+import { TouchableOpacity, Text,Alert } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 
 import StyleOf from "../assets/AppStyles";
 
-export default function CancelMarchaBtn({request_id=0}) {
+export default function DeclineMarchaBtn({request_id=0}) {
 
     const navigation = useNavigation();
+    const {rbBodyBtnLight,m5,selfCenter,textWhite,rbBtnLable}=StyleOf;
+
+
+    const [showBox, setShowBox] = useState(true);
+    const showConfirmDialog = (request_id) => {
+      return Alert.alert(
+        "Are your sure?",
+        "you want to decline this request?",
+        [
+          // The "Yes" button
+          {
+            text: "Yes",
+            onPress: () => {
+              setShowBox(false);
+              declineMarchaRequest(request_id);
+            },
+          },
+          // The "No" button
+          // Does nothing but dismiss the dialog when tapped
+          {
+            text: "No",
+          },
+        ]
+      );
+    };
+
 
     function declineMarchaRequest(request_id) {
+
         const data = {
           api_token: global.token,
           user_id: global.uid,
           request_id: request_id,
           status: 0,
         };
+
         fetch(global.api + "accept_marcha_request", {
           method: "POST", // or 'PUT'
           headers: {
@@ -36,14 +65,15 @@ export default function CancelMarchaBtn({request_id=0}) {
           .catch((error) => {
             console.error("Error:", error);
           });
+          
       }
 
   return (
     <TouchableOpacity
-      onPress={() => declineMarchaRequest(request_id)}
-      style={[StyleOf.rbBodyBtnLight,StyleOf.m5]}
+      onPress={() => showConfirmDialog(request_id)}
+      style={[rbBodyBtnLight,m5]}
     >
-      <Text style={[StyleOf.selfCenter, StyleOf.textWhite,StyleOf.rbBtnLable,{textAlign:"center"}]}>
+      <Text style={[selfCenter, textWhite,rbBtnLable,{textAlign:"center"}]}>
         DECLINE
       </Text>
     </TouchableOpacity>

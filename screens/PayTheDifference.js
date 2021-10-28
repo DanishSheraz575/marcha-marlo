@@ -12,7 +12,7 @@ export default function PayTheDifference({}) {
     const data = {
       api_token: global.token,
       user_id: global.uid,
-      product_ids: global.product_ids,
+      product_ids: global.myProductSelectedId,
       marcha_product_id: global.marcha_product_id,
     };
 

@@ -8,18 +8,17 @@ import {
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
-import MarchaSpinner from "../components/MarchaSpinner";
+import CardLoader from "../components/CardLoader";
 import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
 
 export default function MarchaRequestReceived({}) {
   
-  const [myProductsState, setMyProductsState] = useState(0);
+  const [dataState, setDataState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
-
   useEffect(() => {
     fetch(global.api + "get_marcha_requests_received", {
       method: "POST", // or 'PUT'
@@ -32,6 +31,7 @@ export default function MarchaRequestReceived({}) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length>0) {
+          
           let myProductList = [];
           
           json.result.forEach((item) => {
@@ -69,9 +69,10 @@ export default function MarchaRequestReceived({}) {
             });
           });
           setDataList(myProductList);
-          setMyProductsState(2);
+          
+          setDataState(2);
         } else {
-          setMyProductsState(1);
+          setDataState(1);
         }
       })
       .catch((error) => {
@@ -94,21 +95,21 @@ export default function MarchaRequestReceived({}) {
 
       <View style={[StyleOf.containerInner]}>
         {(() => {
-          if (myProductsState == 0) {
-            return <MarchaSpinner size={70} />;
+          if (dataState == 0) {
+            return <CardLoader />;
           }
           return null;
         })()}
 
         {(() => {
-          if (myProductsState == 1) {
+          if (dataState == 1) {
             return <RequestsNotFound btnType="BackToDashboard" message="No request received yet." />;
           }
           return null;
         })()}
 
         {(() => {
-          if (myProductsState == 2) {
+          if (dataState == 2) {
             return <FlatList data={dataList} renderItem={renderRequestCard} keyExtractor={(item, index) => index.toString()} />
           }
           return null;

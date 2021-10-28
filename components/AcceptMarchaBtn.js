@@ -15,6 +15,7 @@ export default function AcceptMarchaBtn({ request_id = 0, requester_id = 0, requ
       request_id: request_id,
       status: 1,
     };
+
     fetch(global.api + "accept_marcha_request", {
       method: "POST", // or 'PUT'
       headers: {

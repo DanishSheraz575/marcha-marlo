@@ -16,7 +16,7 @@ export default function ScreenHeader({
       <View
         style={[
           StyleOf.flexIt,
-          StyleOf.p15,
+          StyleOf.p20,
           {
             alignItems: "center",
           },

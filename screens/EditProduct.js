@@ -31,8 +31,6 @@ export default function EditProduct({route}) {
   const [deletedImages, setDeletedImages] = useState([]);
 
   const {product_id, title,condition,description,category_id,location,value,images,product_images_base_url}=route.params.productDetails;
-  //console.log(title);
-  //console.log(images);
 
   var img1= "";
   var img2= "";
@@ -370,9 +368,7 @@ export default function EditProduct({route}) {
     if(productImage1=='' && productImage2=='' && productImage3=='' && productImage4==''){
       data.append("images[]", "");
     }
-    
-  //console.log(data); return false;
-
+  
     //setShowLoader(true);
     fetch(global.api + "update_product", {
       method: "POST", // or 'PUT'
@@ -386,9 +382,6 @@ export default function EditProduct({route}) {
       .then((response) => response.json())
       .then((json) => {
 
-        console.log(json);
-
-        //setShowLoader(false);
         var status = json.status.toLowerCase();
         if (status == "success") {
           alert(json.result);

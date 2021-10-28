@@ -37,7 +37,6 @@ export default function ExploreProductsCard({ data }) {
     global.marcha_product_id = product_id;
     global.marcha_product_value = value;
     const productDetails=filterItem(product_id);
-//console.log(productDetails);
     navigation.navigate("ViewProduct",{productDetails:productDetails});
     //setChecked(id);
   }

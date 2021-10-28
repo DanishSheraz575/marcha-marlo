@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
+  TextInput,
   Dimensions,
 } from "react-native";
 
@@ -21,9 +22,12 @@ const numColumns = 2;
 const WIDTH = Dimensions.get("window").width;
 
 export default function ExploreProducts({ navigation }) {
+  const textInputRef = useRef();
 
+  const [keyword, setKeyword] = useState("");
   const [productsState, setProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
+  const [itemsList, setItemsList] = useState(false);
 
   const data = { api_token: global.token, user_id: global.uid };
   useEffect(() => {
@@ -37,8 +41,9 @@ export default function ExploreProducts({ navigation }) {
       .then((response) => response.json())
       .then((json) => {
         var status = json.status.toLowerCase();
-        if (status == "success" && json.result.length>0) {
+        if (status == "success" && json.result.length > 0) {
           setDataList(json.result.reverse());
+          setItemsList(json.result.reverse());
           setProductsState(2);
         } else {
           setProductsState(1);
@@ -48,21 +53,42 @@ export default function ExploreProducts({ navigation }) {
         console.error("Error:", error);
       });
 
-      return () => {
-        // Anything in here is fired on component unmount.
-      }
-
+    return () => {
+      // Anything in here is fired on component unmount.
+    };
   }, []);
 
-/*
-  function nowGoForMarcha() {
-    if(global.marcha_product_id<1){
-      alert("Please select product first by touch on prduct image.");
-    }else{
-      navigation.navigate('GoForMarcha');
+  function clearFilter() {
+    textInputRef.current.clear();
+    setKeyword('');
+    setDataList(itemsList);
+  }
+
+  function applyFilter() {
+    if (keyword == "" || keyword == null) {
+      //
+      alert("Please enter keyword to filter");
+    } else {
+      const newdata = itemsList.filter(function (item) {
+        var search = keyword.toLowerCase();
+        var title = item.title.toLowerCase();
+        var price = item.value.toLowerCase();
+        var location = item.location.toLowerCase();
+        if (
+          title.includes(search) ||
+          price == search ||
+          location.includes(search)
+        ) {
+          return item;
+        }
+      });
+
+      if (!newdata.length) {
+        alert("Sorry! no records found.");
+      }
+      setDataList(newdata);
     }
   }
-*/  
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -70,18 +96,14 @@ export default function ExploreProducts({ navigation }) {
       <View style={[StyleOf.containerInner]}>
         {(() => {
           if (productsState == 0) {
-            return (
-              <CardContentLoader />
-            );
+            return <CardContentLoader />;
           }
           return null;
         })()}
 
         {(() => {
           if (productsState == 1) {
-            return (
-              <ProductsNotFound btnType= "BackToDashboard" />
-            );
+            return <ProductsNotFound btnType="BackToDashboard" />;
           }
           return null;
         })()}
@@ -89,9 +111,69 @@ export default function ExploreProducts({ navigation }) {
         {(() => {
           if (productsState == 2) {
             return (
-              <View >
-                <ExploreProductsCard data={dataList} />              
-             </View>
+              <>
+                <View style={[{ marginTop: -10, paddingHorizontal: 10 }]}>
+                  <View
+                    style={{
+                      backgroundColor: "#fff",
+                      width: "85%",
+                      padding: 5,
+                      height: 42,
+                      borderRadius: 5,
+                    }}
+                  >
+                    <TextInput
+                      style={{
+                        marginBottom: 0,
+                        width: "90%",
+                        alignSelf: "flex-start",
+                        position: "absolute",
+                        lineHeight: 42,
+                        height: 42,
+                        paddingHorizontal: 10,
+                      }}
+                      ref={textInputRef}
+                      placeholder="Search by title, price, location"
+                      onChangeText={(keyword) => setKeyword(keyword)}
+                    />
+
+                    {(() => {
+                      if (keyword !== "") {
+                        return (
+                          <TouchableOpacity
+                            style={{
+                              position: "absolute",
+                              marginRight: 10,
+                              right: 0,
+                              padding: 5,
+                              marginTop: 5,
+                            }}
+                            onPress={() => clearFilter()}
+                          >
+                            <Image
+                              source={require("../assets/cross-icon-black.png")}
+                            />
+                          </TouchableOpacity>
+                        );
+                      }
+                      return null;
+                    })()}
+                  </View>
+                  <TouchableOpacity
+                    style={{
+                      position: "absolute",
+                      marginRight: 10,
+                      right: 0,
+                    }}
+                    onPress={() => applyFilter()}
+                  >
+                    <Image source={require("../assets/filterIcon.png")} />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <ExploreProductsCard data={dataList} />
+                </View>
+              </>
             );
           }
           return null;

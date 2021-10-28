@@ -12,13 +12,6 @@ const image =  require('../assets/homebg.png');
 
 export default function Home({ navigation }) {
 
-  /*
-  console.log(getLocal('uid'));
-  if(getLocal('uid')>0){
-    navigation.navigate('Dashboard');
-  }
-  */
-
   return (
     <View style={StyleOf.fullContainer}>
 
