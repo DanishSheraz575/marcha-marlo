@@ -7,19 +7,23 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  Alert,
 } from "react-native";
 
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import SelectDropdown from "react-native-select-dropdown";
 
-import * as ImagePicker from "expo-image-picker";
+// import * as ImagePicker from "expo-image-picker";
 
 import Loader from "../components/Loader";
 
 import StyleOf from "../assets/AppStyles";
 import ScreenHeader from "../components/ScreenHeader";
+import { Picker } from "../services/ImagePicker";
 
 export default function MyProfile({}) {
+
+  const {fullContainer, containerInner, rowItemCenter, f20, fwBold, textBlack, input, btn, dropShadow, bgEminence, btnLabel}=StyleOf;
 
   const genders = ["Male", "Female"];
 
@@ -43,35 +47,38 @@ export default function MyProfile({}) {
   const [profileImage, setProfileImage] = useState(global.uimage);
   const [newProfileImage, setNewProfileImage] = useState("");
 
-  let openImagePickerAsync = async () => {
-    //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-    let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
+  let openImagePickerAsync = async (type) => {
+    try {
+      const pickerResult = await Picker[
+        type == "camera" ? "openCamera" : "openImagePicker"
+      ]();
+      if (pickerResult?.status) {
+        let img = { localUri: pickerResult?.image?.uri };
+        setNewProfileImage(img.localUri);
+        setProfileImage(img.localUri);
+        global.uimage = img.localUri;
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      //mediaTypes: ImagePicker.MediaTypeOptions.All,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-      //base64: true,
-    });
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-    let img = { localUri: pickerResult.uri };
-    setNewProfileImage(img.localUri);
-    setProfileImage(img.localUri);
-    global.uimage = img.localUri;
+  const showAlert = () => {
+    Alert.alert("Image Picker", "choose or take image", [
+      { text: "Cancel", onPress: () => null },
+      {
+        text: "Open gallery",
+        onPress: () => openImagePickerAsync(""),
+      },
+      {
+        text: "Open Camera",
+        onPress: () => openImagePickerAsync("camera"),
+        style: "cancel",
+      },
+    ]);
   };
 
   function update_profile() {
-
     if (name === "") {
       setNameError(true);
       return false;
@@ -84,16 +91,15 @@ export default function MyProfile({}) {
     setShowLoader(true);
     var data = new FormData();
 
-    if(newProfileImage!=''){
+    if (newProfileImage != "") {
       data.append("image", {
         uri: newProfileImage,
         name: "file",
         type: "image/jpg",
       });
-    }else{
-      data.append("file", '');
+    } else {
+      data.append("file", "");
     }
-
 
     data.append("api_token", global.token);
     data.append("user_id", global.uid);
@@ -117,7 +123,6 @@ export default function MyProfile({}) {
 
     NetInfo.fetch().then((isConnected) => {
       if (isConnected) {
-        
         fetch(global.api + "update_profile", {
           method: "POST", // or 'PUT'
           headers: {
@@ -144,27 +149,25 @@ export default function MyProfile({}) {
           .catch((error) => {
             console.error("Error:", error);
           });
-
       } else {
         setShowLoader(false);
         alert("not connected");
       }
     });
-  
   }
 
   return (
-    <View style={StyleOf.fullContainer}>
+    <View style={fullContainer}>
       <ScreenHeader title="My Account" />
 
-      <View style={[StyleOf.containerInner]}>
+      <View style={[containerInner]}>
         <ScrollView>
-          <View style={StyleOf.rowItemCenter}>
+          <View style={rowItemCenter}>
             <Text
               style={[
-                StyleOf.f26,
-                StyleOf.fwBold,
-                StyleOf.textBlack,
+                f20,
+                fwBold,
+                textBlack,
                 { marginTop: 10 },
               ]}
             >
@@ -186,7 +189,7 @@ export default function MyProfile({}) {
               )}
 
               <TouchableOpacity
-                onPress={openImagePickerAsync}
+                onPress={showAlert}
                 style={[
                   {
                     elevation: 3,
@@ -197,7 +200,6 @@ export default function MyProfile({}) {
                   },
                 ]}
               >
-                {/* <Image style={[StyleOf.editIcon,{marginTop:-36,marginLeft:100,zIndex:2}]} source={require('../assets/camera_icon.png')} />*/}
                 <Image
                   style={[{ marginLeft: 3, marginTop: 3 }]}
                   source={require("../assets/camera_icon.png")}
@@ -207,7 +209,7 @@ export default function MyProfile({}) {
 
             <TextInput
               style={[
-                StyleOf.input,
+                input,
                 nameError ? { borderColor: global.borderDanger } : "",
               ]}
               placeholder="Enter Name"
@@ -217,14 +219,14 @@ export default function MyProfile({}) {
             />
 
             <TextInput
-              style={StyleOf.input}
+              style={input}
               placeholder="Enter Email"
               value={global.uemail}
               onChangeText={(email) => setEmail(email)}
             />
 
             <TextInput
-              style={StyleOf.input}
+              style={input}
               placeholder="Change Password"
               secureTextEntry={true}
               onChangeText={(password) => setPassword(password)}
@@ -232,7 +234,7 @@ export default function MyProfile({}) {
 
             <TextInput
               style={[
-                StyleOf.input,
+                input,
                 contactError ? { borderColor: global.borderDanger } : "",
               ]}
               placeholder="Enter Contact"
@@ -242,7 +244,7 @@ export default function MyProfile({}) {
             />
 
             <SelectDropdown
-              buttonStyle={StyleOf.input}
+              buttonStyle={input}
               buttonTextStyle={[{ textAlign: "left", color: "#000000" }]}
               buttonTextStyleAfterSelection={[{ color: "#000000" }]}
               defaultButtonText={gender}
@@ -261,7 +263,7 @@ export default function MyProfile({}) {
             />
 
             <TextInput
-              style={StyleOf.input}
+              style={input}
               placeholder="City"
               value={city}
               onChangeText={(city) => setCity(city)}
@@ -270,13 +272,13 @@ export default function MyProfile({}) {
             <TouchableOpacity
               onPress={update_profile}
               style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgEminence,
+                btn,
+                dropShadow,
+                bgEminence,
                 { marginBottom: 40 },
               ]}
             >
-              <Text style={StyleOf.btnLabel}>Update</Text>
+              <Text style={btnLabel}>Update</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -306,8 +308,8 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   profileImageContainer: {
-    marginTop: 20,
-    marginBottom: 30,
+    marginTop: 10,
+    marginBottom: 15,
     width: 120,
     height: 130,
   },

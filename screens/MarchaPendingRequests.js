@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { View, FlatList } from "react-native";
-
-import * as SecureStore from "expo-secure-store";
-
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
@@ -12,14 +8,17 @@ import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
 
-export default function MarchaPendingRequests({}) {
+export default function MarchaPendingRequests() {
+
+  const {fullContainer, containerInner}=StyleOf;
+
   global.product_ids = 0;
   global.product_value = 0;
   global.marcha_product_id = 0;
   global.marcha_product_value = 0;
 
   const [dataState, setDataState] = useState(0);
-  const [dataList, setDataList] = useState(false);
+  const [dataList, setDataList] = useState([]);
 
   const data = { api_token: global.token, user_id: global.uid };
 
@@ -34,20 +33,16 @@ export default function MarchaPendingRequests({}) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase();
-
         if (status == "success" && json.result.length > 0) {
-          //setDataList(json.result.reverse());
-          //setDataState(2);
-
-          let myProductList = [];
-          json.result.forEach((item) => {
-            if (
+          const dataList = json.result.map((item) => {
+           if (
               item.requester_product_id > 0 &&
               item.requested_product_id > 0
             ) {
-              let images = item.requested_product.images.split(",");
+              let images = item.requested_product?.images.split(",");
               let img = global.product_images_base_url + images[0];
-              myProductList.push({
+
+              return {
                 requested_username: item.requested_username,
                 requested_product_title: item.requested_product.title,
                 requested_product_value: item.requested_product.value,
@@ -57,10 +52,10 @@ export default function MarchaPendingRequests({}) {
                 marcha_against_product_title: item.requester_product.title,
                 marcha_request_id: item.request_id,
                 marcha_date: item.dated,
-              });
+              };
             }
           });
-          setDataList(myProductList);
+          setDataList(dataList);
           setDataState(2);
         } else {
           setDataState(1);
@@ -69,53 +64,29 @@ export default function MarchaPendingRequests({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
-    return () => {
-      // Anything in here is fired on component unmount.
-    };
   }, []);
 
   function renderRequestCard({ item }) {
-    return <MarchaRequestCard item={item} requestType="sent" />;
+    return <MarchaRequestCard item={item} showHeader='0' requestType="sent" />;
   }
 
   return (
-    <View style={StyleOf.fullContainer}>
+    <View style={fullContainer}>
       <ScreenHeader title="Marcha Pending Requests" />
-
-      <View style={[StyleOf.containerInner]}>
-        {(() => {
-          if (dataState == 0) {
-            return <CardLoader />;
+      <View style={[containerInner]}>
+        {dataState == 0 && <CardLoader />}
+        <FlatList
+          data={dataList}
+          renderItem={renderRequestCard}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={
+            <RequestsNotFound
+              btnType="BackToDashboardBtn"
+              message="You have not have any pending Marcha requests."
+            />
           }
-          return null;
-        })()}
-
-        {(() => {
-          if (dataState == 1) {
-            return (
-              <RequestsNotFound
-                btnType="BackToDashboardBtn"
-                message="You have not have any pending Marcha requests."
-              />
-            );
-          }
-          return null;
-        })()}
-
-        {(() => {
-          if (dataState == 2) {
-            return (
-              <FlatList
-                data={dataList}
-                renderItem={renderRequestCard}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            );
-          }
-          return null;
-        })()}
+        />
       </View>
-
       <BottomLinks active="" />
     </View>
   );

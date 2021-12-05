@@ -3,6 +3,9 @@ import { Text, StyleSheet, Image } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 export default function TimeAgo({ dated }) {
+
+  const {f11, textGray}=StyleOf;
+
   function time_ago(time) {
     if (time != "") {
       switch (typeof time) {
@@ -62,5 +65,5 @@ export default function TimeAgo({ dated }) {
     return time;
   }
 
-  return <Text style={[StyleOf.f11, StyleOf.textGray]}>{time_ago(dated)}</Text>;
+  return <Text style={[f11, textGray]}>{time_ago(dated)}</Text>;
 }

@@ -4,8 +4,11 @@ import StyleOf from "../assets/AppStyles";
 
 export default function MarchaSpinner({ size = 70 }) {
   let rotateValueHolder = new Animated.Value(0);
-
+  const {rowItemCenter}=StyleOf;
   const startImageRotateFunction = () => {
+
+   
+
     rotateValueHolder.setValue(0);
     Animated.timing(rotateValueHolder, {
       toValue: 1,
@@ -21,7 +24,7 @@ export default function MarchaSpinner({ size = 70 }) {
   });
   startImageRotateFunction();
   return (
-    <View style={StyleOf.rowItemCenter}>
+    <View style={rowItemCenter}>
       <Animated.Image
         style={{
           width: size,

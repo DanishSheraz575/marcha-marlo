@@ -3,6 +3,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import StyleOf from '../assets/AppStyles';
+//import MarchaMarloBottomBtn from "../components/MarchaMarloBottomBtn";
 
 
 export default function BottomLinks({active}) {
@@ -27,6 +28,7 @@ export default function BottomLinks({active}) {
             <View style={styles.myNav}>            
                 <TouchableOpacity style={StyleOf.itemCenter}  onPress={()=>navigation.navigate('MyProducts')}>
                     <Image  style={styles.imgNav}  source={require('../assets/tab_favicon.png')}  onPress={()=>navigation.navigate('MyProducts')} />  
+                    {/* <MarchaMarloBottomBtn  style={styles.imgNav} onPress={()=>navigation.navigate('MyProducts')} /> */}
                 </TouchableOpacity>
             </View>
             <View style={styles.myNav}>

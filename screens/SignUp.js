@@ -18,6 +18,9 @@ import StyleOf from "../assets/AppStyles";
 // import SocialBtns from "../components/SocialBtns";
 
 export default function SignUp({ navigation }) {
+
+  const {fullContainer, rowItemCenter, f26, fwBold, textEminence, f14, textCodGray, input, btn, dropShadow,bgEminence, btnLabel }=StyleOf;
+
   const genders = ["Male", "Female"];
 
   const [showLoader, setShowLoader] = useState(false);
@@ -102,13 +105,13 @@ export default function SignUp({ navigation }) {
 
   return (
     <ScrollView>
-      <View style={[StyleOf.fullContainer]}>
-        <View style={StyleOf.rowItemCenter}>
+      <View style={[fullContainer]}>
+        <View style={rowItemCenter}>
           <Text
             style={[
-              StyleOf.f26,
-              StyleOf.fwBold,
-              StyleOf.textEminence,
+              f26,
+              fwBold,
+              textEminence,
               { marginTop: 30 },
             ]}
           >
@@ -116,9 +119,9 @@ export default function SignUp({ navigation }) {
           </Text>
           <Text
             style={[
-              StyleOf.f14,
-              StyleOf.fwBold,
-              StyleOf.textCodGray,
+              f14,
+              fwBold,
+              textCodGray,
               { marginBottom: 30 },
             ]}
           >
@@ -127,7 +130,7 @@ export default function SignUp({ navigation }) {
 
           <TextInput
             style={[
-              StyleOf.input,
+              input,
               nameError ? { borderColor: global.borderDanger } : "",
             ]}
             placeholder="Your Name"
@@ -138,7 +141,7 @@ export default function SignUp({ navigation }) {
           <TextInput
             keyboardType="email-address"
             style={[
-              StyleOf.input,
+              input,
               emailError ? { borderColor: global.borderDanger } : "",
             ]}
             placeholder="Your Email"
@@ -148,7 +151,7 @@ export default function SignUp({ navigation }) {
           />
           <TextInput
             style={[
-              StyleOf.input,
+              input,
               passwordError ? { borderColor: global.borderDanger } : "",
             ]}
             placeholder="Enter Password"
@@ -158,7 +161,7 @@ export default function SignUp({ navigation }) {
           />
           <TextInput
             style={[
-              StyleOf.input,
+              input,
               conpasswordError ? { borderColor: global.borderDanger } : "",
             ]}
             placeholder="Confirm Password"
@@ -169,7 +172,7 @@ export default function SignUp({ navigation }) {
 
           <TextInput
             style={[
-              StyleOf.input,
+              input,
               contactError ? { borderColor: global.borderDanger } : "",
             ]}
             placeholder="Contact"
@@ -179,7 +182,7 @@ export default function SignUp({ navigation }) {
           />
 
           <SelectDropdown
-            buttonStyle={StyleOf.input}
+            buttonStyle={input}
             buttonTextStyle={[{ textAlign: "left" }]}
             buttonTextStyleAfterSelection={[{ color: "#000000" }]}
             defaultButtonText={"Gender"}
@@ -198,7 +201,7 @@ export default function SignUp({ navigation }) {
           />
 
           <TextInput
-            style={StyleOf.input}
+            style={input}
             placeholder="City"
             onChangeText={(city) => setCity(city)}
           />
@@ -206,13 +209,13 @@ export default function SignUp({ navigation }) {
           <TouchableOpacity
             onPress={()=>getMeSignup()}
             style={[
-              StyleOf.btn,
-              StyleOf.dropShadow,
-              StyleOf.bgEminence,
+              btn,
+              dropShadow,
+              bgEminence,
               { marginTop: 20, marginBottom: 35 },
             ]}
           >
-            <Text style={StyleOf.btnLabel}>sign up</Text>
+            <Text style={btnLabel}>sign up</Text>
           </TouchableOpacity>
         </View>
       </View>

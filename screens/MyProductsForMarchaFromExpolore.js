@@ -18,6 +18,8 @@ const WIDTH = Dimensions.get("window").width;
 
 export default function MyProductsForMarchaFromExpolore({ navigation }) {
 
+  const {fullContainer, containerInner}=StyleOf;
+
   const [myProductsState, setMyProductsState] = useState(0);
   const [dataList, setDataList] = useState(false);
 
@@ -100,9 +102,9 @@ export default function MyProductsForMarchaFromExpolore({ navigation }) {
 
 
   return (
-    <View style={StyleOf.fullContainer}>
+    <View style={fullContainer}>
       <ScreenHeader title="My Products" />
-      <View style={[StyleOf.containerInner,{marginBottom:80}]}>
+      <View style={[containerInner,{marginBottom:80}]}>
         {(() => {
           if (myProductsState == 0) {
             return (

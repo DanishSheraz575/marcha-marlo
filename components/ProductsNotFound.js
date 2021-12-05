@@ -6,37 +6,45 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 export default function ProductsNotFound({ btnType }) {
+
   const navigation = useNavigation();
-  var btnLabel = "Back To Dashbaord";
+  
+  var btnLabelText = "Back To Dashbaord";
   var gotoScreen = "Dashboard";
 
+
   if (btnType == "MyProductBtn") {
-    var btnLabel = "add product now!";
+    var btnLabelText = "add product now!";
     var gotoScreen = "AddProduct";
   }
 
   if (btnType == "GoBackToMyProducts") {
-    var btnLabel = "Go Back To My Products List";
+    var btnLabelText = "Go Back To My Products List";
     var gotoScreen = "MyProducts";
   }
 
   if (btnType == "GoBackToExploreProducts") {
-    var btnLabel = "Go Back To Products List";
+    var btnLabelText = "Go Back To Products List";
     var gotoScreen = "ExploreProducts";
   }
 
   if (btnType == "BackToDashboard") {
-    var btnLabel = "Back To Dashbaord";
+    var btnLabelText = "Back To Dashbaord";
     var gotoScreen = "Dashboard";
   }
 
   if (btnType == "Back") {
-    var btnLabel = "Go Back";
+    var btnLabelText = "Go Back";
     var gotoScreen = "";
   }
 
+
+  const {rowItemCenter, btn, dropShadow, bgEminence, btnLabel, containerInner, fullContainer}=StyleOf;
+
   return (
-    <View style={StyleOf.rowItemCenter}>
+    <View style={[fullContainer]}>
+    <View style={[containerInner, { marginBottom: 30}]}>
+    <View style={[rowItemCenter]}>
       <Text
         style={{
           fontSize: 42,
@@ -58,15 +66,17 @@ export default function ProductsNotFound({ btnType }) {
       </Text>
       <TouchableOpacity
         style={[
-          StyleOf.btn,
-          StyleOf.dropShadow,
-          StyleOf.bgEminence,
-          { marginTop: "5%" },
+          btn,
+          dropShadow,
+          bgEminence,
+          { marginTop: "5%"},
         ]}
         onPress={ gotoScreen=='' ? () => navigation.goBack() : () => navigation.navigate(gotoScreen)}
       >
-        <Text style={StyleOf.btnLabel}>{btnLabel}</Text>
+        <Text style={btnLabel}>{btnLabelText}</Text>
       </TouchableOpacity>
+    </View>
+    </View>
     </View>
   );
 }

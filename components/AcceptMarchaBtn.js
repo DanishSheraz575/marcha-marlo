@@ -8,6 +8,9 @@ import StyleOf from "../assets/AppStyles";
 export default function AcceptMarchaBtn({ request_id = 0, requester_id = 0, requester_name="User", requester_email='', requester_image='', my_product_id=0, marcha_product_id=0  }) {
   const navigation = useNavigation();
 
+
+  const {rbBodyBtnRed, m5, selfCenter, textWhite, rbBtnLable}=StyleOf;
+
   function acceptMarchaRequest(request_id) {
     const data = {
       api_token: global.token,
@@ -50,10 +53,10 @@ export default function AcceptMarchaBtn({ request_id = 0, requester_id = 0, requ
 
   return (
     <TouchableOpacity
-      onPress={() => acceptMarchaRequest(request_id)}
-      style={[StyleOf.rbBodyBtnRed,StyleOf.m5]}
+      onPress={acceptMarchaRequest(request_id)}
+      style={[rbBodyBtnRed,m5]}
     >
-      <Text style={[StyleOf.selfCenter, StyleOf.textWhite, StyleOf.rbBtnLable]}>ACCEPT</Text>
+      <Text style={[selfCenter, textWhite, rbBtnLable]}>ACCEPT</Text>
     </TouchableOpacity>
   );
 }

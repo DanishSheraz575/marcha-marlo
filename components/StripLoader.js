@@ -7,25 +7,18 @@ const dimensions = Dimensions.get("window");
 const win = Dimensions.get('window');
 const ratio = win.width/2;
 
-export default function CardContentLoader() {
-  const {colContainerRow, col5, p20, loadingContentImg } = StyleOf;
+export default function StripLoader() {
+  const {colContainerRow, col10, p20, loadingContentImg } = StyleOf;
 
   var rows = [];
   for (let i = 0; i < 5; i++) {
     rows.push(
       <View key={i} style={colContainerRow}>
-        <View style={col5}>
+        <View style={col10}>
         <Image
             style={[loadingContentImg,{height:200,resizeMode:"stretch"}]}
             resizeMode="cover"
-            source={require("../assets/content_loading_card.gif")}
-          />
-        </View>
-        <View style={col5}>
-        <Image
-            style={[loadingContentImg,{height:200,resizeMode:"stretch"}]}
-            resizeMode="cover"
-            source={require("../assets/content_loading_card.gif")}
+            source={require("../assets/notification_loader.gif")}
           />
         </View>
       </View>

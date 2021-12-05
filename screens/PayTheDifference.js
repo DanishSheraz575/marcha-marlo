@@ -6,6 +6,15 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 export default function PayTheDifference({}) {
+  const {
+    rowItemCenter,
+    btn,
+    dropShadow,
+    bgEminence,
+    btnLabel,
+    bgSelectiveYellow,
+  } = StyleOf;
+
   const navigation = useNavigation();
 
   function marchaMarnaHy() {
@@ -39,7 +48,7 @@ export default function PayTheDifference({}) {
   }
 
   return (
-    <View style={StyleOf.rowItemCenter}>
+    <View style={rowItemCenter}>
       <Image source={require("../assets/questionQ.png")} />
 
       <Text
@@ -61,27 +70,17 @@ export default function PayTheDifference({}) {
       </Text>
 
       <TouchableOpacity
-        style={[
-          StyleOf.btn,
-          StyleOf.dropShadow,
-          StyleOf.bgEminence,
-          { marginTop: "5%" },
-        ]}
+        style={[btn, dropShadow, bgEminence, { marginTop: "5%" }]}
         onPress={() => marchaMarnaHy()}
       >
-        <Text style={StyleOf.btnLabel}>yes I want to do the marcha</Text>
+        <Text style={btnLabel}>yes I want to do the marcha</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[
-          StyleOf.btn,
-          StyleOf.dropShadow,
-          StyleOf.bgSelectiveYellow,
-          { marginTop: "5%" },
-        ]}
+        style={[btn, dropShadow, bgSelectiveYellow, { marginTop: "5%" }]}
         onPress={() => navigation.goBack()}
       >
-        <Text style={StyleOf.btnLabel}>no i'm not interested</Text>
+        <Text style={btnLabel}>no i'm not interested</Text>
       </TouchableOpacity>
     </View>
   );

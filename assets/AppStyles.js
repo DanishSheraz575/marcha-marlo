@@ -1,5 +1,5 @@
 import { StyleSheet, StatusBar } from "react-native";
-import { color } from "react-native-reanimated";
+// import { color } from "react-native-reanimated";
 
 //const AppStyles = StyleSheet.create({
 export default StyleSheet.create({
@@ -186,6 +186,29 @@ export default StyleSheet.create({
   input: {
     height: 45,
     width: "85%",
+    marginBottom: 15,
+    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    lineHeight: 25,
+    backgroundColor: "#FFFFFF",
+    borderColor: "#F3F3F3",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    textAlign: "left",
+    // textTransform: "uppercase",
+  },
+
+  popupInput: {
+    height: 45,
+    width: "100%",
     marginBottom: 15,
     borderWidth: 1,
     paddingVertical: 10,
@@ -466,6 +489,7 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width:"90%"
   },
   modalHeading: {
     fontSize: 20,
@@ -626,7 +650,7 @@ checkbox: {
 productImage: {
   width: 130,
   height: 130,
-  alignSelf: "center",
+  alignSelf: "center"
 },
 productPrice: {
   color: "#000000",

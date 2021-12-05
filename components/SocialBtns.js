@@ -5,8 +5,9 @@ const facebookIcon =  require('../assets/facebook-icon.png');
 const twitterIcon =  require('../assets/twitter-icon.png');
 
 export default function SocialBtns() {
+
   return (
-    <View>
+    <>
         <Text style={styleOf.enterWithSocial}>Enter via social networks</Text>
         <View style={styleOf.flexIt}>
             <TouchableOpacity style={[styleOf.socialBtn, styleOf.btn, styleOf.twitterButton]}>
@@ -16,7 +17,7 @@ export default function SocialBtns() {
                 <Image source={facebookIcon} />
             </TouchableOpacity>
         </View>
-    </View>
+    </>
   );
 }
 

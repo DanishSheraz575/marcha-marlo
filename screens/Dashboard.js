@@ -1,144 +1,158 @@
 //import React from "react";
-import React, { useEffect } from "react";
-import { View, Text, Image, TouchableOpacity,ImageBackground } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 
-
 //import Logo from "../components/Logo";
 
-export default function Dashboard({navigation}) {
-  const image =  require('../assets/dashboardbg.png');
+export default function Dashboard({ navigation }) {
+  const {
+    fullContainer,
+    bgImage,
+    containerInner,
+    dashboardBoxMagenta,
+    dashboardBoxGray,
+    px20,
+    pb10,
+    f12,
+    textWelcome,
+    textLgMd,
+    textWhite,
+    dashboardContainer,
+    dashboardRow,
+    dashboardBox,
+    dashboardBoxGreen,
+    dashboardBoxImg,
+    dashboardBoxLabel,
+    dashboardBoxBlue,
+    dashboardBoxYellow,
+    dashboardBoxRed,
+  } = StyleOf;
 
-  
+  const [products, setProducts] = useState([]);
+  // const [exploreProducts, setExploreProducts] = useState([]);
+  const image = require("../assets/dashboardbg.png");
+
+  useEffect(() => {
+    getProducts()
+      .then((res) => setProducts(res))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
-    <View style={[StyleOf.fullContainer]}>
-      <ImageBackground source={image} style={StyleOf.bgImage}>
-        <ScreenHeader title="Dashboard" backbtn="0" bgColor='' />
-
-        <View style={[StyleOf.containerInner]}>
-          
-          <View style={[StyleOf.px20, StyleOf.pb10]}>
-            <Text style={[StyleOf.f12, StyleOf.textWelcome]}>welcome,</Text>
-            <Text style={[StyleOf.textLgMd, StyleOf.textWhite]}>
-              {global.ufull_name} 
-{/*               
-              <TouchableOpacity onPress={() => navigation.navigate('MyProfile')}>
-                <Image source={require('../assets/edit_icon.png')} />
-              </TouchableOpacity> */}
-
-            </Text>
-            <Text style={[StyleOf.f12, StyleOf.textWhite]}>{global.uemail}</Text>
+    <View style={[fullContainer]}>
+      <ImageBackground source={image} style={bgImage}>
+        <ScreenHeader title="Dashboard" backbtn="0" bgColor="" />
+        <View style={[containerInner]}>
+          <View style={[px20, pb10]}>
+            <Text style={[f12, textWelcome]}>welcome,</Text>
+            <Text style={[textLgMd, textWhite]}>{global.ufull_name}</Text>
+            <Text style={[f12, textWhite]}>{global.uemail}</Text>
           </View>
-          
 
-
-
-
-          <View style={[StyleOf.dashboardContainer]}>
-            <View style={StyleOf.dashboardRow}>
+          <View style={[dashboardContainer]}>
+            <View style={dashboardRow}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaRequestReceived')}
-                style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGreen]}
+                onPress={() => navigation.navigate("MarchaRequestReceived")}
+                style={[dashboardBox, dashboardBoxGreen]}
               >
                 <Image
-                        resizeMethod="scale" 
-                        resizeMode="center"
-                  style={StyleOf.dashboardBoxImg}
+                  resizeMethod="scale"
+                  resizeMode="center"
+                  style={dashboardBoxImg}
                   source={require("../assets/marcha_requests.png")}
                 />
-                {/* <Text style={StyleOf.dashboardBoxLabel}>My products</Text> 
-                <Text style={StyleOf.dashboardBoxLabel}>NUMBER OF MARCHA'S REQUESTS</Text>*/}
-                <Text style={StyleOf.dashboardBoxLabel}>MARCHA'S REQUESTS</Text>
+                <Text style={dashboardBoxLabel}>MARCHA'S REQUESTS</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MyProducts')}
-                style={[StyleOf.dashboardBox, StyleOf.dashboardBoxBlue]}
+                onPress={() => navigation.navigate("MyProducts", { products })}
+                style={[dashboardBox, dashboardBoxBlue]}
               >
                 <Image
-                        resizeMethod="auto" 
-                        resizeMode="center"
-                  style={StyleOf.dashboardBoxImg}
+                  resizeMethod="auto"
+                  resizeMode="center"
+                  style={dashboardBoxImg}
                   source={require("../assets/explore_products.png")}
                 />
-                {/* <Text style={StyleOf.dashboardBoxLabel}>Explore Products</Text> */}
-                <Text style={StyleOf.dashboardBoxLabel}>MY PRODUCTS</Text>
+                <Text style={dashboardBoxLabel}>MY PRODUCTS</Text>
               </TouchableOpacity>
             </View>
 
-            <View style={StyleOf.dashboardRow}>
+            <View style={dashboardRow}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaDone')}
-                style={[StyleOf.dashboardBox, StyleOf.dashboardBoxYellow]}
+                onPress={() => navigation.navigate("MarchaDone")}
+                style={[dashboardBox, dashboardBoxYellow]}
               >
                 <Image
-                        resizeMethod="auto" 
-                        resizeMode="center"
-                  style={StyleOf.dashboardBoxImg}
+                  resizeMethod="auto"
+                  resizeMode="center"
+                  style={dashboardBoxImg}
                   source={require("../assets/marcha_done.png")}
                 />
-                <Text style={StyleOf.dashboardBoxLabel}>
+                <Text style={dashboardBoxLabel}>
                   {/* Marcha Done list */}
                   NUMBER OF MARCHA'S DONE
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaPendingRequests')}
-                style={[StyleOf.dashboardBox, StyleOf.dashboardBoxRed]}
+                onPress={() => navigation.navigate("MarchaPendingRequests")}
+                style={[dashboardBox, dashboardBoxRed]}
               >
                 <Image
-                        resizeMethod="auto" 
-                        resizeMode="center"
-                  style={StyleOf.dashboardBoxImg}
+                  resizeMethod="auto"
+                  resizeMode="center"
+                  style={dashboardBoxImg}
                   source={require("../assets/pending_requests.png")}
                 />
-                <Text style={StyleOf.dashboardBoxLabel}>
+                <Text style={dashboardBoxLabel}>
                   {/* Marcha Request received */}
                   PENDING REQUESTS
                 </Text>
               </TouchableOpacity>
             </View>
 
-
-
-            <View style={StyleOf.dashboardRow}>
+            <View style={dashboardRow}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('MarchaDoneRequests')}
-                style={[StyleOf.dashboardBox, StyleOf.dashboardBoxGray]}
+                onPress={() => navigation.navigate("MarchaDoneRequests")}
+                style={[dashboardBox, dashboardBoxGray]}
               >
                 <Image
-                  style={StyleOf.dashboardBoxImg}
-                  resizeMethod="auto" 
+                  style={dashboardBoxImg}
+                  resizeMethod="auto"
                   resizeMode="center"
                   source={require("../assets/marcha_requests.png")}
                 />
-                <Text style={StyleOf.dashboardBoxLabel}>
+                <Text style={dashboardBoxLabel}>
                   {/* Marcha Request sent */}
                   MARCHA DONE REQUESTS
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                 onPress={() => navigation.navigate('MyProfile')}
-                style={[StyleOf.dashboardBox, StyleOf.dashboardBoxMagenta]}
+                onPress={() => navigation.navigate("MyProfile")}
+                style={[dashboardBox, dashboardBoxMagenta]}
               >
                 <Image
-                  resizeMethod="auto" 
+                  resizeMethod="auto"
                   resizeMode="center"
-                  style={StyleOf.dashboardBoxImg}
+                  style={dashboardBoxImg}
                   source={require("../assets/user_profile.png")}
                 />
-                <Text style={StyleOf.dashboardBoxLabel}>
+                <Text style={dashboardBoxLabel}>
                   {/* Marcha Done Requests */}
                   USER PROFILE
                 </Text>
               </TouchableOpacity>
             </View>
-
-
           </View>
         </View>
 

@@ -18,6 +18,28 @@ import Loader from "../components/Loader";
 import SocialBtns from "../components/SocialBtns";
 
 export default function Login({ navigation }) {
+  const {
+    fullContainer,
+    bgWhite,
+    moveToBottom,
+    btnLabel,
+    btn,
+    dropShadow,
+    bgRadicalRed,
+    input,
+    textCodGray,
+    f14,
+    textRadicalRed,
+    fwBold,
+    f26,
+    rowItemCenter,
+    centeredView,
+    modalView,
+    modalHeading,
+    popupInput,
+    bgEminence
+  } = StyleOf;
+
   const [showLoader, setShowLoader] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,8 +49,6 @@ export default function Login({ navigation }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
 
   function get_me_login() {
     if (email == "") {
@@ -125,28 +145,28 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <View style={[StyleOf.fullContainer, StyleOf.bgWhite]}>
-      <View style={StyleOf.rowItemCenter}>
-        <Text style={[StyleOf.f26, StyleOf.fwBold, StyleOf.textRadicalRed]}>
+    <View style={[fullContainer, bgWhite]}>
+      <View style={rowItemCenter}>
+        <Text style={[f26, fwBold, textRadicalRed]}>
           Welcome back,
         </Text>
-        <Text style={[StyleOf.f14, StyleOf.fwBold, StyleOf.textCodGray]}>
+        <Text style={[f14, fwBold, textCodGray]}>
           Log in with your account
         </Text>
       </View>
 
-      <View style={StyleOf.rowItemCenter}>
+      <View style={rowItemCenter}>
         <TextInput
           style={{ textTransform: "lowercase" }}
           keyboardType="email-address"
-          style={StyleOf.input}
+          style={input}
           placeholder="Enter Email"
           value={email}
           onChangeText={(email) => setEmail(email)}
         />
 
         <TextInput
-          style={StyleOf.input}
+          style={input}
           placeholder="Enter Password"
           secureTextEntry={true}
           value={password}
@@ -155,9 +175,9 @@ export default function Login({ navigation }) {
 
         <TouchableOpacity
           onPress={get_me_login}
-          style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed]}
+          style={[btn, dropShadow, bgRadicalRed]}
         >
-          <Text style={StyleOf.btnLabel}>Login</Text>
+          <Text style={btnLabel}>Login</Text>
         </TouchableOpacity>
 
         <Text onPress={() => setModalVisible(true)} style={{ marginTop: 20 }}>
@@ -165,15 +185,15 @@ export default function Login({ navigation }) {
         </Text>
       </View>
 
-      <View style={StyleOf.rowItemCenter}>
-        <View style={StyleOf.moveToBottom}>
+      <View style={rowItemCenter}>
+        <View style={moveToBottom}>
           <SocialBtns />
 
           <Text style={{ marginTop: 30, marginBottom: 10 }}>
             Don’t have an account?
             <Text
               onPress={() => navigation.navigate("SignUp")}
-              style={[StyleOf.textRadicalRed, StyleOf.fwBold]}
+              style={[textRadicalRed, fwBold]}
             >
               {" "}
               Sign Up
@@ -191,24 +211,24 @@ export default function Login({ navigation }) {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={StyleOf.centeredView}>
-          <View style={StyleOf.modalView}>
-            <Text style={[StyleOf.modalHeading, StyleOf.textRadicalRed]}>
+        <View style={centeredView}>
+          <View style={modalView}>
+            <Text style={[modalHeading, textRadicalRed]}>
               Recover Your Password
             </Text>
 
             <TextInput
-              style={[StyleOf.input, { width: "100%" }]}
+              style={[popupInput]}
               placeholder="Enter Email"
               onChangeText={(password_recover_email) =>
                 setPasswordRecoverEmail(password_recover_email)
               }
             />
             <Pressable
-              style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence]}
+              style={[btn, dropShadow, bgEminence]}
               onPress={reset_my_password}
             >
-              <Text style={StyleOf.btnLabel}>Submit</Text>
+              <Text style={btnLabel}>Submit</Text>
             </Pressable>
           </View>
         </View>

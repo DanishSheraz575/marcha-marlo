@@ -9,48 +9,37 @@ import SocialBtns from '../components/SocialBtns';
 
 const image =  require('../assets/homebg.png');
 
-
 export default function Home({ navigation }) {
 
+  const {fullContainer,bgImage,containerInner,rowItemCenter,f26,fwBold,btn,dropShadow,bgRadicalRed,btnLabel,moveToBottom,bgEminence}=StyleOf;
+
   return (
-    <View style={StyleOf.fullContainer}>
-
-      <ImageBackground source={image} style={StyleOf.bgImage}>
-      
-        <View style={StyleOf.containerInner}>    
-
-          <View style={StyleOf.rowItemCenter} >
+    <View style={fullContainer}>
+      <ImageBackground source={image} style={bgImage}>
+        <View style={containerInner}>    
+          <View style={rowItemCenter} >
             <Logo />   
           </View>
-
-          <View style={StyleOf.rowItemCenter} >
-
-            <Text style={[StyleOf.f26,StyleOf.fwBold, {marginTop:40,marginBottom:40,textAlign:'center'}]}>
+          <View style={rowItemCenter} >
+            <Text style={[f26,fwBold, {marginTop:40,marginBottom:40,textAlign:'center'}]}>
               Be together, 
               {'\n'}
               anytime, everywhere
-            </Text>                 
-                              
-            <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgRadicalRed]}>
-              <Text style={StyleOf.btnLabel}>Login</Text>
+            </Text>                             
+            <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[btn, dropShadow, bgRadicalRed]}>
+              <Text style={btnLabel}>Login</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={[StyleOf.btn, StyleOf.dropShadow, StyleOf.bgEminence]}>
-              <Text style={StyleOf.btnLabel}>Sign Up</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={[btn, dropShadow, bgEminence]}>
+              <Text style={btnLabel}>Sign Up</Text>
             </TouchableOpacity>
-
           </View>
-
-          <View style={StyleOf.rowItemCenter} >
-            <View style={StyleOf.moveToBottom}>
+          <View style={rowItemCenter} >
+            <View style={moveToBottom}>
               <SocialBtns />
             </View>
           </View>
-
-        </View>
-        
+        </View>      
       </ImageBackground>
-
     </View>
   );
 }

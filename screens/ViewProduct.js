@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -14,27 +14,27 @@ import StyleOf from "../assets/AppStyles";
 export default function ViewProduct({ route }) {
   const navigation = useNavigation();
 
-  const {product_id, title,condition,description,location,value,images}=route.params.productDetails;
 
-  function interestedInMarcha(product_id, value) {
-      global.marcha_product_id = product_id;
-      global.marcha_product_value = value;
+  const {dropShadow, btn, bgEminence, btnLabel}=StyleOf;
+
+  const { product_id, title, condition, description, location, value, images } =
+    route.params.productDetails;
+
+  const interestedInMarcha = () => {
+    global.marcha_product_id = product_id;
+    global.marcha_product_value = value;
+    global.myProductSelectedId = "";
+    global.myProductSelectedValue = "";
     navigation.navigate("MyProductsForMarchaFromExpolore");
-  }
-  
+  };
 
-  var productImages = [];
-  if (images) {
-    let pimages = images.split(",");
-    for (let i = 0; i < pimages.length; i++) {
-      productImages.push(global.product_images_base_url + pimages[i]);
-    }
-  }
-
+  const productImages = images
+    .split(",")
+    .map((img) => global.product_images_base_url + img);
   return (
     <>
       <View style={styles.page}>
-        <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
+        <View style={[styles.detailsContainer, dropShadow]}>
           <SliderBox
             dotColor="#FF3D57"
             inactiveDotColor="#efefef"
@@ -42,16 +42,16 @@ export default function ViewProduct({ route }) {
             resizeMode={"cover"}
             autoplay
             circleLoop
-            ImageComponentStyle={{ borderRadius: 5, width: "100%",marginTop:35 }}
+            ImageComponentStyle={{
+              borderRadius: 5,
+              width: "100%",
+              marginTop: 35,
+            }}
             imageLoadingColor="#2196F3"
             images={productImages}
           />
           <View style={{ flex: 1, padding: 15 }}>
-            <Text
-              style={[styles.detailsText, styles.pTitle]}
-            >
-              {title}
-            </Text>
+            <Text style={[styles.detailsText, styles.pTitle]}>{title}</Text>
             <Text style={[styles.detailsText, styles.font16]}>
               Condition: {condition}
               <Image source={require("../assets/location-icon2-back.png")} />
@@ -66,10 +66,10 @@ export default function ViewProduct({ route }) {
             </ScrollView>
 
             <TouchableOpacity
-              style={[StyleOf.btn, StyleOf.bgEminence, { alignSelf: "center" }]}
-              onPress={() => interestedInMarcha(product_id, value)}
+              style={[btn, bgEminence, { alignSelf: "center" }]}
+              onPress={interestedInMarcha}
             >
-              <Text style={StyleOf.btnLabel}>I AM INTERESTED</Text>
+              <Text style={btnLabel}>I AM INTERESTED</Text>
             </TouchableOpacity>
           </View>
         </View>

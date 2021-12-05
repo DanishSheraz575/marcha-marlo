@@ -5,14 +5,17 @@ import { View, Text, FlatList, Image } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
-import MarchaSpinner from "../components/MarchaSpinner";
+import StripLoader from "../components/StripLoader";
 import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
 import TimeAgo from "../components/TimeAgo";
 
 export default function Notifications({}) {
+
+  const {rowStrip, rowStripBottomBorder, colContainerRow, col2, col8, textBlack, f18, fwBold, textGray, f14, fwNormal, fullContainer, containerInner   }=StyleOf;
+
   const [notificationState, setNotificationState] = useState(0);
-  const [dataList, setDataList] = useState(false);
+  const [dataList, setDataList] = useState([]);
 
   const data = { api_token: global.token, user_id: global.uid };
 
@@ -26,18 +29,10 @@ export default function Notifications({}) {
     })
       .then((response) => response.json())
       .then((json) => {
-
         const status = json.status.toLowerCase();
-        if (status == "success") {
-          let dataList = [];
-          json.result.forEach((item) => {
-            dataList.push({
-              message: item.message,
-              type: item.type,
-              ago:item.added_on
-            });
-          });
-          setDataList(dataList);
+        const result = json.result;
+        if (status == "success" && result.length>0 ) {
+          setDataList(result);
           setNotificationState(2);
         } else {
           setNotificationState(1);
@@ -53,16 +48,16 @@ export default function Notifications({}) {
 
   function renderNotiSlot({ item }) {
     return (
-      <View style={[StyleOf.rowStrip,StyleOf.rowStripBottomBorder]}>
-        <View style={StyleOf.colContainerRow}>
-          <View style={StyleOf.col2}>
+      <View style={[rowStrip,rowStripBottomBorder]}>
+        <View style={colContainerRow}>
+          <View style={col2}>
             <Image source={require("../assets/notificationIcon.png")} />
           </View>
-          <View style={StyleOf.col8}>
+          <View style={col8}>
             <View style={{marginLeft:10}}>
-              <Text style={[StyleOf.textBlack, StyleOf.f18, StyleOf.fwBold]}>
+              <Text style={[textBlack, f18, fwBold]}>
                 Notification
-                <Text style={[StyleOf.textGray, StyleOf.f14, StyleOf.fwNormal]}> {item.message}</Text>
+                <Text style={[textGray, f14, fwNormal]}> {item.message}</Text>
               </Text>
               <TimeAgo dated={item.ago} />
             </View>
@@ -73,41 +68,13 @@ export default function Notifications({}) {
   }
 
   return (
-    <View style={StyleOf.fullContainer}>
+    <View style={fullContainer}>
       <ScreenHeader title="Notifications" bellbtn="0" />
 
-      <View style={[StyleOf.containerInner]}>
-        {(() => {
-          if (notificationState == 0) {
-            return <MarchaSpinner size={70} />;
-          }
-          return null;
-        })()}
-
-        {(() => {
-          if (notificationState == 1) {
-            return (
-              <RequestsNotFound
-                btnType="NotificationBackToDashboardBtn"
-                message="There are no more notifications here."
-              />
-            );
-          }
-          return null;
-        })()}
-
-        {(() => {
-          if (notificationState == 2) {
-            return (
-              <FlatList
-                data={dataList}
-                renderItem={renderNotiSlot}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            );
-          }
-          return null;
-        })()}
+      <View style={[containerInner]}>
+        {notificationState == 0 && <StripLoader size={70} />}
+        {notificationState == 1 && <RequestsNotFound btnType="NotificationBackToDashboardBtn" message="There are no more notifications here." />}
+        {notificationState == 2 && <FlatList data={dataList} renderItem={renderNotiSlot} keyExtractor={(item, index) => index.toString()} /> }
       </View>
 
       <BottomLinks active="" />

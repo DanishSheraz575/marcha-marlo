@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback, memo } from "react";
 import {
   View,
   Text,
@@ -9,83 +9,36 @@ import {
   Image,
 } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
-
 import MarchaSpinner from "../components/MarchaSpinner";
 import TimeAgo from "../components/TimeAgo";
-
 import CancelMarchaBtn from "../components/CancelMarchaBtn";
-
 import StyleOf from "../assets/AppStyles";
 
-export default function Chat({ route }) {
-  const navigation = useNavigation();
+const Chat = ({ route, navigation }) => {
+  const flatListRef = useRef();
+  const {
+    request_id,
+    my_product_id,
+    marcha_product_id,
+    requester_name,
+    requester_image,
+  } = route.params;
 
-  const textInputRef = useRef();
-
-  const flatList = useRef();
-
-  const { request_id } = route.params;
-  const { my_product_id } = route.params;
-  const { marcha_product_id } = route.params;
-
-  const { requester_id } = route.params;
-  const { requester_name } = route.params;
-  const { requester_email } = route.params;
-  const { requester_image } = route.params;
-
-  const [requestId, setRequestId] = useState(request_id);
-  const [myProductId, setMyProductId] = useState(my_product_id);
-  const [marchaProductId, setMarchaProductId] = useState(marcha_product_id);
-  const [message, setMessage] = useState(false);
+  const [message, setMessage] = useState("");
   const [messagesState, setMessagesState] = useState(0);
-  const [dataList, setDataList] = useState(false);
-  const [newItem, setNewItem] = useState(false);
+  const [dataList, setDataList] = useState([]);
 
-  const [lastMessage, setLastMessage] = useState(false);
-
-
-  /*
   useEffect(() => {
-    getChatHistory();
-    return () => {
-      // This is its cleanup.
-    };
+    const setInterValRef = setInterval(() => getChatHistory(), 5000);
+    return () => clearInterval(setInterValRef);
+    // getChatHistory();
   }, []);
-  
 
-  useEffect(() => {
-    return () => {
-      getChatHistory();
-    };
-  }, [dataList]);
-*/
-
-
-  setTimeout(
-    function () {      
-      getChatHistory();
-    }.bind(this),
-    5000
-  );
-  //setTimeout(function(){getChatHistory()}.bind(this), 5000)
-
-  //setTimeout(()=>getChatHistory(), 3000);
-
-  /*
-  function addItemInFlatList(added_by, msg, added_on){
-    var id=(dataList.length+1);
-    var newList = [dataList , {added_by :added_by, msg: msg, added_on:added_on}];
-    setDataList(newList);
-  }
-*/
-
-  const getChatHistory = () => {
-    //function getChatHistory() {
+  const getChatHistory = useCallback(() => {
     const data = {
       api_token: global.token,
       user_id: global.uid,
-      request_id: requestId,
+      request_id: request_id,
     };
 
     fetch(global.api + "chat_history", {
@@ -99,113 +52,91 @@ export default function Chat({ route }) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success") {
-          let messagesData = [];
-          json.result.forEach((item) => {
-            messagesData.push({
-              msg: item.msg,
-              added_by: item.added_by,
-              added_on: item.added_on,
-            });
-          });
+          const messagesData = json.result.map(
+            ({ msg, added_by, added_on }) => ({ msg, added_by, added_on })
+          );
           setDataList(messagesData);
-          setMessagesState(2);
-        } else {
-          setMessagesState(1);
+          // setMessagesState(2);
         }
+        setMessagesState(1);
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+      .catch((error) => console.error("Error:", error));
+  }, []);
 
-  function renderChat({ item }) {
+  const renderChat = useCallback(({ item }) => {
     return (
       <View style={styles.speachBubbleContainer}>
-        {(() => {
-          if (item.added_by == global.uid) {
-            return (
-              // Sent
-              <View>
-                <View style={StyleOf.colContainerRow}>
-                  <View style={[StyleOf.col10]}>
-                    <View
-                      style={[styles.speachBubble, styles.sentSpeachBubble]}
-                    >
-                      <Text style={StyleOf.textWhite}>{item.msg}</Text>
-                    </View>
-                  </View>
-                  <View style={[StyleOf.col10]}>
-                    <Text style={[styles.sentDate, StyleOf.f11]}>
-                      <TimeAgo dated={item.added_on} />
-                    </Text>
-                  </View>
+        {item?.added_by == global.uid ? (
+          // Sent
+          <>
+            <View style={StyleOf.colContainerRow}>
+              <View style={[StyleOf.col10]}>
+                <View style={[styles.speachBubble, styles.sentSpeachBubble]}>
+                  <Text style={StyleOf.textWhite}>{item?.msg}</Text>
                 </View>
               </View>
-            );
-          } else {
-            return (
-              // Received
-              <View>
-                <View style={StyleOf.colContainerRow}>
-                  <View style={[StyleOf.col10]}>
-                    <View style={[styles.speachBubble]}>
-                      <Text style={StyleOf.textBlack}>{item.msg}</Text>
-                    </View>
-                  </View>
-                  <View style={[StyleOf.col10]}>
-                    <Text style={[styles.receivedDate, StyleOf.f11]}>
-                      <TimeAgo dated={item.added_on} />
-                    </Text>
-                  </View>
+              <View style={[StyleOf.col10]}>
+                <Text style={[styles.sentDate, StyleOf.f11]}>
+                  <TimeAgo dated={item?.added_on} />
+                </Text>
+              </View>
+            </View>
+          </>
+        ) : (
+          // Received
+          <>
+            <View style={StyleOf.colContainerRow}>
+              <View style={[StyleOf.col10]}>
+                <View style={[styles.speachBubble]}>
+                  <Text style={StyleOf.textBlack}>{item?.msg}</Text>
                 </View>
               </View>
-            );
-          }
-        })()}
+              <View style={[StyleOf.col10]}>
+                <Text style={[styles.receivedDate, StyleOf.f11]}>
+                  <TimeAgo dated={item?.added_on} />
+                </Text>
+              </View>
+            </View>
+          </>
+        )}
       </View>
     );
-  }
+  }, []);
 
-  function sendMessage() {
-    if (message != "") {
-
-      dataList.push({ added_by: global.uid, msg: message, added_on: '' });
-      setDataList(dataList);
-      setNewItem(true);
+  const sendMessage = useCallback(() => {
+    if (message) {
+      const newMessage = { added_by: global.uid, msg: message, added_on: "" };
+      setDataList((oldMessage) => [...oldMessage, newMessage]);
+      setMessage("");
       const data = {
         api_token: global.token,
         user_id: global.uid,
-        request_id: requestId,
-        my_product_id: myProductId,
-        marcha_product_id: marchaProductId,
+        request_id: request_id,
+        my_product_id: my_product_id,
+        marcha_product_id: marcha_product_id,
         message: message,
         attachments: "",
       };
 
-      textInputRef.current.clear();
-      fetch(global.api + "send_message", {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          getChatHistory();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      sendChatToDb(data);
     }
-  }
+  }, [message]);
 
-  function sendMarchaDoneRequest() {
-    const data = {
-      api_token: global.token,
-      user_id: global.uid,
-      request_id: request_id,
-    };
+  const sendChatToDb = useCallback((data) => {
+    fetch(global.api + "send_message", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((json) => console.log("successfully sent "))
+      .catch((error) => console.error("Error:", error));
+  }, []);
+
+  const sendMarchaDoneRequest = useCallback(() => {
+    const data = { api_token: global.token, user_id: global.uid, request_id };
     fetch(global.api + "send_marcha_done_request", {
       method: "POST", // or 'PUT'
       headers: {
@@ -226,7 +157,7 @@ export default function Chat({ route }) {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }
+  }, []);
 
   return (
     <View style={StyleOf.fullContainer}>
@@ -262,22 +193,17 @@ export default function Chat({ route }) {
                 { flexDirection: "row", alignItems: "center" },
               ]}
             >
-              {(() => {
-                if (requester_image != "") {
-                  return (
-                    <Image
-                      style={styles.profileImg}
-                      source={{ uri: requester_image }}
-                    />
-                  );
-                }
-                return (
-                  <Image
-                    style={styles.profileImg}
-                    source={require("../assets/user_profile.png")}
-                  />
-                );
-              })()}
+              {requester_image != "" ? (
+                <Image
+                  style={styles.profileImg}
+                  source={{ uri: requester_image }}
+                />
+              ) : (
+                <Image
+                  style={styles.profileImg}
+                  source={require("../assets/user_profile.png")}
+                />
+              )}
               <Text
                 style={{
                   color: "#FFFFFF",
@@ -307,7 +233,7 @@ export default function Chat({ route }) {
           <View style={[StyleOf.colContainerRow]}>
             <View style={[StyleOf.col5]}>
               <TouchableOpacity
-                onPress={() => sendMarchaDoneRequest(request_id)}
+                onPress={sendMarchaDoneRequest}
                 style={[StyleOf.rbBodyBtnRed, { margin: 5 }]}
               >
                 <Text
@@ -323,10 +249,7 @@ export default function Chat({ route }) {
               </TouchableOpacity>
             </View>
             <View style={[StyleOf.col5]}>
-              <CancelMarchaBtn
-                request_id={request_id}
-                title="Cancel Marcha"
-              />
+              <CancelMarchaBtn request_id={request_id} title="Cancel Marcha" />
             </View>
           </View>
         </View>
@@ -337,39 +260,28 @@ export default function Chat({ route }) {
             { paddingHorizontal: 20, paddingVertical: 10 },
           ]}
         >
-          {(() => {
-            if (messagesState == 0) {
-              return <MarchaSpinner size={70} />;
-            }
-            return null;
-          })()}
+          {messagesState == 0 && <MarchaSpinner size={70} />}
 
-          {(() => {
-            if (messagesState == 1) {
-              return (
+          {messagesState !== 0 && (
+            <FlatList
+              // inverted={1}
+              data={dataList}
+              ref={flatListRef}
+              renderItem={renderChat}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={() => (
                 <View style={StyleOf.rowItemCenter}>
                   <Text style={[StyleOf.f18, StyleOf.textGray]}>Say Hi!</Text>
                 </View>
-              );
-            }
-            return null;
-          })()}
-
-          {(() => {
-            if (messagesState == 2) {
-              return (
-                <FlatList
-                  data={dataList}
-                  ref={flatList}
-                  onContentSizeChange={() => flatList.current.scrollToEnd()}
-                  renderItem={renderChat}
-                  keyExtractor={(item, index) => index.toString()}                  
-                  extraData={newItem}
-                />
-              );
-            }
-            return null;
-          })()}
+              )}
+              onContentSizeChange={() =>
+                flatListRef.current.scrollToEnd({ animated: true })
+              }
+              onLayout={() =>
+                flatListRef.current.scrollToEnd({ animated: true })
+              }
+            />
+          )}
         </View>
 
         <View
@@ -381,18 +293,18 @@ export default function Chat({ route }) {
           }}
         >
           <TextInput
-            onChangeText={(message) => setMessage(message)}
-            //value={textInput}
+            onChangeText={setMessage}
+            value={message}
             //onSubmitEditing={setMessage}
             style={{
-              lineHeight: 0,
+              // lineHeight: 0,
               paddingHorizontal: 8,
               paddingVertical: 3,
               alignSelf: "flex-start",
               width: "90%",
             }}
             //value={defaultTextInputValue}
-            ref={textInputRef}
+            // ref={textInputRef}
             placeholder="Type something ..."
           />
           <TouchableOpacity
@@ -408,7 +320,9 @@ export default function Chat({ route }) {
       </View>
     </View>
   );
-}
+};
+
+export default memo(Chat);
 
 const styles = StyleSheet.create({
   profileImg: {

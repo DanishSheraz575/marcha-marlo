@@ -8,152 +8,75 @@ import {
   CheckBox,
   StyleSheet,
   Image,
+  Alert,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-
-import * as ImagePicker from "expo-image-picker";
-//import { ImageManipulator } from 'expo';
-//import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
-
-import * as ImageManipulator from "expo-image-manipulator";
-
 import { useNavigation } from "@react-navigation/native";
-
 import StyleOf from "../assets/AppStyles";
-
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
 
 import Loader from "../components/Loader";
+import { Picker } from "../services/ImagePicker";
 
 export default function AddProduct({}) {
+  const {
+    fullContainer,
+    containerInner,
+    p30,
+    mb30,
+    labelLight,
+    labelDark,
+    addProductInput,
+    smallText,
+    flexIt,
+    productTypeButton,
+    productTypeButtonLabelActive,
+    productTypeButtonLabel,
+    textArea,
+    checkboxContainer,
+    selfCenter,
+    m5,
+    textRadicalRed,
+    mb40,
+    hCenter,
+    btn,
+    dropShadow,
+    bgRadicalRed,
+    btnLabel
+  } = StyleOf;
+
   const [showLoader, setShowLoader] = useState(false);
-
   const navigation = useNavigation();
-
   let [productImage1, setProductImage1] = useState("");
   let [productImage2, setProductImage2] = useState("");
   let [productImage3, setProductImage3] = useState("");
   let [productImage4, setProductImage4] = useState("");
 
-
-  const compressImage = async (image) => {
-    const manipResult = await ImageManipulator.manipulateAsync(
-      image,
-      [{ resize: { width: 300, height: 300 } }],
-      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
-    );
-    return manipResult.uri;
+  let openImagePickerAsync = async (type, setImage) => {
+    try {
+      const pickerResult = await Picker[
+        type == "camera" ? "openCamera" : "openImagePicker"
+      ]();
+      if (pickerResult?.status) setImage(pickerResult?.image?.uri);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  let openImagePickerAsync1 = async () => {
-    //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-    let permissionResult =
-      //await ImagePicker.requestMediaLibraryPermissionsAsync();
-      await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
-    let pickerResult = await ImagePicker.launchCameraAsync({
-      //mediaTypes: ImagePicker.MediaTypeOptions.All,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-      //base64: true,
-    });
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-    const imgURL = await compressImage(pickerResult.uri);
-    setProductImage1(imgURL);
-  };
-
-  let openImagePickerAsync2 = async () => {
-    //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-    let permissionResult =
-      //await ImagePicker.requestMediaLibraryPermissionsAsync();
-      await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      let pickerResult = await ImagePicker.launchCameraAsync({
-      //mediaTypes: ImagePicker.MediaTypeOptions.All,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-      //base64: true,
-    });
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-    //let img = { localUri: pickerResult.uri };
-    //setProductImage2(img.localUri);
-    const imgURL = await compressImage(pickerResult.uri);
-    setProductImage2(imgURL);
-  };
-
-  let openImagePickerAsync3 = async () => {
-    //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-    let permissionResult =
-      //await ImagePicker.requestMediaLibraryPermissionsAsync();
-      await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      let pickerResult = await ImagePicker.launchCameraAsync({
-      //mediaTypes: ImagePicker.MediaTypeOptions.All,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-      //base64: true,
-    });
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-    //let img = { localUri: pickerResult.uri };
-    //setProductImage3(img.localUri);
-    const imgURL = await compressImage(pickerResult.uri);
-    setProductImage3(imgURL);
-  };
-  let openImagePickerAsync4 = async () => {
-    //let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-    let permissionResult =
-      //await ImagePicker.requestMediaLibraryPermissionsAsync();
-      await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-    //let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      let pickerResult = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-      //base64: true,
-    });
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-    //let img = { localUri: pickerResult.uri };
-    //setProductImage4(img.localUri);
-    const imgURL = await compressImage(pickerResult.uri);
-    setProductImage4(imgURL);
+  const showAlert = (setImage) => {
+    Alert.alert("Image Picker", "choose or take image", [
+      { text: "Cancel", onPress: () => null },
+      {
+        text: "Open gallery",
+        onPress: () => openImagePickerAsync("", setImage),
+      },
+      {
+        text: "Open Camera",
+        onPress: () => openImagePickerAsync("camera", setImage),
+        style: "cancel",
+      },
+    ]);
   };
 
   const [categories, setCategories] = useState([]);
@@ -271,7 +194,7 @@ export default function AddProduct({}) {
     data.append("value", productValue);
     data.append("category_id", category_id);
     data.append("category", productCustomCategory);
-//    data.append("images", "");
+    //    data.append("images", "");
 
     if (productImage1) {
       data.append("images[]", {
@@ -302,7 +225,12 @@ export default function AddProduct({}) {
       });
     }
 
-    if(productImage1=='' && productImage2=='' && productImage3=='' && productImage4==''){
+    if (
+      productImage1 == "" &&
+      productImage2 == "" &&
+      productImage3 == "" &&
+      productImage4 == ""
+    ) {
       data.append("images[]", "");
     }
 
@@ -333,64 +261,58 @@ export default function AddProduct({}) {
   }
 
   return (
-    <View style={StyleOf.fullContainer}>
+    <View style={fullContainer}>
       <ScreenHeader title="Add Product" />
 
-      <View style={[StyleOf.containerInner, StyleOf.p30]}>
+      <View style={[containerInner, p30]}>
         <ScrollView>
-          <View style={[StyleOf.mb30]}>
-            <Text style={[StyleOf.labelLight]}>Add Product Title</Text>
-            <Text style={[StyleOf.labelDark]}>Add Title</Text>
+          <View style={[mb30]}>
+            <Text style={[labelLight]}>Add Product Title</Text>
+            <Text style={[labelDark]}>Add Title</Text>
             <TextInput
-              style={[StyleOf.addProductInput]}
+              style={[addProductInput]}
               onChangeText={(productTitle) => setProductTitle(productTitle)}
             />
-            <Text style={[StyleOf.smallText]}>
+            <Text style={[smallText]}>
               Mention the key features of your item (e.g. brand, model, make,
               type)
             </Text>
           </View>
 
-          <View style={[StyleOf.mb30]}>
-            <Text style={[StyleOf.labelLight]}>Product Condition</Text>
-            <Text style={[StyleOf.labelDark]}>Select Condition*</Text>
+          <View style={[mb30]}>
+            <Text style={[labelLight]}>Product Condition</Text>
+            <Text style={[labelDark]}>Select Condition*</Text>
 
-            <View style={StyleOf.flexIt}>
+            <View style={flexIt}>
               <TouchableOpacity
                 onPress={(productCondition) => setProductCondition("New")}
-                style={[StyleOf.productTypeButton]}
+                style={[productTypeButton]}
               >
                 {productCondition == "New" ? (
-                  <Text style={[StyleOf.productTypeButtonLabelActive]}>
-                    New
-                  </Text>
+                  <Text style={[productTypeButtonLabelActive]}>New</Text>
                 ) : (
-                  <Text style={[StyleOf.productTypeButtonLabel]}>New</Text>
+                  <Text style={[productTypeButtonLabel]}>New</Text>
                 )}
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={(productCondition) => setProductCondition("Used")}
-                style={[StyleOf.productTypeButton, { productCondition }]}
+                style={[productTypeButton, { productCondition }]}
               >
                 {productCondition == "Used" ? (
-                  <Text style={[StyleOf.productTypeButtonLabelActive]}>
-                    Used
-                  </Text>
+                  <Text style={[productTypeButtonLabelActive]}>Used</Text>
                 ) : (
-                  <Text style={[StyleOf.productTypeButtonLabel]}>Used</Text>
+                  <Text style={[productTypeButtonLabel]}>Used</Text>
                 )}
               </TouchableOpacity>
             </View>
           </View>
 
-          <View style={[StyleOf.mb30]}>
-            <Text style={[StyleOf.labelLight]}>Product Information</Text>
-            <Text style={[StyleOf.labelDark]}>
-              Describe what you are selling
-            </Text>
+          <View style={[mb30]}>
+            <Text style={[labelLight]}>Product Information</Text>
+            <Text style={[labelDark]}>Describe what you are selling</Text>
             <TextInput
-              style={[StyleOf.textArea]}
+              style={[textArea]}
               placeholder="Type something"
               placeholderTextColor="grey"
               numberOfLines={10}
@@ -399,21 +321,19 @@ export default function AddProduct({}) {
                 setProductDescription(productDescription)
               }
             />
-            <Text style={[StyleOf.smallText]}>
+            <Text style={[smallText]}>
               Include condition, features and other information about the
               product
             </Text>
           </View>
 
-          <View style={[StyleOf.mb30]}>
+          <View style={[mb30]}>
             {productCustomCategory ? (
               <View>
-                <Text style={[StyleOf.labelLight]}>Custom Category</Text>
-                <Text style={[StyleOf.labelDark]}>
-                  Add Your Custom Category
-                </Text>
+                <Text style={[labelLight]}>Custom Category</Text>
+                <Text style={[labelDark]}>Add Your Custom Category</Text>
                 <TextInput
-                  style={[StyleOf.addProductInput]}
+                  style={[addProductInput]}
                   onChangeText={(productCustomCategory) =>
                     setProductCustomCategory(productCustomCategory)
                   }
@@ -421,10 +341,10 @@ export default function AddProduct({}) {
               </View>
             ) : (
               <View>
-                <Text style={[StyleOf.labelLight]}>Product Category</Text>
-                <Text style={[StyleOf.labelDark]}>Select Category</Text>
+                <Text style={[labelLight]}>Product Category</Text>
+                <Text style={[labelDark]}>Select Category</Text>
                 <SelectDropdown
-                  buttonStyle={StyleOf.addProductInput}
+                  buttonStyle={addProductInput}
                   buttonTextStyle={[{ textAlign: "left" }]}
                   buttonTextStyleAfterSelection={[{ color: "#000000" }]}
                   data={categories}
@@ -440,21 +360,21 @@ export default function AddProduct({}) {
                 />
               </View>
             )}
-            <View style={StyleOf.checkboxContainer}>
+            <View style={checkboxContainer}>
               <CheckBox
                 value={productCustomCategory}
                 onValueChange={setProductCustomCategory}
-                style={StyleOf.selfCenter}
+                style={selfCenter}
               />
-              <Text style={StyleOf.m5}>I want to add custom category</Text>
+              <Text style={m5}>I want to add custom category</Text>
             </View>
           </View>
 
-          <View style={[StyleOf.mb30]}>
-            <Text style={[StyleOf.labelLight]}>location</Text>
-            <Text style={[StyleOf.labelDark]}>Select Location</Text>
+          <View style={[mb30]}>
+            <Text style={[labelLight]}>location</Text>
+            <Text style={[labelDark]}>Select Location</Text>
             <SelectDropdown
-              buttonStyle={StyleOf.addProductInput}
+              buttonStyle={addProductInput}
               buttonTextStyle={[{ textAlign: "left" }]}
               buttonTextStyleAfterSelection={[{ color: "#000000" }]}
               data={locations}
@@ -470,27 +390,25 @@ export default function AddProduct({}) {
             />
           </View>
 
-          <View style={[StyleOf.mb30]}>
-            <Text style={[StyleOf.labelLight]}>
+          <View style={[mb30]}>
+            <Text style={[labelLight]}>
               Select The Best Price of Your Product
             </Text>
-            <Text style={[StyleOf.labelDark]}>Product Price in PKR</Text>
+            <Text style={[labelDark]}>Product Price in PKR</Text>
             <TextInput
-              style={[StyleOf.addProductInput]}
+              style={[addProductInput]}
               placeholder="Rs."
               keyboardType="numeric"
               onChangeText={(productValue) => setProductValue(productValue)}
             />
           </View>
 
-          <View style={[StyleOf.mb30]}>
-            <Text style={[StyleOf.labelLight]}>
-              Manage Your Product Gallery
-            </Text>
-            <Text style={[StyleOf.labelDark]}>Product Image(s)</Text>
+          <View style={[mb30]}>
+            <Text style={[labelLight]}>Manage Your Product Gallery</Text>
+            <Text style={[labelDark]}>Product Image(s)</Text>
 
             <View style={styles.galleryImagesContainer}>
-              <TouchableOpacity onPress={openImagePickerAsync1}>
+              <TouchableOpacity onPress={() => showAlert(setProductImage1)}>
                 {productImage1 == "" ? (
                   <Image
                     style={styles.imageBox}
@@ -504,7 +422,7 @@ export default function AddProduct({}) {
                 )}
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={openImagePickerAsync2}>
+              <TouchableOpacity onPress={() => showAlert(setProductImage2)}>
                 {productImage2 == "" ? (
                   <Image
                     style={styles.imageBox}
@@ -518,7 +436,7 @@ export default function AddProduct({}) {
                 )}
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={openImagePickerAsync3}>
+              <TouchableOpacity onPress={() => showAlert(setProductImage3)}>
                 {productImage3 == "" ? (
                   <Image
                     style={styles.imageBox}
@@ -532,7 +450,7 @@ export default function AddProduct({}) {
                 )}
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={openImagePickerAsync4}>
+              <TouchableOpacity onPress={() => showAlert(setProductImage4)}>
                 {productImage4 == "" ? (
                   <Image
                     style={styles.imageBox}
@@ -547,22 +465,17 @@ export default function AddProduct({}) {
               </TouchableOpacity>
             </View>
 
-            <Text style={[StyleOf.smallText, StyleOf.textRadicalRed]}>
+            <Text style={[smallText, textRadicalRed]}>
               You can upload up to 4 images only.
             </Text>
           </View>
 
-          <View style={[StyleOf.mb40, StyleOf.hCenter]}>
+          <View style={[mb40, hCenter]}>
             <TouchableOpacity
               onPress={upload_product}
-              style={[
-                StyleOf.btn,
-                StyleOf.dropShadow,
-                StyleOf.bgRadicalRed,
-                StyleOf.hCenter,
-              ]}
+              style={[btn, dropShadow, bgRadicalRed, hCenter]}
             >
-              <Text style={StyleOf.btnLabel}>Upload NOW!</Text>
+              <Text style={btnLabel}>Upload NOW!</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

@@ -11,32 +11,19 @@ export default function ScreenHeader({
 }) {
   const navigation = useNavigation();
 
+  const {flexIt, p20, itemCenter, iconBox}=StyleOf;
+
   return (
-    <View>
-      <View
-        style={[
-          StyleOf.flexIt,
-          StyleOf.p20,
-          {
-            alignItems: "center",
-          },
-          bgColor,
-        ]}
-      >
-        <View>
-          {(() => {
-            if (backbtn == "1") {
-              return (
-                <TouchableOpacity
-                  style={[StyleOf.itemCenter, StyleOf.iconBox]}
-                  onPress={() => navigation.goBack()}
-                >
-                  <Image source={require("../assets/arrow-left.png")} />
-                </TouchableOpacity>
-              );
-            }
-            return null;
-          })()}
+    <>
+      <View style={[flexIt, p20, {alignItems: "center"},bgColor,]}>
+        <View>          
+          {backbtn == "1" && <TouchableOpacity
+                                style={[itemCenter, iconBox]}
+                                onPress={() => navigation.goBack()}
+                              >
+                                <Image source={require("../assets/arrow-left.png")} />
+                              </TouchableOpacity>
+          }
         </View>
         <View>
           <Text style={{ color: "#FFFFFF", fontSize: 20, fontWeight: "bold" }}>
@@ -44,20 +31,16 @@ export default function ScreenHeader({
           </Text>
         </View>
         <View>
-          {(() => {
-            if (bellbtn == "1") {
-              return (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Notifications")}
-                >
-                  <Image source={require("../assets/bell.png")} />
-                </TouchableOpacity>
-              );
-            }
-            return null;
-          })()}
+          {bellbtn == "1" && <TouchableOpacity
+                                style={[itemCenter, iconBox]}
+                                onPress={() => navigation.navigate("Notifications")}
+                              >
+                                <Image source={require("../assets/bell.png")} />
+                              </TouchableOpacity>
+
+          }
         </View>
       </View>
-    </View>
+    </>
   );
 }

@@ -11,6 +11,17 @@ import BottomLinks from "../components/BottomLinks";
 import MarchaRequestCard from "../components/MarchaRequestCard";
 
 export default function MarchaRequestReceived({}) {
+  const {
+    fullContainer,
+    dropShadow,
+    colContainerRow,
+    col5,
+    rbBodyBtnRed,
+    selfCenter,
+    textWhite,
+    rbBodyBtnLight,
+    containerInner
+  } = StyleOf;
 
   const [currentScreen, setCurrentScreenState] = useState("received");
 
@@ -131,62 +142,57 @@ export default function MarchaRequestReceived({}) {
       .catch((error) => {
         console.error("Error:", error);
       });
-      return () => {
-        // Anything in here is fired on component unmount.
-      }
+    return () => {
+      // Anything in here is fired on component unmount.
+    };
   }, []);
 
   function renderRequestReceivedCard({ item }) {
     return (
-      <MarchaRequestCard item={item} requestType="doneRequestReseived" showHeader="0" />
+      <MarchaRequestCard
+        item={item}
+        requestType="doneRequestReseived"
+        showHeader="0"
+      />
     );
   }
   function renderRequestSentCard({ item }) {
     return (
-      <MarchaRequestCard item={item} requestType="doneRequestSent" showHeader="0" />
+      <MarchaRequestCard
+        item={item}
+        requestType="doneRequestSent"
+        showHeader="0"
+      />
     );
   }
 
   return (
-    <View style={StyleOf.fullContainer}>
+    <View style={fullContainer}>
       <ScreenHeader title="Marcha Requests" />
 
       {(() => {
         if (currentScreen == "received") {
           return (
             <View
-              style={[
-                StyleOf.dropShadow,
-                { padding: 5, backgroundColor: "#ffffff" },
-              ]}
+              style={[dropShadow, { padding: 5, backgroundColor: "#ffffff" }]}
             >
-              <View style={[StyleOf.colContainerRow]}>
-                <View style={[StyleOf.col5]}>
-                  <TouchableOpacity
-                    style={[StyleOf.rbBodyBtnRed, { margin: 5 }]}
-                  >
+              <View style={[colContainerRow]}>
+                <View style={[col5]}>
+                  <TouchableOpacity style={[rbBodyBtnRed, { margin: 5 }]}>
                     <Text
-                      style={[
-                        StyleOf.selfCenter,
-                        StyleOf.textWhite,
-                        { textAlign: "center" },
-                      ]}
+                      style={[selfCenter, textWhite, { textAlign: "center" }]}
                     >
                       <Text>Received</Text>
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={[StyleOf.col5]}>
+                <View style={[col5]}>
                   <TouchableOpacity
                     onPress={() => setCurrentScreenState("sent")}
-                    style={[StyleOf.rbBodyBtnLight, { margin: 5 }]}
+                    style={[rbBodyBtnLight, { margin: 5 }]}
                   >
                     <Text
-                      style={[
-                        StyleOf.selfCenter,
-                        StyleOf.textWhite,
-                        { textAlign: "center" },
-                      ]}
+                      style={[selfCenter, textWhite, { textAlign: "center" }]}
                     >
                       <Text>Sent</Text>
                     </Text>
@@ -199,37 +205,27 @@ export default function MarchaRequestReceived({}) {
           return (
             <View
               style={[
-                StyleOf.dropShadow,
+                dropShadow,
                 { padding: 5, backgroundColor: "#ffffff" },
               ]}
             >
-              <View style={[StyleOf.colContainerRow]}>
-                <View style={[StyleOf.col5]}>
+              <View style={[colContainerRow]}>
+                <View style={[col5]}>
                   <TouchableOpacity
                     onPress={() => setCurrentScreenState("received")}
-                    style={[StyleOf.rbBodyBtnLight, { margin: 5 }]}
+                    style={[rbBodyBtnLight, { margin: 5 }]}
                   >
                     <Text
-                      style={[
-                        StyleOf.selfCenter,
-                        StyleOf.textWhite,
-                        { textAlign: "center" },
-                      ]}
+                      style={[selfCenter, textWhite, { textAlign: "center" }]}
                     >
                       <Text>Received</Text>
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={[StyleOf.col5]}>
-                  <TouchableOpacity
-                    style={[StyleOf.rbBodyBtnRed, { margin: 5 }]}
-                  >
+                <View style={[col5]}>
+                  <TouchableOpacity style={[rbBodyBtnRed, { margin: 5 }]}>
                     <Text
-                      style={[
-                        StyleOf.selfCenter,
-                        StyleOf.textWhite,
-                        { textAlign: "center" },
-                      ]}
+                      style={[selfCenter, textWhite, { textAlign: "center" }]}
                     >
                       <Text>Sent</Text>
                     </Text>
@@ -244,7 +240,7 @@ export default function MarchaRequestReceived({}) {
       {(() => {
         if (currentScreen == "received") {
           return (
-            <View style={[StyleOf.containerInner]}>
+            <View style={[containerInner]}>
               {(() => {
                 if (receivedDataState == 0) {
                   return <CardLoader />;
@@ -280,7 +276,7 @@ export default function MarchaRequestReceived({}) {
           );
         } else {
           return (
-            <View style={[StyleOf.containerInner]}>
+            <View style={[containerInner]}>
               {(() => {
                 if (sentDataState == 0) {
                   return <CardLoader />;

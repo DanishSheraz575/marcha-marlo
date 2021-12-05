@@ -42,21 +42,16 @@ export default function MarchaRequestCard({
 
   return (
     <View style={requestBox}>
-      {(() => {
-        if (showHeader == 1) {
-          return (
-            <View style={[rbHeader, dropShadow]}>
-              <Text style={selfCenter}>
-                <Text style={textGray}>Request sent to </Text>
-                <Text style={rbHeaderBold}>
-                  {item.requested_username}
-                </Text>
-              </Text>
-            </View>
-          );
-        }
-        return null;
-      })()}
+
+      {showHeader == 1 && <View style={[rbHeader, dropShadow]}>
+                          <Text style={selfCenter}>
+                            <Text style={textGray}>Request sent to </Text>
+                            <Text style={rbHeaderBold}>
+                              {item.requested_username}
+                            </Text>
+                          </Text>
+                        </View>
+      }
 
       <View style={[rbBody, dropShadow]}>
         <View style={colContainerRow}>
@@ -75,32 +70,22 @@ export default function MarchaRequestCard({
             <Text style={[rbBodyProductTitle, mb5]}>
               {item.requested_product_title}
             </Text>
+            {marchaStatus > 0 && <View style={[colContainerRow, mb5]}>
+                                  <View style={[col, col6]}>
+                                    <Text style={rbBodyProductPrice}>
+                                      Price: {item.requested_product_value}
+                                    </Text>
+                                  </View>
+                                  <View style={[col, col4]}>
+                                    <Image
+                                      style={{ alignSelf: "flex-end" }}
+                                      source={require("../assets/march_done_icon.png")}
+                                    />
+                                  </View>
+                                </View>
+            }
 
-            {(() => {
-              if (marchaStatus > 0) {
-                return (
-                  <View style={[colContainerRow, mb5]}>
-                    <View style={[col, col6]}>
-                      <Text style={rbBodyProductPrice}>
-                        Price: {item.requested_product_value}
-                      </Text>
-                    </View>
-                    <View style={[col, col4]}>
-                      <Image
-                        style={{ alignSelf: "flex-end" }}
-                        source={require("../assets/march_done_icon.png")}
-                      />
-                    </View>
-                  </View>
-                );
-              } else {
-                return (
-                  <Text style={rbBodyProductPrice}>
-                    Marcha Price: {item.requested_product_value}
-                  </Text>
-                );
-              }
-            })()}
+            {marchaStatus == 0 && <Text style={rbBodyProductPrice}> Marcha Price: {item.requested_product_value}</Text>}
 
             <View style={[colContainerRow, mb5]}>
               <View style={col10}>
@@ -128,54 +113,38 @@ export default function MarchaRequestCard({
               </Text>
             </View>
 
-            {(() => {
-              if (requestType == "sent" || requestType == "doneRequestSent") {
-                return <CancelMarchaBtn request_id={item.marcha_request_id} />;
-              }
-              return null;
-            })()}
+            {(requestType == "sent" || requestType == "doneRequestSent") && <CancelMarchaBtn request_id={item.marcha_request_id} />}
 
-            {(() => {
-              if (requestType == "doneRequestReseived") {
-                return (
-                  <View style={[colContainerRow, mb5]}>
-                    <View style={[col5]}>
-                      <AcceptMarchaDoneRequestBtn
-                        request_id={item.marcha_request_id}
-                      />
-                    </View>
-                    <View style={[col5]}>
-                      <DeclineMarchaBtn request_id={item.marcha_request_id} />
-                    </View>
-                  </View>
-                );
-              }
-              return null;
-            })()}
+            {requestType == "doneRequestReseived" && <View style={[colContainerRow, mb5]}>
+                                                      <View style={[col5]}>
+                                                        <AcceptMarchaDoneRequestBtn
+                                                          request_id={item.marcha_request_id}
+                                                        />
+                                                      </View>
+                                                      <View style={[col5]}>
+                                                        <DeclineMarchaBtn request_id={item.marcha_request_id} />
+                                                      </View>
+                                                    </View>
+            }
 
-            {(() => {
-              if (requestType == "reseived") {
-                return (
-                  <View style={[colContainerRow, mb5]}>
-                    <View style={[col5]}>
-                      <AcceptMarchaBtn
-                        request_id={item.marcha_request_id}
-                        requester_id={item.requester_id}
-                        requester_name={item.requester_name}
-                        requester_email={item.requester_email}
-                        requester_image={item.requester_image}
-                        my_product_id={item.my_product_id}
-                        marcha_product_id={item.marcha_product_id}
-                      />
-                    </View>
-                    <View style={[col5]}>
-                      <DeclineMarchaBtn request_id={item.marcha_request_id} />
-                    </View>
-                  </View>
-                );
-              }
-              return null;
-            })()}
+            {requestType == "reseived" && <View style={[colContainerRow, mb5]}>
+                                            <View style={[col5]}>
+                                              <AcceptMarchaBtn
+                                                request_id={item.marcha_request_id}
+                                                requester_id={item.requester_id}
+                                                requester_name={item.requester_name}
+                                                requester_email={item.requester_email}
+                                                requester_image={item.requester_image}
+                                                my_product_id={item.my_product_id}
+                                                marcha_product_id={item.marcha_product_id}
+                                              />
+                                            </View>
+                                            <View style={[col5]}>
+                                              <DeclineMarchaBtn request_id={item.marcha_request_id} />
+                                            </View>
+                                          </View>
+            }
+
           </View>
         </View>
       </View>
