@@ -49,22 +49,22 @@ export default function MarchaRequestReceived() {
 
             return {
               requested_username:added_by.full_name,
-              requested_product_title: requester_product?.title,
-              requested_product_value: requester_product?.value,
-              requested_product_location: requester_product?.location,
-              requested_product_condition: requester_product?.condition,
+              requested_product_title: requester_product.title,
+              requested_product_value: requester_product.value,
+              requested_product_location: requester_product.location,
+              requested_product_condition: requester_product.condition,
               requested_product_image: pimg,
 
-              marcha_against_product_title: item?.requested_product?.title,
-              marcha_request_id: item?.request_id,
+              marcha_against_product_title: item.requested_product.title,
+              marcha_request_id: item.request_id,
               
-              my_product_id: item?.requested_product_id,
-              marcha_product_id: item?.requester_product_id,
-              requester_id: added_by?.user_id,
-              requester_name: added_by?.full_name,
-              requester_email: added_by?.email,
+              my_product_id: item.requested_product_id,
+              marcha_product_id: item.requester_product_id,
+              requester_id: added_by.user_id,
+              requester_name: added_by.full_name,
+              requester_email: added_by.email,
               requester_image: img,
-              marcha_date: item?.dated,
+              marcha_date: item.dated,
             };
           });
           setDataList(dataList);
