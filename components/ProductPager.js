@@ -23,6 +23,10 @@ import StyleOf from "../assets/AppStyles";
 const config = { velocityThreshold: 0.3, directionalOffsetThreshold: 80 };
 
 export default function ProductPager({ data }) {
+
+//console.log(data);
+//return false;
+
   const navigation = useNavigation();
   //const [detailsOf, setDetailsOf] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -33,7 +37,7 @@ export default function ProductPager({ data }) {
     global.marcha_product_id = id;
     global.marcha_product_value = value;
 
-    const data = {
+    const apiData = {
       api_token: global.token,
       user_id: global.uid,
       product_ids: global.myProductSelectedId,
@@ -43,7 +47,7 @@ export default function ProductPager({ data }) {
     fetch(global.api + "send_marcha_request", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(apiData),
     })
       .then((response) => response.json())
       .then((json) => {
@@ -72,7 +76,6 @@ export default function ProductPager({ data }) {
     const productImages = p.images
       .split(",")
       .map((img) => global.product_images_base_url + img);
-    console.log({ p, productImages });
     return (
       <View style={[styles.detailsContainer, StyleOf.dropShadow]}>
         <SliderBox
@@ -135,7 +138,7 @@ export default function ProductPager({ data }) {
                 <ImageBackground
                   resizeMode="contain"
                   source={{
-                    uri: `${p.images_base_url}${singleProductImage[0]}`,
+                    uri: `${global.product_images_base_url}${singleProductImage[0]}`,
                   }}
                   style={[styles.bgImage]}
                 >

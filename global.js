@@ -55,7 +55,7 @@ global.getProducts = getMyProducts = () => {
       const promise = await fetch(global.api + "my_products", {
         method: "POST", // or 'PUT'
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_token: global.token, user_id: global.uid }),
+        body: JSON.stringify({ api_token: global.token, user_id: global.uid, is_mobile:true }),
       });
       if (promise.ok) {
         const { result } = await promise.json();
@@ -73,7 +73,7 @@ global.getExploreProducts = getExploreProduct = () => {
       const promise = await fetch(global.api + "explore_products", {
         method: "POST", // or 'PUT'
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_token: global.token, user_id: global.uid }),
+        body: JSON.stringify({ api_token: global.token, user_id: global.uid, is_mobile:true }),
       });
       if (promise.ok) {
         const { result } = await promise.json();

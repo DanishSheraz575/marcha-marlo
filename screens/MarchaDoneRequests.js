@@ -31,7 +31,7 @@ export default function MarchaRequestReceived({}) {
   const [sentDataState, setSentDataState] = useState(0);
   const [sentDataList, setSentDataList] = useState(false);
 
-  const data = { api_token: global.token, user_id: global.uid };
+  const data = { api_token: global.token, user_id: global.uid, is_mobile:true };
 
   useEffect(() => {
     fetch(global.api + "get_marcha_done_requests_received", {
@@ -45,6 +45,7 @@ export default function MarchaRequestReceived({}) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length > 0) {
+          /*
           let RDataList = [];
           json.result.forEach((item) => {
             var requester = item.added_by;
@@ -79,6 +80,8 @@ export default function MarchaRequestReceived({}) {
             });
           });
           setReceivedDataList(RDataList);
+          */
+          setReceivedDataList(json.result);
           setReceivedDataState(2);
         } else {
           setReceivedDataState(1);
@@ -99,6 +102,7 @@ export default function MarchaRequestReceived({}) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length > 0) {
+          /*
           let SDataList = [];
 
           json.result.forEach((item) => {
@@ -134,6 +138,8 @@ export default function MarchaRequestReceived({}) {
             });
           });
           setSentDataList(SDataList);
+          */
+          setSentDataList(json.result);
           setSentDataState(2);
         } else {
           setSentDataState(1);

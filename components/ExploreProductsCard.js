@@ -18,7 +18,8 @@ function formatData(dataList, numColumns) {
   return dataList;
 }
 
-export default function ExploreProductsCard({ data, refresh, onRefresh }) {
+export default function ExploreProductsCard({ data, refresh, onRefresh, url })
+{
   const navigation = useNavigation();
 
   //const [isChecked, setChecked] = useState(0);
@@ -49,7 +50,10 @@ export default function ExploreProductsCard({ data, refresh, onRefresh }) {
   );
 
   const renderProductCard = useCallback(({ item }) => {
+    
+
     const { product_id, value, images, condition, title, location } = item;
+
     const {
       productCard,
       itemInvisible,
@@ -61,16 +65,27 @@ export default function ExploreProductsCard({ data, refresh, onRefresh }) {
       productLocationMarker,
     } = StyleOf;
 
-    if (item.empty) {
+    if (item.empty){
+
       return <View style={[productCard, itemInvisible]} />;
+
     } else {
-      let pimages = images.split(",");
-      let img = product_images_base_url + pimages[0];
+      
+      //let pimages = images.split(",");
+      //let img = product_images_base_url + pimages[0];
+
+      let img = global.product_images_base_url + images;
+
       if (condition == "New") {
+      
         var conditionRibbon = require("../assets/new.png");
+      
       } else {
+      
         var conditionRibbon = require("../assets/old.png");
+      
       }
+
 
       return (
         <View style={productCard}>
@@ -95,9 +110,7 @@ export default function ExploreProductsCard({ data, refresh, onRefresh }) {
               />
             </View>
           </TouchableOpacity>
-
           <Text style={productPrice}>Rs. {value}</Text>
-
           <Text style={productTitle}>{title}</Text>
           <Text style={productLocation}>
             <Image
@@ -108,6 +121,7 @@ export default function ExploreProductsCard({ data, refresh, onRefresh }) {
           </Text>
         </View>
       );
+
     }
   }, []);
 

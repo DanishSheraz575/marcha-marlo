@@ -19,6 +19,7 @@ export default function GoForMarcha() {
     api_token: global.token,
     user_id: global.uid,
     product_ids: pid,
+    is_mobile:true
   };
   useEffect(() => {
     fetch(global.api + "go_for_marcha", {

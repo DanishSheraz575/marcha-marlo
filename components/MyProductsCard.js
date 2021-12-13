@@ -49,7 +49,7 @@ export default function MyProductsCard({ data, refresh, onRefresh }) {
       title,
       location,
       empty,
-      product_images_base_url,
+    //  product_images_base_url,
     } = item;
 
     const {
@@ -71,8 +71,9 @@ export default function MyProductsCard({ data, refresh, onRefresh }) {
     if (empty) {
       return <View style={[productCard, itemInvisible]} />;
     } else {
-      let pimages = images.split(",");
-      let img = product_images_base_url + pimages[0];
+      //let pimages = images.split(",");
+      //let img = product_images_base_url + pimages[0];
+      let img = global.product_images_base_url + images;
       if (condition == "New") {
         var conditionRibbon = require("../assets/new.png");
       } else {

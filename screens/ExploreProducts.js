@@ -8,6 +8,10 @@ import StyleOf from "../assets/AppStyles";
 
 class ExploreProducts extends PureComponent {
   
+
+  
+  
+
   state = { itemsList: [], productsState: true, keyword: "", dataList: [] };
 
   componentDidMount() {
@@ -88,6 +92,7 @@ class ExploreProducts extends PureComponent {
                 data={dataList}
                 refresh={productsState}
                 onRefresh={this.getData}
+                url={global.product_images_base_url}
               />
             </>
           )}
