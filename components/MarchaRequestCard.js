@@ -58,22 +58,22 @@ export default function MarchaRequestCard({
           <View style={[col, col4]}>
             <Image
               style={rbBodyImg}
-              source={{ uri: item.requested_product_image }}
+              source={{ uri: global.product_images_base_url+item.requested_product_image }}
             />
             <Text style={rbBodyDate}>
               <Image source={require("../assets/clock-icon.png")} />
-              {item.marcha_date}
+              {item.request_date}
             </Text>
           </View>
 
           <View style={[col, col6]}>
             <Text style={[rbBodyProductTitle, mb5]}>
-              {item.requested_product_title}
+              {item.requester_product_title}
             </Text>
             {marchaStatus > 0 && <View style={[colContainerRow, mb5]}>
                                   <View style={[col, col6]}>
                                     <Text style={rbBodyProductPrice}>
-                                      Price: {item.requested_product_value}
+                                      Price: {item.requester_product_value}
                                     </Text>
                                   </View>
                                   <View style={[col, col4]}>
@@ -85,7 +85,7 @@ export default function MarchaRequestCard({
                                 </View>
             }
 
-            {marchaStatus == 0 && <Text style={rbBodyProductPrice}> Marcha Price: {item.requested_product_value}</Text>}
+            {marchaStatus == 0 && <Text style={rbBodyProductPrice}> Marcha Price: {item.requester_product_value}</Text>}
 
             <View style={[colContainerRow, mb5]}>
               <View style={col10}>
@@ -93,7 +93,7 @@ export default function MarchaRequestCard({
                   Location:{" "}
                   <Text style={[f12, fwBold]}>
                     <Image source={require("../assets/location-icon2.png")} />{" "}
-                    {item.requested_product_location}
+                    {item.requester_product_location}
                   </Text>
                 </Text>
               </View>
@@ -101,7 +101,7 @@ export default function MarchaRequestCard({
                 <Text style={[f12]}>
                   Condition:{" "}
                   <Text style={[f12, fwBold]}>
-                    {item.requested_product_condition}
+                    {item.requester_product_condition}
                   </Text>
                 </Text>
               </View>
@@ -109,20 +109,20 @@ export default function MarchaRequestCard({
             <View style={rbBodyMarchaAgainstBox}>
               <Text>Marcha against:</Text>
               <Text style={fwBold}>
-                {item.marcha_against_product_title}
+                {item.requested_product_title}
               </Text>
             </View>
 
-            {(requestType == "sent" || requestType == "doneRequestSent") && <CancelMarchaBtn request_id={item.marcha_request_id} />}
+            {(requestType == "sent" || requestType == "doneRequestSent") && <CancelMarchaBtn request_id={item.request_id} />}
 
             {requestType == "doneRequestReseived" && <View style={[colContainerRow, mb5]}>
                                                       <View style={[col5]}>
                                                         <AcceptMarchaDoneRequestBtn
-                                                          request_id={item.marcha_request_id}
+                                                          request_id={item.request_id}
                                                         />
                                                       </View>
                                                       <View style={[col5]}>
-                                                        <DeclineMarchaBtn request_id={item.marcha_request_id} />
+                                                        <DeclineMarchaBtn request_id={item.request_id} />
                                                       </View>
                                                     </View>
             }
@@ -130,17 +130,17 @@ export default function MarchaRequestCard({
             {requestType == "reseived" && <View style={[colContainerRow, mb5]}>
                                             <View style={[col5]}>
                                               <AcceptMarchaBtn
-                                                request_id={item.marcha_request_id}
+                                                request_id={item.request_id}
                                                 requester_id={item.requester_id}
                                                 requester_name={item.requester_name}
                                                 requester_email={item.requester_email}
                                                 requester_image={item.requester_image}
-                                                my_product_id={item.my_product_id}
+                                                my_product_id={item.requested_product_id}
                                                 marcha_product_id={item.marcha_product_id}
                                               />
                                             </View>
                                             <View style={[col5]}>
-                                              <DeclineMarchaBtn request_id={item.marcha_request_id} />
+                                              <DeclineMarchaBtn request_id={item.request_id} />
                                             </View>
                                           </View>
             }

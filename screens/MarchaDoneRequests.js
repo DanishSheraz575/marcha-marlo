@@ -8,7 +8,8 @@ import ScreenHeader from "../components/ScreenHeader";
 import CardLoader from "../components/CardLoader";
 import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
-import MarchaRequestCard from "../components/MarchaRequestCard";
+import MarchaDoneRequestReceivedCard from "../components/MarchaDoneRequestReceivedCard";
+import MarchaDoneRequestSentCard from "../components/MarchaDoneRequestSentCard";
 
 export default function MarchaRequestReceived({}) {
   const {
@@ -44,6 +45,8 @@ export default function MarchaRequestReceived({}) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase();
+
+
         if (status == "success" && json.result.length > 0) {
           /*
           let RDataList = [];
@@ -155,19 +158,15 @@ export default function MarchaRequestReceived({}) {
 
   function renderRequestReceivedCard({ item }) {
     return (
-      <MarchaRequestCard
+      <MarchaDoneRequestReceivedCard
         item={item}
-        requestType="doneRequestReseived"
-        showHeader="0"
       />
     );
   }
   function renderRequestSentCard({ item }) {
     return (
-      <MarchaRequestCard
+      <MarchaDoneRequestSentCard
         item={item}
-        requestType="doneRequestSent"
-        showHeader="0"
       />
     );
   }
