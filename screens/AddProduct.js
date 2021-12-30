@@ -238,7 +238,7 @@ export default function AddProduct({}) {
     fetch(global.api + "add_product", {
       method: "POST", // or 'PUT'
       headers: {
-        "Content-Type": "application/json",
+        Accept: 'application/json',
         "Content-Type": "multipart/form-data",
       },
       //body: JSON.stringify(data),

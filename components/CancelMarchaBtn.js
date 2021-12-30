@@ -6,10 +6,10 @@ import { useNavigation } from "@react-navigation/native";
 
 import StyleOf from "../assets/AppStyles";
 
-export default function CancelMarchaBtn({ request_id = 0, title = "CANCEL" }) {
+export default function CancelMarchaBtn({ request_id = 0, title = "CANCEL REQUEST" }) {
   const navigation = useNavigation();
 
-  const { rbBodyBtnLight, selfCenter, textWhite } = StyleOf;
+  const { rbBodyBtnLight, selfCenter, f11, textWhite } = StyleOf;
   const [showBox, setShowBox] = useState(true);
 
   const showConfirmDialog = (request_id) => {
@@ -64,7 +64,7 @@ export default function CancelMarchaBtn({ request_id = 0, title = "CANCEL" }) {
       onPress={() => showConfirmDialog(request_id)}
       style={[rbBodyBtnLight, { margin: 5 }]}
     >
-      <Text style={[selfCenter, textWhite, { textAlign: "center" }]}>
+      <Text style={[selfCenter, textWhite, f11, { textAlign: "center" }]}>
         <Image source={require("../assets/cross-icon.png")} />
         {title}
       </Text>

@@ -1,5 +1,7 @@
 import * as SecureStore from "expo-secure-store";
 
+import { useNavigation } from "@react-navigation/native";
+
 global.setLocal = saveToLocal = async (key, value) => {
   await SecureStore.setItemAsync(key, value);
 };
@@ -47,7 +49,11 @@ global.getConfig = async function getFromLocal(key) {
     }, []);
 };
 
-global.getOut = getLOgOut = () => SecureStore.deleteItemAsync("marchaUserInfo");
+global.getOut = getLOgOut = () => 
+{
+  SecureStore.deleteItemAsync("marchaUserInfo");
+}
+
 global.getProducts = getMyProducts = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -59,7 +65,7 @@ global.getProducts = getMyProducts = () => {
       });
       if (promise.ok) {
         const { result } = await promise.json();
-        resolve(result?.reverse());
+        resolve(result);
       } else resolve([]);
     } catch (error) {
       reject("Unknow Error");
@@ -77,7 +83,7 @@ global.getExploreProducts = getExploreProduct = () => {
       });
       if (promise.ok) {
         const { result } = await promise.json();
-        resolve(result?.reverse());
+        resolve(result);
       } else resolve([]);
     } catch (error) {
       reject("Unknow Error");

@@ -83,14 +83,18 @@ export default function SignUp({ navigation }) {
           .then((response) => response.json())
           .then((json) => {
             setShowLoader(false);
-            alert(json.result);
             var status = json.status.toLowerCase();
             if (status == "success") {
               alert(json.result);
               navigation.navigate('Login');
-            } else {
-              alert(json.result);
+            } 
+            /*
+            else {
+              if(json.result.email){
+                setEmailError(true);
+              }
             }
+            */
           })
           .catch((error) => {
             setShowLoader(false);

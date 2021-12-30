@@ -6,16 +6,19 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  Alert
 } from "react-native";
-
+import * as SecureStore from "expo-secure-store";
 import StyleOf from "../assets/AppStyles";
-
-import ScreenHeader from "../components/ScreenHeader";
+//import { useNavigation } from "@react-navigation/native";
 import BottomLinks from "../components/BottomLinks";
 
 //import Logo from "../components/Logo";
 
 export default function Dashboard({ navigation }) {
+
+  //const navigation = useNavigation();
+
   const {
     fullContainer,
     bgImage,
@@ -37,11 +40,23 @@ export default function Dashboard({ navigation }) {
     dashboardBoxBlue,
     dashboardBoxYellow,
     dashboardBoxRed,
+    p20,
+    flexIt,
+    itemCenter,
+    iconBox,
   } = StyleOf;
 
   const [products, setProducts] = useState([]);
   // const [exploreProducts, setExploreProducts] = useState([]);
   const image = require("../assets/dashboardbg.png");
+
+
+  useEffect(() => {
+    console.log(global.uid);
+    if(global.uid<1){
+      
+    }
+  });
 
   useEffect(() => {
     getProducts()
@@ -52,7 +67,53 @@ export default function Dashboard({ navigation }) {
   return (
     <View style={[fullContainer]}>
       <ImageBackground source={image} style={bgImage}>
-        <ScreenHeader title="Dashboard" backbtn="0" bgColor="" />
+        <View style={[flexIt, p20, { alignItems: "center" }]}>
+          <View>
+            <TouchableOpacity
+              style={[itemCenter, iconBox]}
+              onPress={() => {
+                Alert.alert(
+                  'Logout',
+                  'Are you sure? You want to logout?',
+                  [
+                    {
+                      text: 'Cancel',
+                      onPress: () => {
+                        return null;
+                      },
+                    },
+                    {
+                      text: 'Confirm',
+                      onPress: () => {
+                        SecureStore.deleteItemAsync("marchaUserInfo");
+                        navigation.navigate("Home");
+                      },
+                    },
+                  ],
+                  {cancelable: false},
+                );
+              }}
+            >
+              <Image source={require("../assets/logout.png")} />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text
+              style={{ color: "#FFFFFF", fontSize: 20, fontWeight: "bold" }}
+            >
+              Dashboard
+            </Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              style={[itemCenter, iconBox]}
+              onPress={() => navigation.navigate("Notifications")}
+            >
+              <Image source={require("../assets/bell.png")} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View style={[containerInner]}>
           <View style={[px20, pb10]}>
             <Text style={[f12, textWelcome]}>welcome,</Text>

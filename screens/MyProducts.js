@@ -58,7 +58,7 @@ export default function MyProducts({ navigation, route }) {
           />
         {showBtn == true && <TouchableOpacity
                               onPress={nowGoForMarcha}
-                              style={[{ alignSelf: "center", padding: 10 }]}
+                              style={[{ alignSelf: "center", padding: 10,marginBottom:15 }]}
                             >
                               <Image source={require("../assets/go_for_marcha_btn.png")} /> 
                             </TouchableOpacity>

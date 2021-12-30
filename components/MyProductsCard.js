@@ -18,6 +18,7 @@ const formatData = (dataList, numColumns) => {
 };
 
 export default function MyProductsCard({ data, refresh, onRefresh }) {
+
   const navigation = useNavigation();
   const [isChecked, setChecked] = useState(global.myProductSelectedId);
 
@@ -71,10 +72,8 @@ export default function MyProductsCard({ data, refresh, onRefresh }) {
     if (empty) {
       return <View style={[productCard, itemInvisible]} />;
     } else {
-      //let pimages = images.split(",");
-      //let img = product_images_base_url + pimages[0];
       let img = global.product_images_base_url + images;
-      if (condition == "New") {
+      if (condition.toLowerCase() == "new") {
         var conditionRibbon = require("../assets/new.png");
       } else {
         var conditionRibbon = require("../assets/old.png");
@@ -89,7 +88,7 @@ export default function MyProductsCard({ data, refresh, onRefresh }) {
               style={[
                 global.myProductSelectedId == product_id
                   ? selectedProductImageContainer
-                  : productImageContainer,
+                  : productImageContainer
               ]}
             >
               <Image

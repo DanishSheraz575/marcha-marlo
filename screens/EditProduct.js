@@ -30,7 +30,7 @@ export default function EditProduct({route}) {
 
   const [deletedImages, setDeletedImages] = useState([]);
 
-  const {product_id, title,condition,description,category_id,location,value,images,product_images_base_url}=route.params.productDetails;
+  const {product_id, title,condition,description,category_id,location,value,images, all_images}=route.params.productDetails;
 
   var img1= "";
   var img2= "";
@@ -40,17 +40,17 @@ export default function EditProduct({route}) {
   
   
   if(images!==null){
-    let product_images = images.split(",");
-    img1=product_images_base_url+product_images[0];
+    let product_images = all_images.split(",");
+    img1=global.product_images_base_url+product_images[0];
 
     if(product_images[1]!== undefined){
-      img2=product_images_base_url+product_images[1];
+      img2=global.product_images_base_url+product_images[1];
     }
     if(product_images[2]!== undefined){
-      img3=product_images_base_url+product_images[2];
+      img3=global.product_images_base_url+product_images[2];
     }
     if(product_images[3]!== undefined){
-      img4=product_images_base_url+product_images[3];
+      img4=global.product_images_base_url+product_images[3];
     }
   }
 
@@ -273,7 +273,7 @@ export default function EditProduct({route}) {
   function update_product() {
 
     var data = new FormData();
-
+    
     var category_id = 0;
     
     if (productCategory) {
@@ -368,12 +368,11 @@ export default function EditProduct({route}) {
     if(productImage1=='' && productImage2=='' && productImage3=='' && productImage4==''){
       data.append("images[]", "");
     }
-  
-    //setShowLoader(true);
+
     fetch(global.api + "update_product", {
       method: "POST", // or 'PUT'
       headers: {
-        "Content-Type": "application/json",
+        Accept: 'application/json',     
         "Content-Type": "multipart/form-data",
       },
       //body: JSON.stringify(data),
@@ -381,7 +380,6 @@ export default function EditProduct({route}) {
     })
       .then((response) => response.json())
       .then((json) => {
-
         var status = json.status.toLowerCase();
         if (status == "success") {
           alert(json.result);
