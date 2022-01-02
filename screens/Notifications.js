@@ -17,7 +17,7 @@ export default function Notifications({}) {
   const [notificationState, setNotificationState] = useState(0);
   const [dataList, setDataList] = useState([]);
 
-  const data = { api_token: global.token, user_id: global.uid };
+  const data = { api_token: global.token, user_id: global.uid, is_mobile:true };
 
   useEffect(() => {
     fetch(global.api + "get_notifications", {
@@ -30,9 +30,9 @@ export default function Notifications({}) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase();
-        const result = json.result;
-        if (status == "success" && result.length>0 ) {
-          setDataList(result);
+        console.log(json.result);
+        if (status == "success" && json.result.length>0 ) {
+          setDataList(json.result);
           setNotificationState(2);
         } else {
           setNotificationState(1);
@@ -47,11 +47,19 @@ export default function Notifications({}) {
   }, []);
 
   function renderNotiSlot({ item }) {
+    console.log(global.user_image_base_url+item.user_image);
     return (
       <View style={[rowStrip,rowStripBottomBorder]}>
         <View style={colContainerRow}>
           <View style={col2}>
-            <Image source={require("../assets/notificationIcon.png")} />
+            {
+              item.user_image 
+              ?
+                <Image style={{width:20,height:20}} source={{uri:global.user_image_base_url+item.user_image}} />
+              :
+                <Image source={require("../assets/notificationIcon.png")} />
+            }
+            
           </View>
           <View style={col8}>
             <View style={{marginLeft:10}}>

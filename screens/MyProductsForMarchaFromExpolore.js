@@ -4,9 +4,7 @@ import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
 import StyleOf from "../assets/AppStyles";
 
 import ScreenHeader from "../components/ScreenHeader";
-import ScreenSubTitleHeader from '../components/ScreenSubTitleHeader';
 import BottomLinks from "../components/BottomLinks";
-import MarchaSpinner from "../components/MarchaSpinner";
 import CardContentLoader from "../components/CardContentLoader";
 import MyProductsCardFromExplore from "../components/MyProductsCardFromExplore";
 import ProductsNotFound from "../components/ProductsNotFound";
@@ -36,7 +34,7 @@ export default function MyProductsForMarchaFromExpolore({ navigation }) {
       .then((json) => {
         const status = json.status.toLowerCase() ;
         if (status == "success" && json.result.length>0) {
-          setDataList(json.result.reverse());
+          setDataList(json.result);
           setMyProductsState(2);
         } else {
           setMyProductsState(1);

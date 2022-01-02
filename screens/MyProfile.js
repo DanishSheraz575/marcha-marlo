@@ -178,7 +178,7 @@ export default function MyProfile({}) {
               {profileImage == "" ? (
                 <Image
                   source={require("../assets/user_profile.png")}
-                  style={styles.profileImage}
+                  style={[styles.profileImage]}
                   transition={false}
                 />
               ) : (
@@ -305,12 +305,12 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     zIndex: 1,
     */
-    position: "relative",
+    
   },
   profileImageContainer: {
     marginTop: 10,
     marginBottom: 15,
     width: 120,
-    height: 130,
+    height: 130
   },
 });

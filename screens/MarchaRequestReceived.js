@@ -15,7 +15,7 @@ export default function MarchaRequestReceived() {
   const [dataState, setDataState] = useState(false);
   const [dataList, setDataList] = useState([]);
 
-  const data = { api_token: global.token, user_id: global.uid, is_mobile:true };
+  
   useEffect(() => getData(), []);
 
   const renderRequestCard = useCallback(
@@ -24,7 +24,7 @@ export default function MarchaRequestReceived() {
     ),
     []
   );
-
+  const data = { api_token: global.token, user_id: global.uid, is_mobile:1 };
   const getData = () => {
     setDataState(true);
     fetch(global.api + "get_marcha_requests_received", {
@@ -34,8 +34,10 @@ export default function MarchaRequestReceived() {
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log(json);
         const status = json.status.toLowerCase();        
         if (status == "success" && json.result.length > 0) {
+          
           setDataList(json.result);
           setDataState(true);
         } else {

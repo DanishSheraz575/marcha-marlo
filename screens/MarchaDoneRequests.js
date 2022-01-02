@@ -45,45 +45,7 @@ export default function MarchaRequestReceived({}) {
       .then((response) => response.json())
       .then((json) => {
         const status = json.status.toLowerCase();
-
-
         if (status == "success" && json.result.length > 0) {
-          /*
-          let RDataList = [];
-          json.result.forEach((item) => {
-            var requester = item.added_by;
-
-            if (requester.image != "") {
-              var img = global.user_image_base_url + requester.image;
-            } else {
-              var img = "";
-            }
-
-            let images = item.requester_product.images.split(",");
-            let pimg = global.product_images_base_url + images[0];
-            RDataList.push({
-              requested_username: item.requested_username,
-              requested_product_title: item.requester_product.title,
-              requested_product_value: item.requester_product.value,
-              requested_product_location: item.requester_product.location,
-              requested_product_condition: item.requester_product.condition,
-              requested_product_image: pimg,
-              marcha_against_product_title: item.requested_product.title,
-              marcha_request_id: item.request_id,
-
-              my_product_id: item.requested_product_id,
-              marcha_product_id: item.requester_product_id,
-
-              requester_id: requester.user_id,
-              requester_name: requester.full_name,
-              requester_email: requester.email,
-              requester_image: img,
-
-              marcha_date: item.dated,
-            });
-          });
-          setReceivedDataList(RDataList);
-          */
           setReceivedDataList(json.result);
           setReceivedDataState(2);
         } else {
@@ -105,43 +67,6 @@ export default function MarchaRequestReceived({}) {
       .then((json) => {
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length > 0) {
-          /*
-          let SDataList = [];
-
-          json.result.forEach((item) => {
-            var requester = item.added_by;
-
-            if (requester.image != "") {
-              var img = global.user_image_base_url + requester.image;
-            } else {
-              var img = "";
-            }
-
-            let images = item.requester_product.images.split(",");
-            let pimg = global.product_images_base_url + images[0];
-            SDataList.push({
-              requested_username: item.requested_username,
-              requested_product_title: item.requester_product.title,
-              requested_product_value: item.requester_product.value,
-              requested_product_location: item.requester_product.location,
-              requested_product_condition: item.requester_product.condition,
-              requested_product_image: pimg,
-              marcha_against_product_title: item.requested_product.title,
-              marcha_request_id: item.request_id,
-
-              my_product_id: item.requested_product_id,
-              marcha_product_id: item.requester_product_id,
-
-              requester_id: requester.user_id,
-              requester_name: requester.full_name,
-              requester_email: requester.email,
-              requester_image: img,
-
-              marcha_date: item.dated,
-            });
-          });
-          setSentDataList(SDataList);
-          */
           setSentDataList(json.result);
           setSentDataState(2);
         } else {

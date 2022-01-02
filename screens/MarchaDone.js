@@ -8,7 +8,7 @@ import ScreenHeader from "../components/ScreenHeader";
 import CardContentLoader from "../components/CardContentLoader";
 import RequestsNotFound from "../components/RequestsNotFound";
 import BottomLinks from "../components/BottomLinks";
-import MarchaRequestCard from "../components/MarchaRequestCard";
+import MarchaDoneCard from "../components/MarchaDoneCard";
 
 export default function MarchaDone({}) {
 
@@ -31,26 +31,7 @@ export default function MarchaDone({}) {
         setMyProductsState(1);
         const status = json.status.toLowerCase();
         if (status == "success" && json.result.length > 0) {
-          const myProductList = json.result.map((item) => {
-            if (item?.requested_product?.images != null) {
-              let images = item?.requested_product?.images.split(",");
-              let img = global.product_images_base_url + images[0];
-            } else {
-              img = "";
-            }
-            return {
-              requested_username: item?.requested_username,
-              requested_product_title: item?.requested_product?.title,
-              requested_product_value: item?.requested_product?.value,
-              requested_product_location: item?.requested_product?.location,
-              requested_product_condition: item?.requested_product?.condition,
-              requested_product_image: img,
-              marcha_against_product_title: item?.requester_product?.title,
-              marcha_request_id: item?.request_id,
-              marcha_date: item?.dated,
-            };
-          });
-          setDataList(myProductList);
+          setDataList(json.result);
           setMyProductsState(2);
         }
       })
@@ -60,7 +41,7 @@ export default function MarchaDone({}) {
   }, []);
 
   function renderRequestCard({ item }) {
-    return <MarchaRequestCard item={item} showHeader="0" marchaStatus="1" />;
+    return <MarchaDoneCard item={item} />;
   }
 
   return (

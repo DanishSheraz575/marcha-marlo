@@ -14,7 +14,7 @@ export default function AcceptMarchaDoneRequestBtn({ request_id }) {
     const data = {
       api_token: global.token,
       user_id: global.uid,
-      request_id: request_id,
+      march_done_request_id: request_id,
       status: 1,
     };
     fetch(global.api + "accept_marcha_done_request", {

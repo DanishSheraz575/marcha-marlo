@@ -50,14 +50,6 @@ export default function Dashboard({ navigation }) {
   // const [exploreProducts, setExploreProducts] = useState([]);
   const image = require("../assets/dashboardbg.png");
 
-
-  useEffect(() => {
-    console.log(global.uid);
-    if(global.uid<1){
-      
-    }
-  });
-
   useEffect(() => {
     getProducts()
       .then((res) => setProducts(res))

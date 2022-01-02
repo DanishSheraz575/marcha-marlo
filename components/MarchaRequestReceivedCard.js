@@ -14,8 +14,13 @@ export default function MarchaRequestReceivedCard({item})
 {
   //const navigation = useNavigation();
 
-  const {requestBox,
+  const {
+    requestBox,
+    rbHeader,
     dropShadow,
+    selfCenter,
+    textGray,
+    rbHeaderBold,
     rbBody,
     colContainerRow,
     col,
@@ -30,10 +35,20 @@ export default function MarchaRequestReceivedCard({item})
     rbBodyProductTitle,
     rbBodyProductPrice,
     fwBold,
-    rbBodyMarchaAgainstBox}=StyleOf;
+    rbBodyMarchaAgainstBox
+  }=StyleOf;
 
   return (
     <View style={requestBox}>
+
+      <View style={[rbHeader, dropShadow]}>
+        <Text style={selfCenter}>
+          <Text style={rbHeaderBold}>
+            {item.requester_username}
+          </Text>
+          <Text style={textGray}> wants to do marcha</Text>
+        </Text>
+      </View>
 
       <View style={[rbBody, dropShadow]}>
         <View style={colContainerRow}>
@@ -52,22 +67,29 @@ export default function MarchaRequestReceivedCard({item})
             <Text style={[rbBodyProductTitle, mb5]}>
               {item.requester_product_title}
             </Text>
+            <View style={[colContainerRow, mb5]}>
+              <View style={[col, col6]}>
+                <Text style={rbBodyProductPrice}>
+                  Price: {item.requester_product_value}
+                </Text>
+              </View>
+            </View>
 
             <Text style={rbBodyProductPrice}> Marcha Price: {item.requester_product_value}</Text>
 
             <View style={[colContainerRow, mb5]}>
               <View style={col10}>
                 <Text style={[f12]}>
-                  Location:{item.requester_product_location}
+                  Location:
                   <Text style={[f12, fwBold]}>
-                    <Image source={require("../assets/location-icon2.png")} />
+                    <Image source={require("../assets/location-icon2.png")} />{" "}
                     {item.requester_product_location}
                   </Text>
                 </Text>
               </View>
               <View style={col10}>
                 <Text style={[f12]}>
-                  Condition:{item.requester_product_condition}
+                  Condition:
                   <Text style={[f12, fwBold]}>
                     {item.requester_product_condition}
                   </Text>
@@ -80,15 +102,22 @@ export default function MarchaRequestReceivedCard({item})
                 {item.requested_product_title}
               </Text>
             </View>
+
             <View style={[colContainerRow, mb5]}>
-                <View style={[col5]}>
-                <AcceptMarchaDoneRequestBtn
-                    request_id={item.request_id}
+              <View style={[col5]}>
+                <AcceptMarchaBtn
+                  request_id={item.request_id}
+                  requester_id={item.requester_id}
+                  requester_name={item.requester_name}
+                  requester_email={item.requester_email}
+                  requester_image={item.requester_image}
+                  my_product_id={item.requested_product_id}
+                  marcha_product_id={item.marcha_product_id}
                 />
-                </View>
-                <View style={[col5]}>
+              </View>
+              <View style={[col5]}>
                 <DeclineMarchaBtn request_id={item.request_id} />
-                </View>
+              </View>
             </View>
 
           </View>

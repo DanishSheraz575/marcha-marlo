@@ -17,8 +17,7 @@ export default function ViewProduct({ route }) {
 
   const {dropShadow, btn, bgEminence, btnLabel}=StyleOf;
 
-  const { product_id, title, condition, description, location, value, images } =
-    route.params.productDetails;
+  const { product_id, title, condition, description, location, value, images } = route.params.productDetails;
 
   const interestedInMarcha = () => {
     global.marcha_product_id = product_id;

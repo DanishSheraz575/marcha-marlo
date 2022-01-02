@@ -53,7 +53,7 @@ export default function AcceptMarchaBtn({ request_id = 0, requester_id = 0, requ
 
   return (
     <TouchableOpacity
-      onPress={acceptMarchaRequest(request_id)}
+      onPress={()=> acceptMarchaRequest(request_id)}
       style={[rbBodyBtnRed,m5]}
     >
       <Text style={[selfCenter, textWhite, rbBtnLable]}>ACCEPT</Text>
