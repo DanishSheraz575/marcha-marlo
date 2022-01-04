@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Component } from "react";
 import { View, Image, TouchableOpacity, TextInput } from "react-native";
 import ScreenHeader from "../components/ScreenHeader";
 import BottomLinks from "../components/BottomLinks";
@@ -46,10 +46,10 @@ class ExploreProducts extends PureComponent {
                     borderRadius: 5,
                   }}
                 >
+                  {/* width: "90%", */}
                   <TextInput
                     style={{
                       marginBottom: 0,
-                      width: "90%",
                       alignSelf: "flex-start",
                       position: "absolute",
                       lineHeight: 42,
@@ -109,27 +109,59 @@ class ExploreProducts extends PureComponent {
       alert("Please enter keyword to filter");
     } else {
       const newdata = dataList.filter(function (item) {
-        var search = keyword.toLowerCase();
-        var title = item.title.toLowerCase();
-        var price = item.value.toLowerCase();
-        var location = item.location.toLowerCase();
+        // if (item.title==keyword || item.value == keyword || item.location==keyword)
+        //var title=item.title.toLowerCase();
+        //var location=item.location.toLowerCase();
+
+        if(typeof item.title!=='undefined'){
+          var title=item.title.toLowerCase();
+        }else{
+          var title='marcha marlo bhai';
+        }
+
+        if(typeof item.location !== "undefined"){
+          var location=item.location.toLowerCase();
+        }else{
+          var location='marcha marlo bhai';
+        }
+
+        //alert(title);
+        //keyword=keyword.toLowerCase();
         if (
-          title.includes(search) ||
-          price == search ||
-          location.includes(search)
-        ) {
+          title.includes(keyword.toLowerCase()) || 
+          item.value==keyword.toLowerCase() || 
+          location.includes(keyword.toLowerCase())
+          )
+        {
           return item;
         }
+        
+        // if (
+        //   title.includes(search) ||
+        //   price == search ||
+        //   location.includes(search)
+        // ) {
+        //   return item;
+        // }
+        
       });
 
       if (!newdata.length) {
         alert("Sorry! no records found.");
+      }else{
+        //this.setState({ itemsList: newdata });
+        //this.setState({ itemsList: newdata, productsState: false });
+        this.setState({ dataList: newdata, productsState: false });
       }
-      this.setState({ itemsList: newdata });
+      
     }
   };
 
-  clearFilter = () =>
-    this.setState({ keyword: "", itemsList: this.state.itemsList });
+  clearFilter = () => {
+    this.setState({ keyword: "", itemsList: this.getData() });
+    //this.setState({ keyword: "", itemsList: this.getData() });
+    //this.getData();
+  }
+    //this.setState({ keyword: "", itemsList: this.state.itemsList });
 }
 export default ExploreProducts;
