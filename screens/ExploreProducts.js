@@ -40,7 +40,7 @@ class ExploreProducts extends PureComponent {
                 <View
                   style={{
                     backgroundColor: "#fff",
-                    width: "85%",
+                    width: "73%",
                     padding: 5,
                     height: 42,
                     borderRadius: 5,
@@ -50,6 +50,7 @@ class ExploreProducts extends PureComponent {
                   <TextInput
                     style={{
                       marginBottom: 0,
+                      width: "73%",
                       alignSelf: "flex-start",
                       position: "absolute",
                       lineHeight: 42,
@@ -77,6 +78,18 @@ class ExploreProducts extends PureComponent {
                     </TouchableOpacity>
                   ) : null}
                 </View>
+                
+                <TouchableOpacity
+                  style={{
+                    position: "absolute",
+                    marginRight: 55,
+                    right: 0,
+                  }}
+                  onPress={this.applyFilter}
+                >
+                  <Image source={require("../assets/filterIcon.png")} />
+                </TouchableOpacity>
+                
                 <TouchableOpacity
                   style={{
                     position: "absolute",
@@ -87,6 +100,7 @@ class ExploreProducts extends PureComponent {
                 >
                   <Image source={require("../assets/filterIcon.png")} />
                 </TouchableOpacity>
+
               </View>
               <ExploreProductsCard
                 data={dataList}
@@ -105,8 +119,9 @@ class ExploreProducts extends PureComponent {
   applyFilter = () => {
     const { keyword, dataList } = this.state;
     if (keyword == "" || keyword == null) {
-      //
+      
       alert("Please enter keyword to filter");
+
     } else {
       const newdata = dataList.filter(function (item) {
         // if (item.title==keyword || item.value == keyword || item.location==keyword)
